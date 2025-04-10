@@ -1,0 +1,16 @@
+# Bibliotecas Obrigatórias
+selenium==4.10.0             # Versão exata testada
+webdriver-manager==3.8.6     # Versão com EdgeChromiumDriverManager
+python-dotenv==1.1.0         # Para gerenciamento do .env
+
+# Dependências opcionais (recomendadas)
+pyautogui==0.9.54            # Para automação de GUI (opcional)
+setuptools==78.1.0          # Versão estável mais recente (opcional)
+
+# Bibliotecas úteis para relatórios (opcional)
+openpyxl==3.1.0              # Para manipulação de Excel (opcional)
+pandas==2.2.0              # Para processamento de dados (opcional)
+loguru==0.7.2                # Logging mais amigável (opcional)
+
+# Para testes (opcional)
+pytest==8.0.0               # Framework de testes (opcional)
