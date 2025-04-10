@@ -1,1 +1,37 @@
-/.env
+# Arquivos de ambiente
+.venv
+.env
+.env.local
+.env*.local
+
+# Diretórios de cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Diretórios específicos do seu projeto
+src/__pycache__
+src/core/__pycache__
+src/processadoras/__pycache__
+src/processadoras/zetra/__pycache__
+src/processadoras/zetra/convenios/__pycache__
+
+# Arquivos do IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Arquivos gerados pelo Selenium/WebDriver
+geckodriver.log
+chromedriver.log
+msedgedriver.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+
+# Arquivos de log
+*.log
+logs/
