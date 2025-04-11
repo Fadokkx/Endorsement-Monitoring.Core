@@ -31,10 +31,9 @@ class CipLocators:
 class ConvenioGovSP:
     def __init__(self, driver: WebDriver):
         self.driver = driver
-        self.url = os.getenv("ZETRA_SOBRAL_URL")
-        self.user = os.getenv("ZETRA_USER")
-        self.password = os.getenv("ZETRA_PASS")
-        self.second_password = os.getenv("ZETRA_SECOND_PASS")
+        self.url = os.getenv("CIP_GOVSP_URL")
+        self.user = os.getenv("CIP_USER")
+        self.password = os.getenv("CIP_PASS")
 
         if not all([self.url, self.user, self.password, self.second_password]):
             raise ValueError("Variáveis de ambiente faltando!")

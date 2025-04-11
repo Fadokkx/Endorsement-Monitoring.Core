@@ -1,6 +1,9 @@
 from src.processadoras.zetra.convenios.sobral import ConvenioSobral
 from src.processadoras.zetra.convenios.nova_lima import ConvenioNovaLima
 #from src.processadoras.zetra.convenios.embu import ConvenioEmbu
+from src.core.file_manager import renomear_e_mover_arquivos
+from src.core.date_var import variaveis_data as data
+from src.core.paths import caminhos as paths
 from typing import Dict, Type
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -8,7 +11,7 @@ class ZetraController:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.convenios: Dict[str, Type] = {
-            'sobral': ConvenioSobral,
+            #'sobral': ConvenioSobral,
             #'embu': ConvenioEmbu,
             #'igeprev': ConvenioIgeprev,
             #'sbc': ConvenioSbc,
@@ -21,7 +24,7 @@ class ZetraController:
         }
 
     def executar_fluxo_completo(self, nome_convenio: str) -> bool:
-        """Executa todo o fluxo para um convênio específico com tratamento detalhado de erros"""
+        #Executa todo o fluxo para um convênio específico com tratamento detalhado de erros
         if nome_convenio not in self.convenios:
             raise ValueError(f"Convênio {nome_convenio} não existe")
         
@@ -31,14 +34,29 @@ class ZetraController:
             if not convenio.login():
                 raise Exception("Falha no login")
             
+            try:
+                if not convenio.confirmacao_leitura():
+                    raise Exception("Falha na confirmação de leitura") 
+            except Exception as e:
+                print(f"{e}")
+
             if not convenio.navegar_menu():
                 raise Exception("Falha na navegação do menu")
             
             if not convenio.opcoes_relatorios():
                 raise Exception("Falha nas opções de relatório")
             
-            if not convenio.autorizer():
+            if not convenio.autorizacao_gerador():
                 raise Exception("Falha na autorização")
+    
+            if not convenio.download_arquivo():
+                raise Exception("Falha no download do arquivo")
+            
+            try:
+                if not renomear_e_mover_arquivos(pasta_origem=paths.pasta_download, pasta_destino=paths.convenio.pasta_destino, nome_origem= "cringe", novo_nome=(f"nome_convenio_[data.DATA_ARQUIVO]")):
+                    raise Exception("Falha ao mover o arquivo")
+            except Exception as e:
+                print(f"{e}")
             
             return True
             
@@ -63,5 +81,4 @@ class ZetraController:
                     'status': 'Erro crítico',
                     'erro': str(e)
                 }
-        
         return resultados

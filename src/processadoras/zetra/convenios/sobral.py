@@ -117,7 +117,7 @@ class ConvenioSobral:
             print(f"Erro nas opções de relatório: {e}")
             return False     
         
-    def autorizer(self):
+    def autorizacao_gerador(self):
         try:
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(SobralLocators.SENHA_AUTORIZER)
@@ -128,6 +128,7 @@ class ConvenioSobral:
             WebDriverWait(self.driver, 60).until(
                 EC.presence_of_element_located(SobralLocators.DATA_INICIO)
             )
+            return True
         except Exception as e:
             print(f"Erro na autorização: {e}")
     

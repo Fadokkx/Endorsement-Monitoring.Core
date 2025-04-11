@@ -1,5 +1,5 @@
 # Arquivos de ambiente
-.venv
+.venv/
 .env
 .env.local
 .env*.local
@@ -10,11 +10,11 @@ __pycache__/
 *$py.class
 
 # Diretórios específicos do seu projeto
-src/__pycache__
-src/core/__pycache__
-src/processadoras/__pycache__
-src/processadoras/zetra/__pycache__
-src/processadoras/zetra/convenios/__pycache__
+src/__pycache__/
+src/core/__pycache__/
+src/processadoras/__pycache__/
+src/processadoras/zetra/__pycache__/
+src/processadoras/zetra/convenios/__pycache__/
 
 # Arquivos do IDE
 .idea/

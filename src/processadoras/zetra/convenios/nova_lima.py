@@ -22,7 +22,7 @@ class SobralLocators:
     DATA_FIM = (By.XPATH, '//*[@id="periodoFim"]')
     CHECKBOX_DEFERIDA = (By.XPATH, '//*[@id="SAD_CODIGO7"]')
     BOTAO_GERAR = (By.XPATH, '//*[@id="btnEnvia"]')
-    OPCOES_DOWNLOAD = (By.XPATH, '//*[@id="userMenu"]')
+    OPCOES_DOWNLOAD = (By.XPATH, '//*[@id="userMenu"]/div/span')
     BOTAO_DOWNLOAD = (By.XPATH, '//*[@id="dataTables"]/tbody/tr[1]/td[4]/div/div/div/a[1]')
     SELEC_OPCOES =(By.XPATH, '//*[@id="formato"]')
     OPCAO_CSV = (By.XPATH, '//*[@id="formato"]/option[4]')
@@ -60,6 +60,15 @@ class ConvenioNovaLima:
         except Exception as e:
             print(f"Erro no login: {e}")
             return False
+        
+    def confirmacao_leitura(self):
+        time.sleep(1)
+        try:
+            self.driver.find_element(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div/div/fieldset/div/label[1]').click()
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[2]/a'))).click()
+        except Exception as e:
+            print(f"erro na confirmação de leitura: {e}")
 
     def navegar_menu(self):
         try:
@@ -117,18 +126,32 @@ class ConvenioNovaLima:
             print(f"Erro nas opções de relatório: {e}")
             return False     
         
-    def autorizer(self):
+    def autorizacao_gerador(self):
         try:
-            WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(SobralLocators.SENHA_AUTORIZER)
-            ).send_keys(self.password)
             time.sleep(1)
-            self.driver.find_element(*SobralLocators.SENHA_AUTORIZER).send_keys(Keys.RETURN)
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located(SobralLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
+            self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
             time.sleep(1)
             WebDriverWait(self.driver, 60).until(
-                EC.presence_of_element_located(SobralLocators.DATA_INICIO)
-            )
+                EC.presence_of_element_located(SobralLocators.DATA_INICIO))
+            return True
         except Exception as e:
             print(f"Erro na autorização: {e}")
-    
+            
+    def download_arquivo(self):
+        try:    
+            time.sleep(1)
+            self.driver.execute_script("document.body.style.zoom='33%'")
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(SobralLocators.OPCOES_DOWNLOAD)).click()
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(SobralLocators.BOTAO_DOWNLOAD)).click()
+            time.sleep(1)
+            return True
+        
+        except Exception as e:
+            print(f"Erro no download: {e}")
+        
         return False     
