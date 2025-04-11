@@ -24,6 +24,9 @@ class SobralLocators:
     BOTAO_GERAR = (By.XPATH, '//*[@id="btnEnvia"]')
     OPCOES_DOWNLOAD = (By.XPATH, '//*[@id="userMenu"]')
     BOTAO_DOWNLOAD = (By.XPATH, '//*[@id="dataTables"]/tbody/tr[1]/td[4]/div/div/div/a[1]')
+    SELEC_OPCOES =(By.XPATH, '//*[@id="formato"]')
+    OPCAO_CSV = (By.XPATH, '//*[@id="formato"]/option[4]')
+    SENHA_AUTORIZER = (By.XPATH, '//*[@id="senha2aAutorizacao"]')
     
 class ConvenioSobral:
     def __init__(self, driver: WebDriver):
@@ -31,8 +34,9 @@ class ConvenioSobral:
         self.url = os.getenv("ZETRA_SOBRAL_URL")
         self.user = os.getenv("ZETRA_USER")
         self.password = os.getenv("ZETRA_PASS")
+        self.second_password = os.getenv("ZETRA_SECOND_PASS")
 
-        if not all([self.url, self.user, self.password]):
+        if not all([self.url, self.user, self.password, self.second_password]):
             raise ValueError("Variáveis de ambiente faltando!")
 
     def login(self):
@@ -48,12 +52,11 @@ class ConvenioSobral:
                 EC.presence_of_element_located(SobralLocators.CAMPO_SENHA)
             ).send_keys(self.password)
             
-            ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter...")
+            ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter...: ")
             self.driver.find_element(*SobralLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
             self.driver.find_element(*SobralLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
             return True
             
-        
         except Exception as e:
             print(f"Erro no login: {e}")
             return False
@@ -83,16 +86,49 @@ class ConvenioSobral:
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SobralLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)
+            time.sleep(1)
             
-            #self.driver.execute_script(scroll_to_checkbox)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
             #CHECKBOX
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SobralLocators.CHECKBOX_DEFERIDA)
+                EC.element_to_be_clickable(SobralLocators.CHECKBOX_DEFERIDA)).click()
+            time.sleep(1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            
+            time.sleep(1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(SobralLocators.SELEC_OPCOES))
+            self.driver.find_element(*SobralLocators.SELEC_OPCOES).click()
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(SobralLocators.OPCAO_CSV)
             ).click()
-            time.sleep(10)
+            time.sleep(1)
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(SobralLocators.BOTAO_GERAR))
+            self.driver.find_element(*SobralLocators.BOTAO_GERAR).click()    
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located(SobralLocators.SENHA_AUTORIZER))
+            time.sleep(1)  
             return True
         except Exception as e:
             print(f"Erro nas opções de relatório: {e}")
             return False     
         
+    def autorizer(self):
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located(SobralLocators.SENHA_AUTORIZER)
+            ).send_keys(self.password)
+            time.sleep(1)
+            self.driver.find_element(*SobralLocators.SENHA_AUTORIZER).send_keys(Keys.RETURN)
+            time.sleep(1)
+            WebDriverWait(self.driver, 60).until(
+                EC.presence_of_element_located(SobralLocators.DATA_INICIO)
+            )
+        except Exception as e:
+            print(f"Erro na autorização: {e}")
+    
+        return False     

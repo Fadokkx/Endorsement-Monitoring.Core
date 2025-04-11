@@ -16,6 +16,11 @@ def main():
         
                 if sobral.opcoes_relatorios():
                     print("Opções de relatórios acessadas com sucesso!")
+                    
+                    if sobral.autorizer():
+                        print("Autorização cedida com sucesso!")
+                    else:
+                        print(f"Falha na autorização")
                 else:
                     print("Falha ao acessar opções de relatórios")
             else:
