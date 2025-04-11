@@ -1,7 +1,14 @@
 from src.processadoras.zetra.convenios.sobral import ConvenioSobral
 from src.processadoras.zetra.convenios.nova_lima import ConvenioNovaLima
-#from src.processadoras.zetra.convenios.embu import ConvenioEmbu
-from src.core.file_manager import renomear_e_mover_arquivos
+from src.processadoras.zetra.convenios.embu import ConvenioEmbu
+from src.processadoras.zetra.convenios.igeprev import ConvenioIgeprev
+#from src.processadoras.zetra.convenios.sbc import ConvenioSbc
+#from src.processadoras.zetra.convenios.serra import ConvenioSerra
+#from src.processadoras.zetra.convenios.uberlandia import ConvenioUberlandia
+from src.processadoras.zetra.convenios.curitiba import ConvenioCuritiba
+from src.processadoras.zetra.convenios.HospServPublico import ConvenioHospServPublico
+from src.processadoras.zetra.convenios.hortolandia import ConvenioHortolandia
+from src.core.file_manager import renomear_e_mover_arquivos as file_manager
 from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
 from typing import Dict, Type
@@ -11,15 +18,15 @@ class ZetraController:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.convenios: Dict[str, Type] = {
-            #'sobral': ConvenioSobral,
-            #'embu': ConvenioEmbu,
-            #'igeprev': ConvenioIgeprev,
+            'sobral': ConvenioSobral,
+            'embu': ConvenioEmbu,
+            'igeprev': ConvenioIgeprev,
             #'sbc': ConvenioSbc,
             #'serra': ConvenioSerra,
             #'uberlandia': ConvenioUberlandia,
-            #'curitiba': ConvenioCuritiba,
-            #'hospital_do_servidor_publico': ConvenioHospServPublico,
-            #'hortolandia': ConvenioHortolandia,
+            'curitiba': ConvenioCuritiba,
+            'hospital_do_servidor_publico': ConvenioHospServPublico,
+            'hortolandia': ConvenioHortolandia,
             'nova_lima': ConvenioNovaLima
         }
 
@@ -29,7 +36,6 @@ class ZetraController:
             raise ValueError(f"Convênio {nome_convenio} não existe")
         
         convenio = self.convenios[nome_convenio](self.driver)
-        
         try:
             if not convenio.login():
                 raise Exception("Falha no login")
@@ -38,7 +44,7 @@ class ZetraController:
                 if not convenio.confirmacao_leitura():
                     raise Exception("Falha na confirmação de leitura") 
             except Exception as e:
-                print(f"{e}")
+                    print(f"Sem necessidade de confirmação de leitura {e}")
 
             if not convenio.navegar_menu():
                 raise Exception("Falha na navegação do menu")
@@ -51,10 +57,9 @@ class ZetraController:
     
             if not convenio.download_arquivo():
                 raise Exception("Falha no download do arquivo")
-            
+    
             try:
-                if not renomear_e_mover_arquivos(pasta_origem=paths.pasta_download, pasta_destino=f"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "consignacoes_", novo_nome=(f"zetra_{nome_convenio}_{data.DATA_ARQUIVO}.zip")):
-                    raise Exception("Falha ao mover o arquivo")
+                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "consignacoes_", novo_nome=(f"zetra_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except Exception as e:
                 print(f"{e}")
             

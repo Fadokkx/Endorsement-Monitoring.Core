@@ -21,15 +21,16 @@ def renomear_e_mover_arquivos(pasta_origem, pasta_destino, parametro_nome, novo_
  
             # Verificar se o parâmetro está no nome do arquivo
             if parametro_nome in arquivo:
-                # Criar o novo nome do arquivo
-                extensao = os.path.splitext(arquivo)[1]  # Pega a extensão do arquivo
-                novo_nome = f"{novo_nome}{extensao}"
-                contador += 1
- 
+                
+                extensao = os.path.splitext(arquivo)[1]
+                novo_nome = f"{novo_nome}{extensao}" 
                 caminho_destino = os.path.join(pasta_destino, novo_nome)
  
                 # Renomear e mover o arquivo
                 shutil.move(caminho_origem, caminho_destino)
-                print(f"Renomeado e movido: {arquivo} -> {novo_nome}")
+                print(f"Renomeado e movido: {arquivo} -> {novo_nome}")            
+        return True
+    
     except Exception as e:
         print(f"Ocorreu um erro: {e}")
+        return False
