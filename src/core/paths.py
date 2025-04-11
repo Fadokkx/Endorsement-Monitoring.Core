@@ -1,4 +1,4 @@
 import os
 
 class caminhos:
-    pasta_download = os.expanduser = os.path.expanduser("~downloads")
+    pasta_download = os.path.expanduser("~/Downloads")

@@ -53,7 +53,7 @@ class ZetraController:
                 raise Exception("Falha no download do arquivo")
             
             try:
-                if not renomear_e_mover_arquivos(pasta_origem=paths.pasta_download, pasta_destino=paths.convenio.pasta_destino, nome_origem= "cringe", novo_nome=(f"nome_convenio_[data.DATA_ARQUIVO]")):
+                if not renomear_e_mover_arquivos(pasta_origem=paths.pasta_download, pasta_destino=f"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "consignacoes_", novo_nome=(f"zetra_{nome_convenio}_{data.DATA_ARQUIVO}.zip")):
                     raise Exception("Falha ao mover o arquivo")
             except Exception as e:
                 print(f"{e}")
