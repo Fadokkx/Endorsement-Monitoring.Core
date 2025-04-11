@@ -1,5 +1,5 @@
 from src.processadoras.zetra.convenios.sobral import ConvenioSobral
-#from src.processadoras.zetra.convenios.nova_lima import ConvenioNovaLima
+from src.processadoras.zetra.convenios.nova_lima import ConvenioNovaLima
 #from src.processadoras.zetra.convenios.embu import ConvenioEmbu
 from typing import Dict, Type
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -9,9 +9,15 @@ class ZetraController:
         self.driver = driver
         self.convenios: Dict[str, Type] = {
             'sobral': ConvenioSobral,
-            #'nova_lima': ConvenioNovaLima,
-            #'embu': ConvenioEmbu
-            # Adicione outros convênios aqui
+            #'embu': ConvenioEmbu,
+            #'igeprev': ConvenioIgeprev,
+            #'sbc': ConvenioSbc,
+            #'serra': ConvenioSerra,
+            #'uberlandia': ConvenioUberlandia,
+            #'curitiba': ConvenioCuritiba,
+            #'hospital_do_servidor_publico': ConvenioHospServPublico,
+            #'hortolandia': ConvenioHortolandia,
+            'nova_lima': ConvenioNovaLima
         }
 
     def executar_fluxo_completo(self, nome_convenio: str) -> bool:
@@ -49,12 +55,12 @@ class ZetraController:
             try:
                 sucesso = self.executar_fluxo_completo(nome)
                 resultados[nome] = {
-                    'status': '✅ Sucesso' if sucesso else '❌ Falha',
+                    'status': 'Sucesso' if sucesso else 'Falha',
                     'erro': None
                 }
             except Exception as e:
                 resultados[nome] = {
-                    'status': '🔥 Erro crítico',
+                    'status': 'Erro crítico',
                     'erro': str(e)
                 }
         
