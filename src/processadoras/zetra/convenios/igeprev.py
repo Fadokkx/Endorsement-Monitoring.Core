@@ -30,7 +30,7 @@ class IgeprevLocators:
 class ConvenioIgeprev:
     def __init__(self, driver: WebDriver):
         self.driver = driver
-        self.url = os.getenv("ZETRA_HOSPITAL_DO_SERVIDOR_PUBLICO_URL")
+        self.url = os.getenv("ZETRA_IGEPREV_URL")
         self.user = os.getenv("ZETRA_USER")
         self.password = os.getenv("ZETRA_PASS")
         self.second_password = os.getenv("ZETRA_SECOND_PASS")
@@ -49,7 +49,7 @@ class ConvenioIgeprev:
             ).click()
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(IgeprevLocators.CAMPO_SENHA)
-            ).send_keys(self.second_password)
+            ).send_keys(self.password)
             
             ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter...: ")
             self.driver.find_element(*IgeprevLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
@@ -92,7 +92,7 @@ class ConvenioIgeprev:
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(IgeprevLocators.DATA_INICIO)
             ).send_keys(data.DATA_OPERACOES)
-            
+            self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(IgeprevLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)
@@ -131,7 +131,7 @@ class ConvenioIgeprev:
         try:
             time.sleep(1)
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(IgeprevLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
+                EC.presence_of_element_located(IgeprevLocators.SENHA_AUTORIZER)).send_keys(self.password)
             self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
             time.sleep(1)
             WebDriverWait(self.driver, 60).until(
@@ -142,10 +142,13 @@ class ConvenioIgeprev:
             return False  
             
     def download_arquivo(self):
-        try:    
+        try:
+            time.sleep(1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            time.sleep(1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
             self.driver.execute_script("document.body.style.zoom='33%'")
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(IgeprevLocators.OPCOES_DOWNLOAD)).click()
             WebDriverWait(self.driver, 10).until(
