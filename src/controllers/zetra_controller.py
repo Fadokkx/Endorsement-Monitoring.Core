@@ -2,9 +2,9 @@ from src.processadoras.zetra.convenios.sobral import ConvenioSobral
 from src.processadoras.zetra.convenios.nova_lima import ConvenioNovaLima
 from src.processadoras.zetra.convenios.embu import ConvenioEmbu
 from src.processadoras.zetra.convenios.igeprev import ConvenioIgeprev
-#from src.processadoras.zetra.convenios.sbc import ConvenioSbc
-#from src.processadoras.zetra.convenios.serra import ConvenioSerra
-#from src.processadoras.zetra.convenios.uberlandia import ConvenioUberlandia
+from src.processadoras.zetra.convenios.sbc import ConvenioSbc
+from src.processadoras.zetra.convenios.serra import ConvenioSerra
+from src.processadoras.zetra.convenios.uberlandia import ConvenioUberlandia
 from src.processadoras.zetra.convenios.curitiba import ConvenioCuritiba
 from src.processadoras.zetra.convenios.HospServPublico import ConvenioHospServPublico
 from src.processadoras.zetra.convenios.hortolandia import ConvenioHortolandia
@@ -21,9 +21,9 @@ class ZetraController:
             'sobral': ConvenioSobral,
             'embu': ConvenioEmbu,
             'igeprev': ConvenioIgeprev,
-            #'sbc': ConvenioSbc,
-            #'serra': ConvenioSerra,
-            #'uberlandia': ConvenioUberlandia,
+            'sbc': ConvenioSbc,
+            'serra': ConvenioSerra,
+            'uberlandia': ConvenioUberlandia,
             'curitiba': ConvenioCuritiba,
             'hospital_do_servidor_publico': ConvenioHospServPublico,
             'hortolandia': ConvenioHortolandia,
@@ -45,6 +45,12 @@ class ZetraController:
                     raise Exception("Falha na confirmação de leitura") 
             except Exception as e:
                     print(f"Sem necessidade de confirmação de leitura {e}")
+            
+            try: 
+                if not convenio.troca_senha():
+                    raise Exception("Sem necessidade de troca de senha")
+            except Exception as e:
+                print(f"Sem necessidade de troca de senha {e}")
 
             if not convenio.navegar_menu():
                 raise Exception("Falha na navegação do menu")

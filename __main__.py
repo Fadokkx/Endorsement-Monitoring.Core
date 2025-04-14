@@ -11,7 +11,7 @@ def main():
         zetra = ZetraController(driver)
         
         # Seletor de convênios (pode vir de um arquivo de configuração)
-        convenios = ['igeprev']#['curitiba','nova_lima','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico',]  # Ou None para todos
+        convenios = ['curitiba','nova_lima','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra', 'uberlandia']  # Ou None para todos
         
         resultados = zetra.executar_todos_convenios(convenios)
         
