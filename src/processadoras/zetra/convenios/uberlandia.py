@@ -117,7 +117,7 @@ class ConvenioUberlandia:
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(UberlandiaLocators.DATA_INICIO)
             ).send_keys(data.DATA_OPERACOES)
-            
+            self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(UberlandiaLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)
@@ -169,10 +169,13 @@ class ConvenioUberlandia:
             return False  
             
     def download_arquivo(self):
-        try:    
+        try:
+            time.sleep(1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            time.sleep(1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
             self.driver.execute_script("document.body.style.zoom='33%'")
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(UberlandiaLocators.OPCOES_DOWNLOAD)).click()
             WebDriverWait(self.driver, 10).until(
