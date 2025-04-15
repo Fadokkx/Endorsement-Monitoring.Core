@@ -136,12 +136,16 @@ class ConvenioGovMT:
             self.driver.find_element(*CipLocators.DATA_FIM).send_keys(data.DATA_FINAL)
             self.driver.find_element(*CipLocators.BOTAO_SELEC_ALLCONV).click()
             self.driver.find_element(*CipLocators.BOTAO_SELEC_ALLESPE).click()
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             
-            #Checkbox
-            check.MATRICULA
-            check.CPF
-            check.NOME
-            check.NOME_REDUZ_ORG
+            try:
+                #Checkbox
+                self.driver.find_element(*check.MATRICULA).send_keys(Keys.SPACE)
+                self.driver.find_element(*check.CPF).click()
+                self.driver.find_element(*check.NOME).click()
+                self.driver.find_element(*check.NOME_REDUZ_ORG).click()
+            except Exception as e:
+                print (f"Erro: {e}")
             
             time.sleep(10)
             return True
