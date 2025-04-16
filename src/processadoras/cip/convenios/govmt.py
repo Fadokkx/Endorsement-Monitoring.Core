@@ -5,10 +5,11 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from src.core.coord import CipCoord as CC
 from dotenv import load_dotenv
 import time
 import os
-import pyautogui
+import pyautogui as pg
 
 load_dotenv()
 class CipLocators:
@@ -30,9 +31,11 @@ class CipLocators:
     DATA_FIM = (By.XPATH, "/html/body/div[1]/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[3]/div[3]/input")
     BOTAO_SELEC_ALLCONV = (By.XPATH, "/html/body/div[1]/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[6]/div/div[2]/span/div[2]/div/button[3]")
     BOTAO_SELEC_ALLESPE = (By.XPATH, "/html/body/div[1]/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[9]/div/div[2]/span/div[2]/div/button[3]")
-    BOTAO_GERAR_REL = (By.XPATH, "/html/body/div/div/div[2]/div/form/div[4]/div/div[7]/input[2]")#' //*[@id="id74"]')
-    CSV_TIPO = (By.XPATH, "/html/body/div/div/div/div/form/div[2]/div[1]/div/ul/li[1]/div/ul/li[2]/a")
-    
+    BOTAO_GERAR_REL = (By.XPATH, "/html/body/div/div/div[2]/div/form/div[4]/div/div[7]/input[2]")
+    BOTAO_TROCA_PERFIL = (By.XPATH, "/html/body/div/div/div[1]/div/div[3]/a")
+    BOTAO_GOVSP = (By.XPATH, "/html/body/div/div/form/div[2]/div/div[5]/div[2]/fieldset/div/div[1]/span[2]/input")
+    RADIO_GOVSP = (By.XPATH, "/html/body/div/div/form/div[2]/div/div[5]/div[2]/fieldset/div/div[2]/fieldset/span/label/input")
+
 class ConvenioGovMT:
     def __init__(self, driver: WebDriver):
         self.driver = driver
@@ -79,8 +82,8 @@ class ConvenioGovMT:
             
             self.driver.find_element(*CipLocators.BOTAO_CONTINUAR).click()
             time.sleep(1)
-            
             return True
+        
         except Exception as e:
             print(f"Erro: {e}")
             return False
@@ -97,6 +100,7 @@ class ConvenioGovMT:
                 )
             self.driver.find_element(*CipLocators.MENU_RELATORIOS).click()
             return True
+        
         except Exception as e:
             print(f"{e}")
             return False
@@ -114,6 +118,7 @@ class ConvenioGovMT:
             self.driver.find_element(*CipLocators.OPCAO_TIPO_015).click()
             time.sleep(1)
             return True
+        
         except Exception as e:
             print(f"Erro: {e}")
             return False
@@ -147,11 +152,9 @@ class ConvenioGovMT:
             time.sleep(1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
-            try:
-                self.driver.find_element(*CipLocators.BOTAO_GERAR_REL).send_keys(Keys.SPACE)
-            except Exception as e:
-                print(f"Erro {e}")
-            time.sleep(15)
+            
+            self.driver.find_element(*CipLocators.BOTAO_GERAR_REL).send_keys(Keys.SPACE)
+            time.sleep(5)
             return True
         
         except Exception as e:
@@ -160,12 +163,16 @@ class ConvenioGovMT:
         
     def download_arquivo(self):
         try:
-            try:
-                self.driver.find_element(*CipLocators.CSV_TIPO).click()
-                return True
-            except Exception as e:
-                print(f"Erro: {e}")
-                return False
+            pg.moveTo(CC.ExportarBotão, duration=1)
+            pg.moveTo(CC.TipoCSV, duration=1)
+            pg.click()
+            time.sleep(4)
+            pg.hotkey('ctrl', 'w')
+            time.sleep(1)
+            return True
+        
         except Exception as e:
             print(f"Erro: {e}")
+            return False
+            
 

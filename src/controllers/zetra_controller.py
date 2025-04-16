@@ -13,6 +13,7 @@ from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
 from typing import Dict, Type
 from selenium.webdriver.remote.webdriver import WebDriver
+import time
 
 class ZetraController:
     def __init__(self, driver: WebDriver):
@@ -65,6 +66,7 @@ class ZetraController:
                 raise Exception("Falha no download do arquivo")
     
             try:
+                time.sleep(1)
                 file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "consignacoes_", novo_nome=(f"zetra_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except Exception as e:
                 print(f"{e}")

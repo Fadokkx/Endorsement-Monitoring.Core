@@ -1,6 +1,6 @@
-#from src.processadoras.cip.convenios.govsp import ConvenioGovSP
+from src.processadoras.cip.convenios.govsp import ConvenioGovSP
 from src.processadoras.cip.convenios.govmt import ConvenioGovMT
-#from src.processadoras.cip.convenios.sefazsp import ConvenioSefazSP
+from src.processadoras.cip.convenios.sefazsp import ConvenioSefazSP
 from src.core.file_manager import renomear_e_mover_arquivos as file_manager
 from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
@@ -11,8 +11,8 @@ class CipController:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.convenios: Dict[str, Type] = {
-            #'govsp': ConvenioGovSP,
-            #'govsefazsp': ConvenioSefazSP,
+            'govsp': ConvenioGovSP,
+            'govsefazsp': ConvenioSefazSP,
             'govmt': ConvenioGovMT
         }
 
@@ -41,7 +41,11 @@ class CipController:
             if not convenio.download_arquivo():
                 raise Exception("Falha no download do arquivo")
             
-            
+            try:
+                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "RA015", novo_nome=(f"cip_{nome_convenio}_{data.DATA_ARQUIVO}"))
+            except Exception as e:
+                print(f"{e}")
+
         except Exception as e:
             raise Exception(f"[{nome_convenio.upper()}] {str(e)}") from e
 
