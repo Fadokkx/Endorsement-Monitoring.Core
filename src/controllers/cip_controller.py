@@ -26,39 +26,27 @@ class CipController:
             if not convenio.login():
                 raise Exception("Falha no login")
             
-            try:
-                if not convenio.confirmacao_leitura():
-                    raise Exception("Falha na confirmação de leitura") 
-            except Exception as e:
-                    print(f"Sem necessidade de confirmação de leitura {e}")
+            if not convenio.selec_perfil():
+                raise Exception("Falha na seleção de perfil")
             
-            try: 
-                if not convenio.troca_senha():
-                    raise Exception("Sem necessidade de troca de senha")
-            except Exception as e:
-                print(f"Sem necessidade de troca de senha {e}")
-
             if not convenio.navegar_menu():
-                raise Exception("Falha na navegação do menu")
+                    raise Exception("Falha na navegação do menu")
             
-            if not convenio.opcoes_relatorios():
-                raise Exception("Falha nas opções de relatório")
+            if not convenio.Tipos_Relatorio():
+                raise Exception("Falha na seleção de tipos de relatório")
             
-            if not convenio.autorizacao_gerador():
-                raise Exception("Falha na autorização")
-    
+            if not convenio.Opcoes_Relatorios():
+                raise Exception("Falha na seleção de opções de relatórios")
+            
             if not convenio.download_arquivo():
                 raise Exception("Falha no download do arquivo")
-    
+            
             try:
-                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "consignacoes_", novo_nome=(f"zetra_{nome_convenio}_{data.DATA_ARQUIVO}"))
+                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "RA015", novo_nome=(f"cip_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except Exception as e:
                 print(f"{e}")
-            
-            return True
-            
+
         except Exception as e:
-            # Adiciona o nome do convênio ao erro
             raise Exception(f"[{nome_convenio.upper()}] {str(e)}") from e
 
     def executar_todos_convenios(self, convenios_selecionados: list = None):
