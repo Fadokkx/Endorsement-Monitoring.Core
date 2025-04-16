@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
 import time
 import os
+import pyautogui
 
 load_dotenv()
 class CipLocators:
@@ -29,15 +30,8 @@ class CipLocators:
     DATA_FIM = (By.XPATH, "/html/body/div[1]/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[3]/div[3]/input")
     BOTAO_SELEC_ALLCONV = (By.XPATH, "/html/body/div[1]/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[6]/div/div[2]/span/div[2]/div/button[3]")
     BOTAO_SELEC_ALLESPE = (By.XPATH, "/html/body/div[1]/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[9]/div/div[2]/span/div[2]/div/button[3]")
-"""        
-    CHECKBOX_DEFERIDA = (By.XPATH, '//*[@id="SAD_CODIGO7"]')
-    BOTAO_GERAR = (By.XPATH, '//*[@id="btnEnvia"]')
-    OPCOES_DOWNLOAD = (By.XPATH, '//*[@id="userMenu"]/div/span')
-    BOTAO_DOWNLOAD = (By.XPATH, '//*[@id="dataTables"]/tbody/tr[1]/td[4]/div/div/div/a[1]')
-    SELEC_OPCOES =(By.XPATH, '//*[@id="formato"]')
-    OPCAO_CSV = (By.XPATH, '//*[@id="formato"]/option[4]')
-    SENHA_AUTORIZER = (By.XPATH, '//*[@id="senha2aAutorizacao"]')
-    """
+    BOTAO_GERAR_REL = (By.XPATH, "/html/body/div/div/div[2]/div/form/div[4]/div/div[7]/input[2]")#' //*[@id="id74"]')
+    CSV_TIPO = (By.XPATH, "/html/body/div/div/div/div/form/div[2]/div[1]/div/ul/li[1]/div/ul/li[2]/a")
     
 class ConvenioGovMT:
     def __init__(self, driver: WebDriver):
@@ -94,17 +88,14 @@ class ConvenioGovMT:
     def navegar_menu(self):
         try:
             time.sleep(1)
-            try:
-                WebDriverWait(self.driver, 15).until(
-                    EC.element_to_be_clickable(CipLocators.MENU_PRINCIPAL)
-                    )
-                self.driver.find_element(*CipLocators.MENU_PRINCIPAL).click()
-                WebDriverWait(self.driver, 15).until(
-                    EC.element_to_be_clickable(CipLocators.MENU_RELATORIOS)
-                    )
-                self.driver.find_element(*CipLocators.MENU_RELATORIOS).click()
-            except Exception as e:
-                print(f"Erro: {e}")
+            WebDriverWait(self.driver, 15).until(
+                EC.element_to_be_clickable(CipLocators.MENU_PRINCIPAL)
+                )
+            self.driver.find_element(*CipLocators.MENU_PRINCIPAL).click()
+            WebDriverWait(self.driver, 15).until(
+                EC.element_to_be_clickable(CipLocators.MENU_RELATORIOS)
+                )
+            self.driver.find_element(*CipLocators.MENU_RELATORIOS).click()
             return True
         except Exception as e:
             print(f"{e}")
@@ -138,18 +129,43 @@ class ConvenioGovMT:
             self.driver.find_element(*CipLocators.BOTAO_SELEC_ALLESPE).click()
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             
+            #Checkbox
+            self.driver.find_element(*check.MATRICULA).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.CPF).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.NOME).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.NOME_REDUZ_ORG).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.DESCRICAO).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.AVERB_NUM).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.CONTRACT_NUM).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.AVERB_SIT).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.QUANT_PARCELAS).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.VALOR_PRCL).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.VALOR_LIB).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.LAST_PRCL).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.CONTRACT_INICIO).send_keys(Keys.SPACE)
+            self.driver.find_element(*check.DATA_INCLUSAO_AVERB).send_keys(Keys.SPACE)
+            time.sleep(1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            time.sleep(1)
             try:
-                #Checkbox
-                self.driver.find_element(*check.MATRICULA).send_keys(Keys.SPACE)
-                self.driver.find_element(*check.CPF).click()
-                self.driver.find_element(*check.NOME).click()
-                self.driver.find_element(*check.NOME_REDUZ_ORG).click()
+                self.driver.find_element(*CipLocators.BOTAO_GERAR_REL).send_keys(Keys.SPACE)
             except Exception as e:
-                print (f"Erro: {e}")
-            
-            time.sleep(10)
+                print(f"Erro {e}")
+            time.sleep(15)
             return True
+        
         except Exception as e:
             print(f"Erro: {e}")
             return False
+        
+    def download_arquivo(self):
+        try:
+            try:
+                self.driver.find_element(*CipLocators.CSV_TIPO).click()
+                return True
+            except Exception as e:
+                print(f"Erro: {e}")
+                return False
+        except Exception as e:
+            print(f"Erro: {e}")
 

@@ -38,6 +38,9 @@ class CipController:
             if not convenio.Opcoes_Relatorios():
                 raise Exception("Falha na seleção de opções de relatórios")
             
+            if not convenio.download_arquivo():
+                raise Exception("Falha no download do arquivo")
+            
             
         except Exception as e:
             raise Exception(f"[{nome_convenio.upper()}] {str(e)}") from e
