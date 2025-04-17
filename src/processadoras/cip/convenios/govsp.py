@@ -5,7 +5,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from src.core.coord import CipCoord as CC
+from src.processadoras.cip.core.coord import CipCoord as CC
 from dotenv import load_dotenv
 import time
 import os
