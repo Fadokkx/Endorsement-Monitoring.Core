@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[<img src="./resources/logo.png" width="144"/>](https://www.meucashcard.com.br/)
+[<img src="./resources/Logo.png" width="280"/>](https://www.meucashcard.com.br/)<br><br>
 
   <h1 align="center">Endorsement monitoring Import files</h1>
 
@@ -43,7 +43,7 @@ Esse projeto visa o download de forma rápida e prática dos relatórios para a 
 1. Após o python estar instalado no seu computador, abra o menu iniciar, usando a tecla com o símbolo do windows, digite `CMD` e aperte ENTER.<br><br>
 
 2. Para não vazar as credenciais dos logins da processadora, é necessário a criação de um arquivo `.env` na raíz do arquivo usando o mesmo template do arquivo `eg.env` só que mudando os valores para os que correspondem o seu acesso para os sites das processadoras como demonstrado no exemplo a baixo:<br>
-<img src="./resources/Exemplo_de_uso_.env_notepad.gif"/><br>
+<img src="./resources/Exemplo_de_uso_.env_notepad.gif"/><br><br>
 para a criação do arquivo `.env` utilize o comando `ECHO text>.env` no cmd aberto no passo '1.' para a criação do mesmo.<br> **NÃO ESQUECER DE EXCLUIR O "Text" de dentro do arquivo para evitar problemas na execução.**<br>
 ---
 
@@ -59,8 +59,8 @@ para a criação do arquivo `.env` utilize o comando `ECHO text>.env` no cmd abe
 
 7. Vá para o [link da processadora CIP](https://www.portaldoconsignado.org.br/home?37) e, utilizando suas credenciais acesse até a parte do download dos relatórios e,utilizando o mesmo cmd use o comando `py coord.py`.
 Esse comando terá um timer de 5 segundos para você colocar o cursor em cima do botão de download.
-Exemplo a baixo: <br>
-<img src="./resources/botao_download_CIP.gif"/><br><br>
+Exemplo a baixo:<br>
+<img src=".\resources\Botao_download_CIP.gif"/><br><br>
 **APÓS OBTER ESSES PRIMEIROS VALORES, COLOQUE OS VALORES DADOS PELO TERMINAL NESTA ÁREA GRIFADA SEGUINDO A ORDEM DE SAIDA<br> (EX: 'X:284, Y:200' --> 284, 200**):<br>
 <img src="./resources/Local_primeira_coord_var.png"/><br><br>
 
