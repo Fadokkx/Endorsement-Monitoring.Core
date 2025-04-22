@@ -124,11 +124,11 @@ Caso seja apenas um usuário, sem intenções de mexer no código, o README term
 
 
 > **`CONSIGFACIL\CORE`:**
->- `consigfacil_date_var.py`<br><br>
+>- `consigfacil_date_var.py` - Variáveis de data formatadas para inserção sem problemas nos parâmetros da processadora<br><br>
   ---
 
 > **`ZETRA\CORE`:**
->- `zetra_date_var.py`<br><br>
+>- `zetra_date_var.py` - Variáveis de data formatadas para inserção sem problemas nos parâmetros da processadora<br><br>
 <!--
 ---
 

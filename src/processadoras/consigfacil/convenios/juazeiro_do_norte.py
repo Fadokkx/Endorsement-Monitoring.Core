@@ -28,7 +28,7 @@ class JuazeiroLocators:
 class ConvenioJuazeiro:
     def __init__(self, driver: WebDriver):
         self.driver = driver
-        self.url = os.getenv("CONSIGFACIL_IPATINGA_URL")
+        self.url = os.getenv("CONSIGFACIL_JUAZEIRO_URL")
         self.user = os.getenv("CONSIGFACIL_USER")
         self.password = os.getenv("CONSIGFACIL_PASS")
         
