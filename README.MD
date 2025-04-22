@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[<img src="./resources/logo.png" width="100"/>](https://www.meucashcard.com.br/)
+[<img src="./resources/logo.png"/>](https://www.meucashcard.com.br/)<br><br>
 
   <h1 align="center">Endorsement monitoring Import files</h1>
 
