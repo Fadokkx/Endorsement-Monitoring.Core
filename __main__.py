@@ -13,7 +13,7 @@ def main():
         zetra = ZetraController(driver)
         
         # Seletor de convênios (pode vir de um arquivo de configuração)
-        convenios = [None] #Ou #['nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']  #[None] #para todos
+        convenios = [None] #[None] Ou ['nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']  #[None] #para todos
         
         resultados = zetra.executar_todos_convenios(convenios)
         
@@ -30,7 +30,7 @@ def main():
         cip = CipController(driver)
         
         #Seletor de convênios
-        convenios = ['govmt'] #['govmt', 'govsp', 'govsefazsp'] #Ou [None]
+        convenios = [None] #[None] OU ['govmt', 'govsp', 'govsefazsp']
         
         resultados = cip.executar_todos_convenios(convenios)
         
@@ -46,8 +46,7 @@ def main():
     try:
         consigfacil = ConsigFacilController(driver)
         #Seletor de convênios
-        convenios = ['teresina']#['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']  # Ou #[None]
-        
+        convenios = ['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
         resultados = consigfacil.executar_todos_convenios(convenios)
         
         # Exibe relatório bonito
@@ -63,7 +62,7 @@ def main():
     try:
         NeoConsig = NeoConsigController(driver)
         #Seletor de convênios
-        convenios = ['campina_grande']  # Ou #[None]
+        convenios = ['campina_grande'] #[None] OU ['', '', '', '', ''] 
         
         resultados = consigfacil.executar_todos_convenios(convenios)
         

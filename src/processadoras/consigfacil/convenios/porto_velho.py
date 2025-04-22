@@ -45,7 +45,7 @@ class ConvenioPortoVelho:
             self.driver.find_element(*PortoVelhoLocators.CAMPO_SENHA).send_keys(self.password)
             CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
             self.driver.find_element(*PortoVelhoLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
-            self.driver.find_element(*PortoVelhoLocators.BOTAO_LOGIN).click()
+            self.driver.find_element(*PortoVelhoLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
             time.sleep(1)
             return True
         
