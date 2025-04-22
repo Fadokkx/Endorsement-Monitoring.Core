@@ -2,6 +2,7 @@ from src.core.browser import iniciar_navegador
 from src.controllers.zetra_controller import ZetraController
 from src.controllers.cip_controller import CipController
 from src.controllers.consigfacil_controller import ConsigFacilController
+from src.controllers.neoconsig_controller import NeoConsigController
 from dotenv import load_dotenv
 
 def main():
@@ -29,7 +30,7 @@ def main():
         cip = CipController(driver)
         
         #Seletor de convênios
-        convenios = [None] #Ou #['govmt', 'govsp', 'govsefazsp'] 
+        convenios = ['govmt'] #['govmt', 'govsp', 'govsefazsp'] #Ou [None]
         
         resultados = cip.executar_todos_convenios(convenios)
         
@@ -58,7 +59,7 @@ def main():
     except Exception as e:
         print(f"\n ERRO GLOBAL: {str(e)}")
         
-    """
+    
     try:
         NeoConsig = NeoConsigController(driver)
         #Seletor de convênios
@@ -77,7 +78,7 @@ def main():
     
     finally:
         driver.quit()
-    """ 
+        
 if __name__ == "__main__":
         main()
         

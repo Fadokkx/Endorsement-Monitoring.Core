@@ -160,15 +160,24 @@ class ConvenioGovSP:
         
     def download_arquivo(self):
         try:
-            pg.moveTo(CC.ExportarBotão, duration=1)
-            pg.moveTo(CC.TipoCSV, duration=1)
-            pg.click()
-            time.sleep(6)
-            pg.hotkey('ctrl', 'w')
-            time.sleep(1)
+            try:
+                time.sleep(1)
+                janela_relatorio = pg.locateOnScreen(rf".\resources\Sem_Resultados_Parametro.png", confidence=0.7)
+                if janela_relatorio:
+                    print("Não foi encontrado nenhum relatório com esses parâmetros.")
+                else:
+                    pg.moveTo(CC.ExportarBotão, duration=1)
+                    pg.moveTo(CC.TipoCSV, duration=1)
+                    pg.click()
+                    time.sleep(4)
+                    pg.hotkey('ctrl', 'w')
+                    time.sleep(1)
+            except pg.ImageNotFoundException:
+                print("Imagem não encontrada")
             return True
+        
         except Exception as e:
             print(f"Erro: {e}")
             return False
-            
+
 

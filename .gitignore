@@ -15,8 +15,7 @@ src/core/__pycache__/
 src/processadoras/__pycache__/
 src/processadoras/zetra/__pycache__/
 src/processadoras/zetra/convenios/__pycache__/
-git-push.bat
-git-push.sh
+Git_Repos_manager/
 
 # Arquivos do IDE
 .idea/
