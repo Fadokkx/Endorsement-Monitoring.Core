@@ -1,9 +1,10 @@
-# Bibliotecas Obrigatórias
-selenium==4.10.0             # Versão testada
-webdriver-manager==3.8.6     # Versão com EdgeChromiumDriverManager
-python-dotenv==1.1.0         # Para gerenciamento do .env
-pillow-11.2.1
-pyautogui==0.9.54            # Para automação de GUI (opcional)
+#Obrigatórias
+selenium>=4.10.0
+webdriver-manager>=3.8.6
+pyautogui>=0.9.54
+python-dotenv>=1.1.0
+Pillow>=10.2.0
+opencv-python>=4.9.0.80
+pyscreeze>=1.0
 
-# Dependências opcionais (recomendadas)
-setuptools==78.1.0          # Versão estável mais recente (opcional)
+#Opcionais

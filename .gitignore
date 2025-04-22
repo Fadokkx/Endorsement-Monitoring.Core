@@ -15,6 +15,7 @@ src/core/__pycache__/
 src/processadoras/__pycache__/
 src/processadoras/zetra/__pycache__/
 src/processadoras/zetra/convenios/__pycache__/
+Git_Repos_manager/
 
 # Arquivos do IDE
 .idea/
