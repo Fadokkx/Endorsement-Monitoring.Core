@@ -1,14 +1,14 @@
 from src.processadoras.consigfacil.convenios.campina_grande import ConvenioCampinaGrande
-#from src.processadoras.consigfacil.convenios.cuiaba import ConvenioCuiaba
-#from src.processadoras.consigfacil.convenios.ipatinga import ConvenioIpatinga
-#from src.processadoras.consigfacil.convenios.joao_pessoa import ConvenioJoaoPessoa
-#from src.processadoras.consigfacil.convenios.juazeiro_do_norte import ConvenioJuazeiro
-#from src.processadoras.consigfacil.convenios.maranhao import ConvenioMaranhao
+from src.processadoras.consigfacil.convenios.cuiaba import ConvenioCuiaba
+from src.processadoras.consigfacil.convenios.ipatinga import ConvenioIpatinga
+from src.processadoras.consigfacil.convenios.joao_pessoa import ConvenioJoaoPessoa
+from src.processadoras.consigfacil.convenios.juazeiro_do_norte import ConvenioJuazeiro
+from src.processadoras.consigfacil.convenios.maranhao import ConvenioMaranhao
 #from src.processadoras.consigfacil.convenios.pernambuco import ConvenioPernambuco
-#from src.processadoras.consigfacil.convenios.piaui import ConvenioPiaui
-#from src.processadoras.consigfacil.convenios.porto_velho import ConvenioPortoVelho
+from src.processadoras.consigfacil.convenios.piaui import ConvenioPiaui
+from src.processadoras.consigfacil.convenios.porto_velho import ConvenioPortoVelho
 #from src.processadoras.consigfacil.convenios.recife import ConvenioRecife
-#from src.processadoras.consigfacil.convenios.teresina import ConvenioTeresina
+from src.processadoras.consigfacil.convenios.teresina import ConvenioTeresina
 from src.core.file_manager import renomear_e_mover_arquivos as file_manager
 from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
@@ -19,16 +19,16 @@ class ConsigFacilController():
         self.driver = driver
         self.convenios: Dict[str, Type] = {
             'campina_grande': ConvenioCampinaGrande,
-            #'cuiaba': ConvenioCuiaba,
-            #'ipatinga': ConvenioIpatinga,
-            #'joao_pessoa': ConvenioJoaoPessoa,
-            #'juazeiro': ConvenioJuazeiro,
-            #'maranhao': ConvenioMaranhao,
+            'cuiaba': ConvenioCuiaba,
+            'ipatinga': ConvenioIpatinga,
+            'joao_pessoa': ConvenioJoaoPessoa,
+            'juazeiro': ConvenioJuazeiro,
+            'maranhao': ConvenioMaranhao,
             #'pernambuco': ConvenioPernambuco,
-            #'piaui': ConvenioPiaui,
-            #'porto_velho': ConvenioPortoVelho,
+            'piaui': ConvenioPiaui,
+            'porto_velho': ConvenioPortoVelho,
             #'recife': ConvenioRecife,
-            #'teresina': ConvenioTeresina
+            'teresina': ConvenioTeresina
         }
     
     def executar_fluxo_completo(self, nome_convenio: str) -> bool:

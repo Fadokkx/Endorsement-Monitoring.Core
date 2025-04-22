@@ -45,7 +45,7 @@ def main():
     try:
         consigfacil = ConsigFacilController(driver)
         #Seletor de convênios
-        convenios = ['campina_grande']  # Ou #[None]
+        convenios = ['teresina']#['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']  # Ou #[None]
         
         resultados = consigfacil.executar_todos_convenios(convenios)
         
