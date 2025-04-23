@@ -46,7 +46,7 @@ def main():
     try:
         consigfacil = ConsigFacilController(driver)
         #Seletor de convênios
-        convenios = ['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
+        convenios = [None] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
         resultados = consigfacil.executar_todos_convenios(convenios)
         
         # Exibe relatório bonito
@@ -62,9 +62,9 @@ def main():
     try:
         NeoConsig = NeoConsigController(driver)
         #Seletor de convênios
-        convenios = ['campina_grande'] #[None] OU ['', '', '', '', ''] 
+        convenios = ['alagoas'] #[None] OU ['', '', '', '', ''] 
         
-        resultados = consigfacil.executar_todos_convenios(convenios)
+        resultados = NeoConsig.executar_todos_convenios(convenios)
         
         # Exibe relatório bonito
         print("\n=== RESUMO DE EXECUÇÃO ===")

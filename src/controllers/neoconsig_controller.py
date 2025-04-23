@@ -1,5 +1,5 @@
 #from src.processadoras.neoconsig.convenios.rio_de_janeiro import ConvenioRio
-#from src.processadoras.neoconsig.convenios.alagoas import ConvenioAlagoas
+from src.processadoras.neoconsig.convenios.alagoas import ConvenioAlagoas
 #from src.processadoras.neoconsig.convenios.goias import ConvenioGoias
 #from src.processadoras.neoconsig.convenios.parana import ConvenioParana
 from src.core.file_manager import renomear_e_mover_arquivos as file_manager
@@ -12,9 +12,10 @@ class NeoConsigController:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.convenios: Dict[str, Type] = {
-            #'govsp': ConvenioGovSP,
-            #'govsefazsp': ConvenioSefazSP,
-            #'govmt': ConvenioGovMT
+            #'rio': ConvenioRio,
+            #'parana': ConvenioParana,
+            #'goias': ConvenioGoias,
+            'alagoas': ConvenioAlagoas
         }
 
     def executar_fluxo_completo(self, nome_convenio: str) -> bool:
@@ -27,23 +28,11 @@ class NeoConsigController:
             if not convenio.login():
                 raise Exception("Falha no login")
             
-            if not convenio.selec_perfil():
-                raise Exception("Falha na seleção de perfil")
-            
-            if not convenio.navegar_menu():
-                    raise Exception("Falha na navegação do menu")
-            
-            if not convenio.Tipos_Relatorio():
-                raise Exception("Falha na seleção de tipos de relatório")
-            
-            if not convenio.Opcoes_Relatorios():
-                raise Exception("Falha na seleção de opções de relatórios")
-            
-            if not convenio.download_arquivo():
-                raise Exception("Falha no download do arquivo")
+            if not convenio.acesso_final():
+                raise Exception("Falha na acesso via senha")
             
             try:
-                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "RA015", novo_nome=(f"cip_{nome_convenio}_{data.DATA_ARQUIVO}"))
+                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "operacaoEmprestimo", novo_nome=(f"neoconsig_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except Exception as e:
                 print(f"{e}")
 
