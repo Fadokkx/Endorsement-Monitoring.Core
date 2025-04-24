@@ -27,6 +27,14 @@ class AlagoasLocators:
     BOTAO_SENHA = (By.XPATH, '//*[@id="senha"]')
     BOTAO_ACESSO = (By.CLASS_NAME, "/html/body/div[4]/div/div/div[2]/div[1]/div[2]/form/div[2]/button[1]")
     CAMPO_SENHA = (By.XPATH, '/html/body/div[4]/div/div/div[2]/div[1]/div[2]/form/div[1]/input')
+    MENU_COMERCIAL = (By.XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/a')
+    ABA_CONSIGNACOES = (By.XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/a')
+    OPCAO_CONSULTAR = (By. XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/ul/li/a')
+    SELEC_MES_BOTAO = (By.XPATH, '//*[@id="s2id_mes"]/a')
+    SELEC_MES_BUSCA = (By.XPATH, '//*[@id="s2id_autogen1_search"]')
+    SELEC_ANO_BOTAO = (By.XPATH, '//*[@id="s2id_ano"]/a')
+    SELEC_ANO_BUSCA = (By.XPATH, '//*[@id="s2id_autogen2_search"]')
+    OPCAO_CSV = (By.XPATH, '//*[@id="content"]/div[2]/div/div/div[1]/div[3]/div[3]/div/div/div/a[2]')
 
 
 class ConvenioAlagoas:
@@ -90,8 +98,52 @@ class ConvenioAlagoas:
             
             pg.moveTo(NCC.Login_pos_senha, duration= 1)
             pg.click()
+            time.sleep(3)
+            return True
+        
+        except Exception as e:
+            print(f"ERRO no acesso_final: {str(e)}")
+    
+    def navega_menu(self):
+        try:
+            time.sleep(3)
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(AlagoasLocators.MENU_COMERCIAL)).click()
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(AlagoasLocators.ABA_CONSIGNACOES)).click()
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(AlagoasLocators.OPCAO_CONSULTAR)).click()
             time.sleep(10)
             return True
+        except Exception as e:
+            print (f"{e}")
+            return False
+        
+    def opcoes_relatorio(self):
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(AlagoasLocators.SELEC_MES_BOTAO)).click()
+            self.driver.find_element(*AlagoasLocators.SELEC_MES_BUSCA).send_keys(data.MES_ATUAL)
+            self.driver.find_element(*AlagoasLocators.SELEC_MES_BUSCA).send_keys(Keys.ENTER)
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(AlagoasLocators.SELEC_ANO_BOTAO)).click()
+            self.driver.find_element(*AlagoasLocators.SELEC_ANO_BUSCA).send_keys(data.ANO_ATUAL)
+            self.driver.find_element(*AlagoasLocators.SELEC_ANO_BUSCA).send_keys(Keys.ENTER)
+            time.sleep(3)
+            return True
+        except Exception as e:
+            print(f"Erro {e}")
+            return False
+            
+    def download_relatorio(self):
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(AlagoasLocators.OPCAO_CSV)).click()
+            time.sleep(30)
+            return True
+        except Exception as e:
+            print (f"Erro {e}")
+            return False
         
         except Exception as e:
             print(f"ERRO no acesso_final: {str(e)}")

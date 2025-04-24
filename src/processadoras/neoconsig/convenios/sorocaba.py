@@ -1,5 +1,5 @@
+from src.processadoras.neoconsig.core.segunda_senha_automatizada import TecladoAlfaNumerico as AN
 from src.processadoras.neoconsig.core.NeoConsig_date_var import variaveis_data as data
-from src.processadoras.neoconsig.core.senha_automatizada import TecladoVirtualNeoConsig as VK
 from src.processadoras.neoconsig.core.neoconsig_coord import NeoConsigCoord as NCC
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -29,7 +29,7 @@ class GoiasLocators:
     CAMPO_SENHA = (By.XPATH, '/html/body/div[4]/div/div/div[2]/div[1]/div[2]/form/div[1]/input')
     MENU_COMERCIAL = (By.XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/a')
     ABA_CONSIGNACOES = (By.XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/a')
-    OPCAO_CONSULTAR = (By. XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/ul/li/a')
+    OPCAO_CONSULTAR = (By. XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/ul/li[2]/a')
     SELEC_MES_BOTAO = (By.XPATH, '//*[@id="s2id_mes"]/a')
     SELEC_MES_BUSCA = (By.XPATH, '//*[@id="s2id_autogen1_search"]')
     SELEC_ANO_BOTAO = (By.XPATH, '//*[@id="s2id_ano"]/a')
@@ -37,12 +37,12 @@ class GoiasLocators:
     OPCAO_CSV = (By.XPATH, '//*[@id="content"]/div[2]/div/div/div[1]/div[3]/div[3]/div/div/div/a[2]')
 
 
-class ConvenioGoias:
+class ConvenioSorocaba:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.url = os.getenv("NEOCONSIG_URL")
         self.user = os.getenv("NEOCONSIG_USER")
-        self.password = os.getenv("NEOCONSIG_PASS")
+        self.password = os.getenv("NEOCONSIG_SECOND_PASS")
         
         if not all([self.url, self.user, self.password]):
             raise ValueError("Variáveis de ambiente faltando!")
@@ -67,7 +67,7 @@ class ConvenioGoias:
             time.sleep(4)
             
             self.driver.find_element(*GoiasLocators.SELEC_CONVENIO_BOTAO).click()
-            self.driver.find_element(*GoiasLocators.SELEC_CONVENIO_BUSCA).send_keys("GOIáS - GOV. DO ESTADO")
+            self.driver.find_element(*GoiasLocators.SELEC_CONVENIO_BUSCA).send_keys("PREFEITURA MUNICIPAL DE SOROCABA")
             self.driver.find_element(*GoiasLocators.SELEC_CONVENIO_BUSCA).send_keys(Keys.ENTER)
             
             self.driver.find_element(*GoiasLocators.SELEC_ACESSO_BOTAO).click()
@@ -90,7 +90,7 @@ class ConvenioGoias:
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(GoiasLocators.BOTAO_SENHA)).click()
 
-            senha = VK(self.driver)
+            senha = AN(self.driver)
             if not senha.enter_password(self.password):
                 raise Exception("Falha ao inserir senha no teclado virtual")
             time.sleep(2)
@@ -105,7 +105,7 @@ class ConvenioGoias:
     
     def navega_menu(self):
         try:
-            time.sleep(3)
+            time.sleep(1)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(GoiasLocators.MENU_COMERCIAL)).click()
             WebDriverWait(self.driver, 10).until(

@@ -1,5 +1,6 @@
 #from src.processadoras.neoconsig.convenios.rio_de_janeiro import ConvenioRio
 from src.processadoras.neoconsig.convenios.alagoas import ConvenioAlagoas
+from src.processadoras.neoconsig.convenios.sorocaba import ConvenioSorocaba
 from src.processadoras.neoconsig.convenios.goias import ConvenioGoias
 #from src.processadoras.neoconsig.convenios.parana import ConvenioParana
 from src.core.file_manager import renomear_e_mover_arquivos as file_manager
@@ -15,7 +16,8 @@ class NeoConsigController:
             #'rio': ConvenioRio,
             #'parana': ConvenioParana,
             'goias': ConvenioGoias,
-            'alagoas': ConvenioAlagoas
+            'alagoas': ConvenioAlagoas,
+            'sorocaba': ConvenioSorocaba
         }
 
     def executar_fluxo_completo(self, nome_convenio: str) -> bool:
@@ -30,6 +32,15 @@ class NeoConsigController:
             
             if not convenio.acesso_senha():
                 raise Exception("Falha no acesso via senha")
+            
+            if not convenio.navega_menu():
+                raise Exception ("Falha na navegação no menu")
+            
+            if not convenio.opcoes_relatorio():
+                raise Exception ("Falha na seleção de opções de relatório")
+            
+            if not convenio.download_relatorio():
+                raise Exception ("Falha no download do relatório")
             
             try:
                 file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "operacaoEmprestimo", novo_nome=(f"neoconsig_{nome_convenio}_{data.DATA_ARQUIVO}"))
