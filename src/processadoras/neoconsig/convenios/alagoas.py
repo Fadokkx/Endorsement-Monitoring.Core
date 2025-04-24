@@ -1,11 +1,13 @@
 from src.processadoras.neoconsig.core.NeoConsig_date_var import variaveis_data as data
 from src.processadoras.neoconsig.core.senha_automatizada import TecladoVirtualNeoConsig as VK
+from src.processadoras.neoconsig.core.neoconsig_coord import NeoConsigCoord as NCC
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
+import pyautogui as pg
 import time
 import os
 
@@ -86,8 +88,8 @@ class ConvenioAlagoas:
                 raise Exception("Falha ao inserir senha no teclado virtual")
             time.sleep(4)
             
-            self.driver.find_element(*AlagoasLocators.CAMPO_SENHA).send_keys(Keys.TAB)
-            self.driver.find_element(*AlagoasLocators.CAMPO_SENHA).send_keys(Keys.ENTER)
+            pg.moveTo(NCC.Login_pos_senha, duration= 1)
+            pg.click()
             time.sleep(10)
             return True
         
