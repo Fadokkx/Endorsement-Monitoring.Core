@@ -1,4 +1,4 @@
-#from src.processadoras.neoconsig.convenios.rio_de_janeiro import ConvenioRio
+from src.processadoras.neoconsig.convenios.rio_de_janeiro import ConvenioRio
 from src.processadoras.neoconsig.convenios.alagoas import ConvenioAlagoas
 from src.processadoras.neoconsig.convenios.sorocaba import ConvenioSorocaba
 from src.processadoras.neoconsig.convenios.goias import ConvenioGoias
@@ -13,7 +13,7 @@ class NeoConsigController:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.convenios: Dict[str, Type] = {
-            #'rio': ConvenioRio,
+            'rio': ConvenioRio,
             #'parana': ConvenioParana,
             'goias': ConvenioGoias,
             'alagoas': ConvenioAlagoas,
