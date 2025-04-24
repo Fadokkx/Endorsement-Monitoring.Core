@@ -1,4 +1,5 @@
 from src.processadoras.neoconsig.core.NeoConsig_date_var import variaveis_data as data
+from src.processadoras.neoconsig.core.senha_automatizada import TecladoVirtualNeoConsig as VK
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -21,25 +22,19 @@ class AlagoasLocators:
     SELEC_ACESSO_OPCAO = (By.XPATH, '//*[@id="tipo_acesso"]/option[2]')
     CAMPO_CAPTCHA = (By.XPATH,'//*[@id="captcha_code"]')
     BOTAO_LOGIN = (By.XPATH,'//*[@id="servidor-form"]/div[6]/a')
+    BOTAO_SENHA = (By.XPATH, '//*[@id="senha"]')
+    BOTAO_ACESSO = (By.CLASS_NAME, "/html/body/div[4]/div/div/div[2]/div[1]/div[2]/form/div[2]/button[1]")
+    CAMPO_SENHA = (By.XPATH, '/html/body/div[4]/div/div/div[2]/div[1]/div[2]/form/div[1]/input')
 
-    """
-    BOTAO_NOVIDADES = (By.XPATH, '//*[@id="modalExibeBanners"]/div/div/div[1]/button')
-    ABA_RELATORIO = (By.XPATH, '//*[@id="sidebar"]/ul/div[1]/div[2]/div/div/div/li[2]/a')
-    SELEC_RELATORIO = (By.XPATH, '//*[@id="objeto_1009"]')
-    DATA_INICIO = (By.XPATH, '//*[@id="de"]')
-    DATA_FIM = (By.XPATH, '//*[@id="ate"]')
-    ORDER_BY = (By.XPATH, '//*[@id="ordenar"]')
-    OPCAO_REL = (By.XPATH, '//*[@id="opcao_geracao_relatorio"]')
-    BOTAO_GERAR = (By.XPATH, '//*[@id="t_dadosp"]/tbody/tr[13]/td/p/input')
-    TIPO_CSV = (By.XPATH, '//*[@id="opcao_geracao_relatorio"]/option[2]')
-    """
+
 class ConvenioAlagoas:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.url = os.getenv("NEOCONSIG_URL")
         self.user = os.getenv("NEOCONSIG_USER")
+        self.password = os.getenv("NEOCONSIG_PASS")
         
-        if not all([self.url, self.user]):
+        if not all([self.url, self.user, self.password]):
             raise ValueError("Variáveis de ambiente faltando!")
     
     def login(self):
@@ -63,7 +58,7 @@ class ConvenioAlagoas:
             time.sleep(4)
             
             self.driver.find_element(*AlagoasLocators.SELEC_CONVENIO_BOTAO).click()
-            self.driver.find_element(*AlagoasLocators.SELEC_CONVENIO_BUSCA).send_keys("GOVERNO DO ESTADO DE ALAGOAS")
+            self.driver.find_element(*AlagoasLocators.SELEC_CONVENIO_BUSCA).send_keys("GOIáS - GOV. DO ESTADO")
             self.driver.find_element(*AlagoasLocators.SELEC_CONVENIO_BUSCA).send_keys(Keys.ENTER)
             
             self.driver.find_element(*AlagoasLocators.SELEC_ACESSO_BOTAO).click()
@@ -81,8 +76,20 @@ class ConvenioAlagoas:
         except Exception as e:
             pass
     
-    def acesso_final(self):
+    def acesso_senha(self):
         try:
-            pass
-        except:
-            pass
+            WebDriverWait(self.driver, 15).until(
+                EC.element_to_be_clickable(AlagoasLocators.BOTAO_SENHA)).click()
+
+            senha = VK(self.driver)
+            if not senha.enter_password(self.password):
+                raise Exception("Falha ao inserir senha no teclado virtual")
+            time.sleep(4)
+            
+            self.driver.find_element(*AlagoasLocators.CAMPO_SENHA).send_keys(Keys.TAB)
+            self.driver.find_element(*AlagoasLocators.CAMPO_SENHA).send_keys(Keys.ENTER)
+            time.sleep(10)
+            return True
+        
+        except Exception as e:
+            print(f"ERRO no acesso_final: {str(e)}")

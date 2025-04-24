@@ -28,8 +28,8 @@ class NeoConsigController:
             if not convenio.login():
                 raise Exception("Falha no login")
             
-            if not convenio.acesso_final():
-                raise Exception("Falha na acesso via senha")
+            if not convenio.acesso_senha():
+                raise Exception("Falha no acesso via senha")
             
             try:
                 file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "operacaoEmprestimo", novo_nome=(f"neoconsig_{nome_convenio}_{data.DATA_ARQUIVO}"))

@@ -12,12 +12,10 @@ def main():
     try:
         zetra = ZetraController(driver)
         
-        # Seletor de convênios (pode vir de um arquivo de configuração)
         convenios = [None] #[None] Ou ['nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']  #[None] #para todos
         
         resultados = zetra.executar_todos_convenios(convenios)
-        
-        # Exibe relatório bonito
+
         print("\n=== RESUMO DE EXECUÇÃO ===")
         for convenio, dados in resultados.items():
             print(f"{convenio.upper():<15} {dados['status']}")
@@ -29,12 +27,10 @@ def main():
     try:
         cip = CipController(driver)
         
-        #Seletor de convênios
         convenios = [None] #[None] OU ['govmt', 'govsp', 'govsefazsp']
         
         resultados = cip.executar_todos_convenios(convenios)
-        
-        # Exibe relatório bonito
+
         print("\n=== RESUMO DE EXECUÇÃO ===")
         for convenio, dados in resultados.items():
             print(f"{convenio.upper():<15} {dados['status']}")
@@ -45,11 +41,11 @@ def main():
        
     try:
         consigfacil = ConsigFacilController(driver)
-        #Seletor de convênios
+
         convenios = [None] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
-        resultados = consigfacil.executar_todos_convenios(convenios)
         
-        # Exibe relatório bonito
+        resultados = consigfacil.executar_todos_convenios(convenios)
+
         print("\n=== RESUMO DE EXECUÇÃO ===")
         for convenio, dados in resultados.items():
             print(f"{convenio.upper():<15} {dados['status']}")
@@ -61,12 +57,11 @@ def main():
     
     try:
         NeoConsig = NeoConsigController(driver)
-        #Seletor de convênios
-        convenios = ['alagoas'] #[None] OU ['', '', '', '', ''] 
+
+        convenios = ['alagoas'] #[None] OU ['alagoas', 'parana', 'goias', 'rio'] 
         
         resultados = NeoConsig.executar_todos_convenios(convenios)
-        
-        # Exibe relatório bonito
+
         print("\n=== RESUMO DE EXECUÇÃO ===")
         for convenio, dados in resultados.items():
             print(f"{convenio.upper():<15} {dados['status']}")
