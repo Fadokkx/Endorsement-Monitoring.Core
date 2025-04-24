@@ -1,6 +1,6 @@
 #from src.processadoras.neoconsig.convenios.rio_de_janeiro import ConvenioRio
 from src.processadoras.neoconsig.convenios.alagoas import ConvenioAlagoas
-#from src.processadoras.neoconsig.convenios.goias import ConvenioGoias
+from src.processadoras.neoconsig.convenios.goias import ConvenioGoias
 #from src.processadoras.neoconsig.convenios.parana import ConvenioParana
 from src.core.file_manager import renomear_e_mover_arquivos as file_manager
 from src.core.date_var import variaveis_data as data
@@ -14,7 +14,7 @@ class NeoConsigController:
         self.convenios: Dict[str, Type] = {
             #'rio': ConvenioRio,
             #'parana': ConvenioParana,
-            #'goias': ConvenioGoias,
+            'goias': ConvenioGoias,
             'alagoas': ConvenioAlagoas
         }
 

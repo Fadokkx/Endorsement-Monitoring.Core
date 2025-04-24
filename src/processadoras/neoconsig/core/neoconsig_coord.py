@@ -1,5 +1,6 @@
 import pyautogui
 import time
+
 """
 print("Posicione o mouse onde deseja obter as coordenadas.")
 pyautogui.FAILSAFE = True 
@@ -11,4 +12,4 @@ print(f"X:{x}, Y:{y}", end="\r")
 
 #Mudar de acordo com o resultado do print a cima
 class NeoConsigCoord():
-    Login_pos_senha = 1617, 767
+    Login_pos_senha = 1596, 883

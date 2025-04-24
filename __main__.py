@@ -58,7 +58,7 @@ def main():
     try:
         NeoConsig = NeoConsigController(driver)
 
-        convenios = ['alagoas'] #[None] OU ['alagoas', 'parana', 'goias', 'rio'] 
+        convenios = ['goias'] #[None] OU ['alagoas', 'parana', 'goias', 'rio'] 
         
         resultados = NeoConsig.executar_todos_convenios(convenios)
 

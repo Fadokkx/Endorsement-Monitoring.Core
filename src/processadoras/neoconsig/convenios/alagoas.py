@@ -60,7 +60,7 @@ class ConvenioAlagoas:
             time.sleep(4)
             
             self.driver.find_element(*AlagoasLocators.SELEC_CONVENIO_BOTAO).click()
-            self.driver.find_element(*AlagoasLocators.SELEC_CONVENIO_BUSCA).send_keys("GOIáS - GOV. DO ESTADO")
+            self.driver.find_element(*AlagoasLocators.SELEC_CONVENIO_BUSCA).send_keys("GOVERNO DO ESTADO DE ALAGOAS")
             self.driver.find_element(*AlagoasLocators.SELEC_CONVENIO_BUSCA).send_keys(Keys.ENTER)
             
             self.driver.find_element(*AlagoasLocators.SELEC_ACESSO_BOTAO).click()
@@ -86,7 +86,7 @@ class ConvenioAlagoas:
             senha = VK(self.driver)
             if not senha.enter_password(self.password):
                 raise Exception("Falha ao inserir senha no teclado virtual")
-            time.sleep(4)
+            time.sleep(2)
             
             pg.moveTo(NCC.Login_pos_senha, duration= 1)
             pg.click()
