@@ -49,7 +49,7 @@ class ConvenioHortolandia:
             ).click()
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(HortolandiaLocators.CAMPO_SENHA)
-            ).send_keys(self.password)
+            ).send_keys(self.second_password)
             
             ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter...: ")
             self.driver.find_element(*HortolandiaLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
@@ -59,6 +59,32 @@ class ConvenioHortolandia:
         except Exception as e:
             print(f"Erro no login: {e}")
             return False
+        
+    def troca_senha(self):
+        time.sleep(1)
+        try:
+            try:
+                self.driver.execute_script("document.body.style.zoom='80%'")
+                WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH,'//*[@id="senha"]')))
+                self.driver.find_element(By.XPATH,'//*[@id="senha"]').send_keys(self.password)
+                WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
+                self.driver.find_element(By.XPATH, '/html/body').send_keys(Keys.PAGE_DOWN)
+                time.sleep(1)
+                self.driver.find_element(By.ID,"senhaNova").send_keys(self.second_password)           
+                WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
+                self.driver.find_element(By.ID,"senhaNovaConfirmacao").send_keys(self.second_password)
+                self.driver.find_element(By.XPATH,'//*[@id="no-back"]/div[3]/div/div[4]/a[2]').click()
+                time.sleep(1.5)
+                self.driver.find_element(By.XPATH, '//*[@id="no-back"]/div/div[1]/div[3]/button').click()
+            except Exception as e:
+                print("Sem necessidade de troca de senha")
+        except Exception as e:
+            print(f"Erro: {e}")
+            return True
+        
         
     def confirmacao_leitura(self):
         time.sleep(1)
@@ -131,7 +157,7 @@ class ConvenioHortolandia:
         try:
             time.sleep(1)
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(HortolandiaLocators.SENHA_AUTORIZER)).send_keys(self.password)
+                EC.presence_of_element_located(HortolandiaLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
             self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
             time.sleep(1)
             WebDriverWait(self.driver, 60).until(

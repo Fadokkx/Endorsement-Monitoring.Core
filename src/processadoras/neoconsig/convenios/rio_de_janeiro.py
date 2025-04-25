@@ -28,7 +28,7 @@ class RioLocators:
     BUSCA_MES = (By.XPATH, '//*[@id="s2id_autogen1_search"]')
     BOTAO_ANO = (By.XPATH, '//*[@id="s2id_ano"]/a')
     BUSCA_ANO = (By.XPATH, '//*[@id="s2id_autogen2_search"]')
-    BOTAO_TIPO_CSV = (By.XPATH, '//*[@id="exp_xls"]')
+    BOTAO_TIPO_CSV = (By.XPATH, '//*[@id="content"]/div[2]/div/div/div[1]/div[3]/div[3]/div/div/div/a[2]')
 
 
 class ConvenioRio:
@@ -73,7 +73,7 @@ class ConvenioRio:
                 raise Exception("Falha ao inserir senha no teclado virtual")
             time.sleep(2)
             
-            pg.moveTo(NCC.Login_pos_senha, duration= 1)
+            pg.moveTo(NCC.Login_pos_senha_rio, duration= 1)
             pg.click()
             time.sleep(3)
             return True

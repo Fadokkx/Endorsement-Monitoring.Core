@@ -13,4 +13,5 @@ print(f"X:{x}, Y:{y}", end="\r")
 #Mudar de acordo com o resultado do print a cima
 class NeoConsigCoord():
     Login_pos_senha = 1596, 883
+    Login_pos_senha_rio = 1600, 954
     second_login_pos_senha = 1467, 898
