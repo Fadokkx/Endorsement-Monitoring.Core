@@ -95,6 +95,7 @@ Caso seja apenas um usuário, sem intenções de mexer no código, o README term
 - **Controllers**
   - `cip_controller.py` - Responsável pelas funções executadas nos convênios da processadora CIP<br><br>
   - `consigfacil_controller.py` - Responsável pelas funções executadas nos convênios da processadora Consig Facil<br><br>
+  - `neoconsig_controller.py` - Responsável pelas funções executadas nos convênios da processadora Neo Consig<br><br>
   - `zetra_controller.py` - Responsável pelas funções executadas nos convênios da processadora Zetra <br><br>
 <!-- 
   - `asban_controller.py`
@@ -102,7 +103,6 @@ Caso seja apenas um usuário, sem intenções de mexer no código, o README term
   - `consignet__controller.py`
   - `consigtec_controller.py`
   - `digitalconsig_controller.py`  
-  - `neoconsig_controller.py`
   - `serpro_controller.py`
   - `safeconsig_controller.py`
   - `siconsig_controller.py`
@@ -122,25 +122,22 @@ Caso seja apenas um usuário, sem intenções de mexer no código, o README term
 > - `coord.py` - Necessária utilização para reconhecer as coordenadas do seu monitor para o botão de extração de relatório da processadora CIP.<br>Caso não seja utilizado de acordo com a recomendação na sessão de **criação de ambiente** os arquivos da CIP provavelmente terão de ser baixados **A MÃO**<br><br>
 ---
 
-
 > **`CONSIGFACIL\CORE`:**
 >- `consigfacil_date_var.py` - Variáveis de data formatadas para inserção sem problemas nos parâmetros da processadora<br><br>
-  ---
-
-> **`ZETRA\CORE`:**
->- `zetra_date_var.py` - Variáveis de data formatadas para inserção sem problemas nos parâmetros da processadora<br><br>
-<!--
 ---
 
 > **`NEOCONSIG\CORE`:**
+>- `NeoConsig_date_var.py` - Variáveis de data formatadas e condicionais para inserção sem problemas nos parâmetros da processadora<br><br>
+>- `senha_automatizada.py` - Script para inserção de senha no teclado digital da processadora<br><br>
+---
 
--->
-
+> **`ZETRA\CORE`:**
+>- `zetra_date_var.py` - Variáveis de data formatadas para inserção sem problemas nos parâmetros da processadora<br><br>
+---
 <!--
 ## Como contribuir
 
 <p>
- 
  Crie um fork do projeto e de um `git clone` no seu terminal git.
  Crie sua própria branch e suba um Pull request, ao ser analisado poderá ter as mudanças implementadas na branch main.
 
