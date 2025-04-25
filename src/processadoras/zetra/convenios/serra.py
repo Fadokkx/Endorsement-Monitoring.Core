@@ -9,7 +9,7 @@ import time
 import os
 
 load_dotenv()
-class SBCLocators:
+class SerraLocators:
     MENU_PRINCIPAL = (By.XPATH, '//*[@id="container"]/ul/li[3]/a')
     MENU_RELATORIOS = (By.XPATH, '//*[@id="menuRelatorio"]/ul/li[1]/a')
     CAMPO_USUARIO = (By.NAME, "username")
@@ -26,6 +26,7 @@ class SBCLocators:
     SELEC_OPCOES =(By.XPATH, '//*[@id="formato"]')
     OPCAO_CSV = (By.XPATH, '//*[@id="formato"]/option[4]')
     SENHA_AUTORIZER = (By.XPATH, '//*[@id="senha2aAutorizacao"]')
+    BOTAO_VOLTA_TROCA_SENHA = (By.XPATH, '//*[@id="no-back"]/div/div[1]/div[3]/button')
     
 class ConvenioSerra:
     def __init__(self, driver: WebDriver):
@@ -42,18 +43,18 @@ class ConvenioSerra:
         try:
             self.driver.get(self.url)
             WebDriverWait(self.driver, 15).until(
-                EC.presence_of_element_located(SBCLocators.CAMPO_USUARIO)
+                EC.presence_of_element_located(SerraLocators.CAMPO_USUARIO)
             ).send_keys(self.user)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.BOTAO_CONTINUAR)
+                EC.element_to_be_clickable(SerraLocators.BOTAO_CONTINUAR)
             ).click()
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(SBCLocators.CAMPO_SENHA)
+                EC.presence_of_element_located(SerraLocators.CAMPO_SENHA)
             ).send_keys(self.second_password)
             
             ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter...: ")
-            self.driver.find_element(*SBCLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
-            self.driver.find_element(*SBCLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
+            self.driver.find_element(*SerraLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
+            self.driver.find_element(*SerraLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
             return True
             
         except Exception as e:
@@ -66,18 +67,19 @@ class ConvenioSerra:
             self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.XPATH,'//*[@id="senha"]')))
-            self.driver.find_element(By.XPATH,'//*[@id="senha"]').send_keys(self.password)
+            self.driver.find_element(By.XPATH,'//*[@id="senha"]').send_keys(self.second_password)
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
             self.driver.find_element(By.XPATH, '/html/body').send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
-            self.driver.find_element(By.ID,"senhaNova").send_keys(self.second_password)           
+            self.driver.find_element(By.ID,"senhaNova").send_keys(self.password)           
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
-            self.driver.find_element(By.ID,"senhaNovaConfirmacao").send_keys(self.second_password)
+            self.driver.find_element(By.ID,"senhaNovaConfirmacao").send_keys(self.password)
             self.driver.find_element(By.XPATH,'//*[@id="no-back"]/div[3]/div/div[4]/a[2]').click()
+            self.driver.find_element(*SerraLocators.BOTAO_VOLTA_TROCA_SENHA).click()
         except Exception as e:
-            print(f"Sem necessidade de troca de senha")
+            print(f"Sem necessidade de troca de senha {e}")
             return True
     
     def confirmacao_leitura(self):
@@ -96,10 +98,10 @@ class ConvenioSerra:
         try:
             time.sleep(1)
             WebDriverWait(self.driver, 15).until(
-                EC.element_to_be_clickable(SBCLocators.MENU_PRINCIPAL)
+                EC.element_to_be_clickable(SerraLocators.MENU_PRINCIPAL)
             ).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.MENU_RELATORIOS)
+                EC.element_to_be_clickable(SerraLocators.MENU_RELATORIOS)
             ).click()
             return True
         
@@ -110,11 +112,11 @@ class ConvenioSerra:
     def opcoes_relatorios(self):
         try:
             WebDriverWait(self.driver, 15).until(
-                EC.element_to_be_clickable(SBCLocators.DATA_INICIO)
+                EC.element_to_be_clickable(SerraLocators.DATA_INICIO)
             ).send_keys(data.DATA_OPERACOES)
             self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.DATA_FIM)
+                EC.element_to_be_clickable(SerraLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)
             time.sleep(1)
             
@@ -122,7 +124,7 @@ class ConvenioSerra:
             time.sleep(1)
             #CHECKBOX
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.CHECKBOX_DEFERIDA)).click()
+                EC.element_to_be_clickable(SerraLocators.CHECKBOX_DEFERIDA)).click()
             time.sleep(1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             
@@ -130,17 +132,17 @@ class ConvenioSerra:
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.SELEC_OPCOES))
-            self.driver.find_element(*SBCLocators.SELEC_OPCOES).click()
+                EC.element_to_be_clickable(SerraLocators.SELEC_OPCOES))
+            self.driver.find_element(*SerraLocators.SELEC_OPCOES).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.OPCAO_CSV)
+                EC.element_to_be_clickable(SerraLocators.OPCAO_CSV)
             ).click()
             time.sleep(1)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.BOTAO_GERAR))
-            self.driver.find_element(*SBCLocators.BOTAO_GERAR).click()    
+                EC.element_to_be_clickable(SerraLocators.BOTAO_GERAR))
+            self.driver.find_element(*SerraLocators.BOTAO_GERAR).click()    
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(SBCLocators.SENHA_AUTORIZER))
+                EC.presence_of_element_located(SerraLocators.SENHA_AUTORIZER))
             time.sleep(1)  
             return True
         except Exception as e:
@@ -151,11 +153,11 @@ class ConvenioSerra:
         try:
             time.sleep(1)
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(SBCLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
+                EC.presence_of_element_located(SerraLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
             self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
             time.sleep(1)
             WebDriverWait(self.driver, 60).until(
-                EC.presence_of_element_located(SBCLocators.DATA_INICIO))
+                EC.presence_of_element_located(SerraLocators.DATA_INICIO))
             return True
         except Exception as e:
             print(f"Erro na autorização: {e}")
@@ -170,9 +172,9 @@ class ConvenioSerra:
             time.sleep(1)
             self.driver.execute_script("document.body.style.zoom='33%'")
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.OPCOES_DOWNLOAD)).click()
+                EC.element_to_be_clickable(SerraLocators.OPCOES_DOWNLOAD)).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.BOTAO_DOWNLOAD)).click()
+                EC.element_to_be_clickable(SerraLocators.BOTAO_DOWNLOAD)).click()
             time.sleep(1)
             return True
         

@@ -1,5 +1,5 @@
+from src.processadoras.neoconsig.core.segunda_senha_automatizada import TecladoAlfaNumerico as AN
 from src.processadoras.neoconsig.core.NeoConsig_date_var import variaveis_data as data
-from src.processadoras.neoconsig.core.senha_automatizada import TecladoVirtualNeoConsig as VK
 from src.processadoras.neoconsig.core.neoconsig_coord import NeoConsigCoord as NCC
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -13,7 +13,7 @@ import os
 
 load_dotenv()
 
-class GoiasLocators:
+class SorocabaLocators:
     SELEC_PORTAL = (By.XPATH, "/html/body/header/nav/div/div[2]/ul/li/a/button")
     PORTAL_CONSIG = (By.XPATH, '/html/body/header/nav/div/div[2]/ul/li/ul/li[3]/a')
     CAMPO_LOGIN = (By.XPATH, '//*[@id="login"]')
@@ -29,7 +29,7 @@ class GoiasLocators:
     CAMPO_SENHA = (By.XPATH, '/html/body/div[4]/div/div/div[2]/div[1]/div[2]/form/div[1]/input')
     MENU_COMERCIAL = (By.XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/a')
     ABA_CONSIGNACOES = (By.XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/a')
-    OPCAO_CONSULTAR = (By. XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/ul/li/a')
+    OPCAO_CONSULTAR = (By. XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/ul/li[2]/a')
     SELEC_MES_BOTAO = (By.XPATH, '//*[@id="s2id_mes"]/a')
     SELEC_MES_BUSCA = (By.XPATH, '//*[@id="s2id_autogen1_search"]')
     SELEC_ANO_BOTAO = (By.XPATH, '//*[@id="s2id_ano"]/a')
@@ -37,12 +37,12 @@ class GoiasLocators:
     OPCAO_CSV = (By.XPATH, '//*[@id="content"]/div[2]/div/div/div[1]/div[3]/div[3]/div/div/div/a[2]')
 
 
-class ConvenioGoias:
+class ConvenioSorocaba:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.url = os.getenv("NEOCONSIG_URL")
         self.user = os.getenv("NEOCONSIG_USER")
-        self.password = os.getenv("NEOCONSIG_PASS")
+        self.password = os.getenv("NEOCONSIG_SECOND_PASS")
         
         if not all([self.url, self.user, self.password]):
             raise ValueError("Variáveis de ambiente faltando!")
@@ -52,35 +52,35 @@ class ConvenioGoias:
             self.driver.get(self.url)
             
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(GoiasLocators.SELEC_PORTAL))
-            self.driver.find_element(*GoiasLocators.SELEC_PORTAL).click()
+                EC.element_to_be_clickable(SorocabaLocators.SELEC_PORTAL))
+            self.driver.find_element(*SorocabaLocators.SELEC_PORTAL).click()
             
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(GoiasLocators.PORTAL_CONSIG))
-            self.driver.find_element(*GoiasLocators.PORTAL_CONSIG).click()
+                EC.element_to_be_clickable(SorocabaLocators.PORTAL_CONSIG))
+            self.driver.find_element(*SorocabaLocators.PORTAL_CONSIG).click()
             
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(GoiasLocators.CAMPO_LOGIN))
-            self.driver.find_element(*GoiasLocators.CAMPO_LOGIN).send_keys(self.user)
+                EC.presence_of_element_located(SorocabaLocators.CAMPO_LOGIN))
+            self.driver.find_element(*SorocabaLocators.CAMPO_LOGIN).send_keys(self.user)
             time.sleep(0.5)
-            self.driver.find_element(*GoiasLocators.BOTAO_SEQUENCIA).click()
+            self.driver.find_element(*SorocabaLocators.BOTAO_SEQUENCIA).click()
             time.sleep(4)
             
-            self.driver.find_element(*GoiasLocators.SELEC_CONVENIO_BOTAO).click()
-            self.driver.find_element(*GoiasLocators.SELEC_CONVENIO_BUSCA).send_keys("GOIáS - GOV. DO ESTADO")
-            self.driver.find_element(*GoiasLocators.SELEC_CONVENIO_BUSCA).send_keys(Keys.ENTER)
+            self.driver.find_element(*SorocabaLocators.SELEC_CONVENIO_BOTAO).click()
+            self.driver.find_element(*SorocabaLocators.SELEC_CONVENIO_BUSCA).send_keys("PREFEITURA MUNICIPAL DE SOROCABA")
+            self.driver.find_element(*SorocabaLocators.SELEC_CONVENIO_BUSCA).send_keys(Keys.ENTER)
             
-            self.driver.find_element(*GoiasLocators.SELEC_ACESSO_BOTAO).click()
+            self.driver.find_element(*SorocabaLocators.SELEC_ACESSO_BOTAO).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(GoiasLocators.SELEC_ACESSO_BOTAO))
-            self.driver.find_element(*GoiasLocators.SELEC_ACESSO_OPCAO).click()
+                EC.element_to_be_clickable(SorocabaLocators.SELEC_ACESSO_BOTAO))
+            self.driver.find_element(*SorocabaLocators.SELEC_ACESSO_OPCAO).click()
             
             self.driver.find_element(By.XPATH, "/html/body").click()
             
             NC_CAPTCHA_RESOLVER = input("Digite o Captcha e aperte enter: ")
-            self.driver.find_element(*GoiasLocators.CAMPO_CAPTCHA).send_keys(NC_CAPTCHA_RESOLVER)
+            self.driver.find_element(*SorocabaLocators.CAMPO_CAPTCHA).send_keys(NC_CAPTCHA_RESOLVER)
             
-            self.driver.find_element(*GoiasLocators.BOTAO_LOGIN).click()
+            self.driver.find_element(*SorocabaLocators.BOTAO_LOGIN).click()
             return True
         except Exception as e:
             pass
@@ -88,14 +88,15 @@ class ConvenioGoias:
     def acesso_senha(self):
         try:
             WebDriverWait(self.driver, 15).until(
-                EC.element_to_be_clickable(GoiasLocators.BOTAO_SENHA)).click()
+                EC.element_to_be_clickable(SorocabaLocators.BOTAO_SENHA)).click()
+            self.driver.execute_script("document.body.style.zoom='80%'")
 
-            senha = VK(self.driver)
+            senha = AN(self.driver)
             if not senha.enter_password(self.password):
                 raise Exception("Falha ao inserir senha no teclado virtual")
             time.sleep(2)
             
-            pg.moveTo(NCC.Login_pos_senha, duration= 1)
+            pg.moveTo(NCC.second_login_pos_senha, duration= 1)
             pg.click()
             time.sleep(3)
             return True
@@ -105,13 +106,13 @@ class ConvenioGoias:
     
     def navega_menu(self):
         try:
-            time.sleep(3)
+            time.sleep(1)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(GoiasLocators.MENU_COMERCIAL)).click()
+                EC.element_to_be_clickable(SorocabaLocators.MENU_COMERCIAL)).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(GoiasLocators.ABA_CONSIGNACOES)).click()
+                EC.element_to_be_clickable(SorocabaLocators.ABA_CONSIGNACOES)).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(GoiasLocators.OPCAO_CONSULTAR)).click()
+                EC.element_to_be_clickable(SorocabaLocators.OPCAO_CONSULTAR)).click()
             time.sleep(10)
             return True
         except Exception as e:
@@ -121,13 +122,13 @@ class ConvenioGoias:
     def opcoes_relatorio(self):
         try:
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(GoiasLocators.SELEC_MES_BOTAO)).click()
-            self.driver.find_element(*GoiasLocators.SELEC_MES_BUSCA).send_keys(data.MES_ATUAL)
-            self.driver.find_element(*GoiasLocators.SELEC_MES_BUSCA).send_keys(Keys.ENTER)
+                EC.element_to_be_clickable(SorocabaLocators.SELEC_MES_BOTAO)).click()
+            self.driver.find_element(*SorocabaLocators.SELEC_MES_BUSCA).send_keys(data.MES_ATUAL)
+            self.driver.find_element(*SorocabaLocators.SELEC_MES_BUSCA).send_keys(Keys.ENTER)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(GoiasLocators.SELEC_ANO_BOTAO)).click()
-            self.driver.find_element(*GoiasLocators.SELEC_ANO_BUSCA).send_keys(data.ANO_ATUAL)
-            self.driver.find_element(*GoiasLocators.SELEC_ANO_BUSCA).send_keys(Keys.ENTER)
+                EC.element_to_be_clickable(SorocabaLocators.SELEC_ANO_BOTAO)).click()
+            self.driver.find_element(*SorocabaLocators.SELEC_ANO_BUSCA).send_keys(data.ANO_ATUAL)
+            self.driver.find_element(*SorocabaLocators.SELEC_ANO_BUSCA).send_keys(Keys.ENTER)
             time.sleep(3)
             return True
         except Exception as e:
@@ -137,7 +138,7 @@ class ConvenioGoias:
     def download_relatorio(self):
         try:
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(GoiasLocators.OPCAO_CSV)).click()
+                EC.element_to_be_clickable(SorocabaLocators.OPCAO_CSV)).click()
             time.sleep(30)
             return True
         except Exception as e:
