@@ -12,4 +12,4 @@ print(f"X:{x}, Y:{y}", end="\r")
 
 #Mudar de acordo com o resultado do print a cima
 class AsbanCoord():
-    Campo_Captcha = 1596, 883
+    Campo_Captcha = 479, 559

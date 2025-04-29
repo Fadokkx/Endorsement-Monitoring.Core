@@ -44,11 +44,11 @@ class ConvenioCachoeirinha:
                 EC.element_to_be_clickable(CachoerinhaLocator.CAMPO_LOGIN)).send_keys(self.user)
             self.driver.find_element(*CachoerinhaLocator.CAMPO_SENHA).send_keys(self.password)
             
-            #pg.moveTo(AC.Campo_Captcha)
-            #pg.click()
+            pg.moveTo(AC.Campo_Captcha)
+            pg.click()
             
             #Tempo pra clicar e fazer o captcha
-            time.sleep(15)
+            time.sleep(5)
             self.driver.find_element(*CachoerinhaLocator.BOTAO_LOGIN).click()
             time.sleep(1)
             return True
