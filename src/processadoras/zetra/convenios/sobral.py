@@ -27,6 +27,7 @@ class SobralLocators:
     SELEC_OPCOES =(By.XPATH, '//*[@id="formato"]')
     OPCAO_CSV = (By.XPATH, '//*[@id="formato"]/option[4]')
     SENHA_AUTORIZER = (By.XPATH, '//*[@id="senha2aAutorizacao"]')
+    BOTAO_VOLTA_TROCA_SENHA = (By.XPATH, '//*[@id="no-back"]/div/div[1]/div[3]/button')
     
 class ConvenioSobral:
     def __init__(self, driver: WebDriver):
@@ -61,10 +62,10 @@ class ConvenioSobral:
             print(f"Erro no login: {e}")
             return False
 
-
     def troca_senha(self):
         time.sleep(1)
         try:
+            self.driver.find_element(By.XPATH,'//*[@id="senha"]').click()
             self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.XPATH,'//*[@id="senha"]')))
@@ -78,9 +79,20 @@ class ConvenioSobral:
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
             self.driver.find_element(By.ID,"senhaNovaConfirmacao").send_keys(self.password)
             self.driver.find_element(By.XPATH,'//*[@id="no-back"]/div[3]/div/div[4]/a[2]').click()
-            self.driver.find_element(By.XPATH, '//*[@id="no-back"]/div/div[1]/div[3]/button').click()
-        except Exception as e:
+            self.driver.find_element(*SobralLocators.BOTAO_VOLTA_TROCA_SENHA).click()
+        except:
             print(f"Sem necessidade de troca de senha")
+            return True
+    
+    def confirmacao_leitura(self):
+        time.sleep(1)
+        try:
+            self.driver.find_element(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div/div/fieldset/div/label[1]').click()
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[2]/a'))).click()
+            print("Confirmação de leitura realizada com sucesso.")
+        except Exception as e:
+            print(f"Sem necessidade de confirmação de leitura")
             return True
         
     def navegar_menu(self):

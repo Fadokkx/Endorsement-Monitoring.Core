@@ -3,6 +3,7 @@ from src.controllers.zetra_controller import ZetraController
 from src.controllers.cip_controller import CipController
 from src.controllers.consigfacil_controller import ConsigFacilController
 from src.controllers.neoconsig_controller import NeoConsigController
+from src.controllers.asban_controller import AsbanController
 from dotenv import load_dotenv
 
 def main():
@@ -61,6 +62,22 @@ def main():
         convenios = [None] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
         
         resultados = NeoConsig.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    except Exception as e:
+        print(f"Erro {e}")    
+    
+    
+    try:
+        Asban = AsbanController(driver)
+
+        convenios = ['cachoeirinha'] #[None] OU ['cachoeirinha']
+        
+        resultados = Asban.executar_todos_convenios(convenios)
 
         print("\n=== RESUMO DE EXECUÇÃO ===")
         for convenio, dados in resultados.items():

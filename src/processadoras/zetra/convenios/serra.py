@@ -64,6 +64,7 @@ class ConvenioSerra:
     def troca_senha(self):
         time.sleep(1)
         try:
+            self.driver.find_element(By.XPATH,'//*[@id="senha"]').click()
             self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.XPATH,'//*[@id="senha"]')))
@@ -78,8 +79,8 @@ class ConvenioSerra:
             self.driver.find_element(By.ID,"senhaNovaConfirmacao").send_keys(self.password)
             self.driver.find_element(By.XPATH,'//*[@id="no-back"]/div[3]/div/div[4]/a[2]').click()
             self.driver.find_element(*SerraLocators.BOTAO_VOLTA_TROCA_SENHA).click()
-        except Exception as e:
-            print(f"Sem necessidade de troca de senha {e}")
+        except:
+            print(f"Sem necessidade de troca de senha")
             return True
     
     def confirmacao_leitura(self):
@@ -91,7 +92,6 @@ class ConvenioSerra:
             print("Confirmação de leitura realizada com sucesso.")
         except Exception as e:
             print(f"Sem necessidade de confirmação de leitura")
-            #logger. e
             return True
 
     def navegar_menu(self):
