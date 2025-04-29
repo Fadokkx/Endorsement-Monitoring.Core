@@ -122,15 +122,12 @@ class ConvenioHortolandia:
             
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
-            #CHECKBOX
+
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(HortolandiaLocators.CHECKBOX_DEFERIDA)).click()
             time.sleep(1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            
-            time.sleep(1)
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            
+
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(HortolandiaLocators.SELEC_OPCOES))
             self.driver.find_element(*HortolandiaLocators.SELEC_OPCOES).click()

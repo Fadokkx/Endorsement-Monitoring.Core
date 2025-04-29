@@ -24,7 +24,7 @@ class BalnearioLocators:
 class ConvenioBalneario:
     def __init__(self, driver: WebDriver):
         self.driver = driver
-        self.url = os.getenv("CONSIGNET_BALNEARIO_URL")
+        self.url = os.getenv("CONSIGNET_URL")
         self.user = os.getenv("CONSIGNET_USER")
         self.password = os.getenv("CONSIGNET_PASS")
         
@@ -32,15 +32,23 @@ class ConvenioBalneario:
             raise ValueError("Variáveis de ambiente faltando!")
     def login(self):
         try:
-            self.driver.get(self.url)
-            WebDriverWait(self.driver, 10).until(
+            try:
+                WebDriverWait(self.driver, 2).until(
+                        EC.element_to_be_clickable(BalnearioLocators.BOTAO_PERFIL)).click()
+                WebDriverWait(self.driver, 10).until(
+                        EC.element_to_be_clickable(BalnearioLocators.BOTAO_TROCA_PERFIL)).click()
+                time.sleep(1)
+            except:
+                self.driver.get(self.url)
+                WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(BalnearioLocators.CAMPO_USER)).send_keys(self.user)
-            self.driver.find_element(*BalnearioLocators.BOTAO_CONTINUAR).click()
-            WebDriverWait(self.driver, 10).until(
+                self.driver.find_element(*BalnearioLocators.BOTAO_CONTINUAR).click()
+                WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(BalnearioLocators.CAMPO_SENHA)).send_keys(self.password)
-            self.driver.find_element(*BalnearioLocators.BOTAO_ENTRAR).click()
-            time.sleep(0.5)
+                self.driver.find_element(*BalnearioLocators.BOTAO_ENTRAR).click()
+                time.sleep(0.5)
             return True
+        
         except Exception as e:
             print (f"Erro {e}")
             return False

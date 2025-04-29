@@ -128,9 +128,6 @@ class ConvenioUberlandia:
             time.sleep(1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             
-            time.sleep(1)
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(UberlandiaLocators.SELEC_OPCOES))
             self.driver.find_element(*UberlandiaLocators.SELEC_OPCOES).click()

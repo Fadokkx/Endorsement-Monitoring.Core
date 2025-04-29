@@ -99,7 +99,7 @@ def main():
     try:
         consignet = ConsigNetController(driver)    
         
-        convenios = ['balneario'] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
+        convenios = ['campo_largo', 'balneario'] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
         
         resultados = consignet.executar_todos_convenios(convenios)
                 
@@ -108,6 +108,7 @@ def main():
             print(f"{convenio.upper():<15} {dados['status']}")
             if dados['erro']:
                 print(f"   → {dados['erro']}")
+    
     except Exception as e:
         print(f"Erro {e}")
     

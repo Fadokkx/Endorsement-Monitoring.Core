@@ -122,12 +122,9 @@ class ConvenioHospServPublico:
             
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
-            #CHECKBOX
+            
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(HospServPublicoLocators.CHECKBOX_DEFERIDA)).click()
-            time.sleep(1)
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            
             time.sleep(1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             
