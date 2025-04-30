@@ -99,7 +99,7 @@ def main():
     try:
         consignet = ConsigNetController(driver)    
         
-        convenios = ['campo_largo', 'balneario'] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
+        convenios = ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev'] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
         
         resultados = consignet.executar_todos_convenios(convenios)
                 

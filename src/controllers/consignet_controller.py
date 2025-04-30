@@ -1,8 +1,8 @@
 from src.processadoras.consignet.convenios.balneario import ConvenioBalneario
 from src.processadoras.consignet.convenios.CampoLargo import ConvenioCampoLargo
-#from src.processadoras.consignet.convenios.MaringaPrev import ConvenioMaringaPrev
-#from src.processadoras.consignet.convenios.NavegantesPrev import ConvenioNavegantesPrev
-#from src.processadoras.consignet.convenios.navegantes import ConvenioNavegantes
+from src.processadoras.consignet.convenios.MaringaPrev import ConvenioMaringaPrev
+from src.processadoras.consignet.convenios.NavegantesPrev import ConvenioNavegantesPrev
+from src.processadoras.consignet.convenios.navegantes import ConvenioNavegantes
 from src.core.file_manager import renomear_e_mover_arquivos as file_manager
 from selenium.webdriver.remote.webdriver import WebDriver
 from src.core.date_var import variaveis_data as data
@@ -14,10 +14,10 @@ class ConsigNetController():
         self.driver = driver
         self.convenios: Dict[str, Type] = {
             'balneario': ConvenioBalneario,
-            'campo_largo': ConvenioCampoLargo
-            #'maringa_prev': ConvenioMaringaPrev,
-            #'navegantes': ConvenioNavegantes,
-            #'navegantes_prev': ConvenioNavegantesPrev
+            'campo_largo': ConvenioCampoLargo,
+            'maringa_prev': ConvenioMaringaPrev,
+            'navegantes': ConvenioNavegantes,
+            'navegantes_prev': ConvenioNavegantesPrev
         }
     def executar_fluxo_completo(self, nome_convenio: str) -> bool:
         #Executa todo o fluxo para um convênio específico com tratamento detalhado de erros
