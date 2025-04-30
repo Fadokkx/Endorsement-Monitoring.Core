@@ -37,7 +37,7 @@ def main():
     try:
         cip = CipController(driver)
         
-        convenios = [None] #[None] OU ['govmt', 'govsp', 'govsefazsp']
+        convenios = ['govsp', 'govsefazsp', 'govmt'] #[None] OU ['govmt', 'govsp', 'govsefazsp']
         
         resultados = cip.executar_todos_convenios(convenios)
 
@@ -99,7 +99,7 @@ def main():
     try:
         consignet = ConsigNetController(driver)    
         
-        convenios = ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev'] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
+        convenios = [None] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
         
         resultados = consignet.executar_todos_convenios(convenios)
                 
