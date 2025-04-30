@@ -37,7 +37,7 @@ def main():
     try:
         cip = CipController(driver)
         
-        convenios = ['govsp', 'govsefazsp', 'govmt'] #[None] OU ['govmt', 'govsp', 'govsefazsp']
+        convenios = [None] #[None] OU ['govmt', 'govsp', 'govsefazsp']
         
         resultados = cip.executar_todos_convenios(convenios)
 
@@ -112,6 +112,22 @@ def main():
     except Exception as e:
         print(f"Erro {e}")
     
+    try:
+        consiglog = ConsigLogController(driver)
+        
+        convenios = ['amazonas'] #[None] ou ['amazonas', 'duque_de_caxias']
+        
+        resultados = consiglog.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    
+    except Exception as e:
+        print(f"Erro {e}")
+        
     finally:
         driver.quit()
         
