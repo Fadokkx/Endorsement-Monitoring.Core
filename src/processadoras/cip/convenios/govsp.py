@@ -48,15 +48,27 @@ class ConvenioGovSP:
     
     def login(self):
         try:
-            WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(CipLocators.BOTAO_TROCA_PERFIL)
-            )
-            self.driver.find_element(*CipLocators.BOTAO_TROCA_PERFIL).click()
             try:
-                if not self.driver.find_element(*CipLocators.BOTAO_TROCA_PERFIL):
-                    self.driver.get(self.url)
-            except Exception as e:
-                print (f"Erro: {e}")
+                WebDriverWait(self.driver, 10).until(
+                    EC.element_to_be_clickable(CipLocators.BOTAO_TROCA_PERFIL)
+                )
+                self.driver.find_element(*CipLocators.BOTAO_TROCA_PERFIL).click()
+                    
+            except:
+                self.driver.get(self.url)
+                WebDriverWait(self.driver, 15).until(
+                    EC.element_to_be_clickable(CipLocators.ABA_LOGIN))
+                self.driver.find_element(*CipLocators.ABA_LOGIN).click()
+                WebDriverWait(self.driver, 15).until(
+                    EC.presence_of_element_located(CipLocators.CAMPO_USUARIO))
+
+                self.driver.find_element(*CipLocators.CAMPO_USUARIO).send_keys(self.user)
+                self.driver.find_element(*CipLocators.CAMPO_SENHA).send_keys(self.password)
+                CipCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
+                self.driver.find_element(*CipLocators.CAMPO_CAPTCHA).send_keys(CipCaptchaResolver)
+                self.driver.find_element(*CipLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
+                time.sleep(1)
+                
             return True
 
         except Exception as e:

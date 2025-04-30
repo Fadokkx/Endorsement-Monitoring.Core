@@ -49,8 +49,6 @@ class ConvenioGovMT:
     def login(self):
         try:
             self.driver.get(self.url)
-            time.sleep(1)
-            
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(CipLocators.ABA_LOGIN))
             self.driver.find_element(*CipLocators.ABA_LOGIN).click()
