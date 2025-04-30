@@ -1,4 +1,3 @@
-
 from datetime import date, timedelta, datetime
 
 DATA_OPERACAO = date.today() - timedelta(days=3)

@@ -5,6 +5,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from src.processadoras.cip.core.cip_paths import Diretorios_Imagem as PC
 from src.processadoras.cip.core.coord import CipCoord as CC
 from dotenv import load_dotenv
 import time
@@ -49,7 +50,7 @@ class ConvenioGovSP:
     def login(self):
         try:
             try:
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(CipLocators.BOTAO_TROCA_PERFIL)
                 )
                 self.driver.find_element(*CipLocators.BOTAO_TROCA_PERFIL).click()
@@ -173,23 +174,24 @@ class ConvenioGovSP:
     def download_arquivo(self):
         try:
             try:
-                time.sleep(1)
-                janela_relatorio = pg.locateOnScreen(rf".\resources\Sem_Resultados_Parametro.png", confidence=0.7)
+                janela_relatorio = pg.locateOnScreen(
+                PC.janela_relatorio,
+                confidence=0.9,
+                minSearchTime=10
+                )
                 if janela_relatorio:
-                    print("Não foi encontrado nenhum relatório com esses parâmetros.")
-                else:
                     pg.moveTo(CC.ExportarBotão, duration=1)
                     pg.moveTo(CC.TipoCSV, duration=1)
                     pg.click()
                     time.sleep(4)
                     pg.hotkey('ctrl', 'w')
                     time.sleep(1)
-            except pg.ImageNotFoundException:
-                print("Imagem não encontrada")
-            return True
-        
+                    return True
+                
+            except Exception as e:
+                print(f"Erro ao procurar imagens: {str(e)}")
+                return False
+            
         except Exception as e:
-            print(f"Erro: {e}")
+            print(f"Erro geral no download: {str(e)}")
             return False
-
-
