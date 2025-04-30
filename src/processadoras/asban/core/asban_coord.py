@@ -1,5 +1,6 @@
 import pyautogui
 import time
+
 """
 print("Posicione o mouse onde deseja obter as coordenadas.")
 pyautogui.FAILSAFE = True 
@@ -10,8 +11,5 @@ print(f"X:{x}, Y:{y}", end="\r")
 #= X,Y
 
 #Mudar de acordo com o resultado do print a cima
-class CipCoord():
-    ExportarBotão = 274, 477
-    TipoCSV = 274, 637 
-
-
+class AsbanCoord():
+    Campo_Captcha = 479, 559

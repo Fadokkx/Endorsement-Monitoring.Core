@@ -5,7 +5,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from src.processadoras.cip.core.coord import CipCoord as CC
+from src.processadoras.cip.core.cip_paths import Diretorios_Imagem as PC
 from dotenv import load_dotenv
 import time
 import os
@@ -48,15 +48,27 @@ class ConvenioGovSP:
     
     def login(self):
         try:
-            WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(CipLocators.BOTAO_TROCA_PERFIL)
-            )
-            self.driver.find_element(*CipLocators.BOTAO_TROCA_PERFIL).click()
             try:
-                if not self.driver.find_element(*CipLocators.BOTAO_TROCA_PERFIL):
-                    self.driver.get(self.url)
-            except Exception as e:
-                print (f"Erro: {e}")
+                WebDriverWait(self.driver, 2).until(
+                    EC.element_to_be_clickable(CipLocators.BOTAO_TROCA_PERFIL)
+                )
+                self.driver.find_element(*CipLocators.BOTAO_TROCA_PERFIL).click()
+                    
+            except:
+                self.driver.get(self.url)
+                WebDriverWait(self.driver, 15).until(
+                    EC.element_to_be_clickable(CipLocators.ABA_LOGIN))
+                self.driver.find_element(*CipLocators.ABA_LOGIN).click()
+                WebDriverWait(self.driver, 15).until(
+                    EC.presence_of_element_located(CipLocators.CAMPO_USUARIO))
+
+                self.driver.find_element(*CipLocators.CAMPO_USUARIO).send_keys(self.user)
+                self.driver.find_element(*CipLocators.CAMPO_SENHA).send_keys(self.password)
+                CipCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
+                self.driver.find_element(*CipLocators.CAMPO_CAPTCHA).send_keys(CipCaptchaResolver)
+                self.driver.find_element(*CipLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
+                time.sleep(1)
+                
             return True
 
         except Exception as e:
@@ -144,40 +156,63 @@ class ConvenioGovSP:
             self.driver.find_element(*check.LAST_PRCL).send_keys(Keys.SPACE)
             self.driver.find_element(*check.CONTRACT_INICIO).send_keys(Keys.SPACE)
             self.driver.find_element(*check.DATA_INCLUSAO_AVERB).send_keys(Keys.SPACE)
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
-            try:
-                self.driver.find_element(*CipLocators.BOTAO_GERAR_REL).send_keys(Keys.SPACE)
-            except Exception as e:
-                print(f"Erro {e}")
+            time.sleep(0.1)
+            
+            self.driver.find_element(*CipLocators.BOTAO_GERAR_REL).send_keys(Keys.SPACE)
             time.sleep(5)
             return True
         
         except Exception as e:
             print(f"Erro: {e}")
             return False
-        
+
     def download_arquivo(self):
         try:
             try:
-                time.sleep(1)
-                janela_relatorio = pg.locateOnScreen(rf".\resources\Sem_Resultados_Parametro.png", confidence=0.7)
+                Sem_relatorio = pg.locateOnScreen(
+                    PC.sem_relatorio,
+                    confidence= 0.8,
+                    minSearchTime= 3
+                )
+                if Sem_relatorio:
+                    print("Sem relatórios com os parâmetros")
+                    return True
+            except:
+                pass
+
+            try:
+                janela_relatorio = pg.locateOnScreen(
+                    PC.janela_relatorio,
+                    confidence= 0.8,
+                    minSearchTime= 3
+                )
+
                 if janela_relatorio:
-                    print("Não foi encontrado nenhum relatório com esses parâmetros.")
-                else:
-                    pg.moveTo(CC.ExportarBotão, duration=1)
-                    pg.moveTo(CC.TipoCSV, duration=1)
-                    pg.click()
-                    time.sleep(4)
-                    pg.hotkey('ctrl', 'w')
-                    time.sleep(1)
-            except pg.ImageNotFoundException:
-                print("Imagem não encontrada")
-            return True
-        
+                    exportar = pg.locateOnScreen(
+                    PC.ExportarBotao,
+                    confidence= 0.8,
+                    minSearchTime=3
+                    )
+
+                    if exportar:
+                        pg.moveTo(exportar)
+                        csv_option = pg.locateOnScreen(
+                            PC.TipoCSV,
+                            confidence= 0.8,
+                            minSearchTime= 3
+                        )
+                        if csv_option:
+                            pg.moveTo(csv_option)
+                            pg.click(csv_option)
+                            time.sleep(2)
+                            pg.hotkey('ctrl', 'w')
+                            return True
+
+            except Exception as e:
+                print(f"Erro ao procurar imagens: {str(e)}")
+                return False
         except Exception as e:
-            print(f"Erro: {e}")
+            print(f"Erro geral no download: {str(e)}")
             return False
-
-

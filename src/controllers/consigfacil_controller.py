@@ -14,6 +14,7 @@ from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
 from typing import Dict, Type
 from selenium.webdriver.remote.webdriver import WebDriver
+
 class ConsigFacilController():
     def __init__(self, driver: WebDriver):
         self.driver = driver

@@ -41,18 +41,18 @@ class ZetraController:
             if not convenio.login():
                 raise Exception("Falha no login")
             
-            try:
-                if not convenio.confirmacao_leitura():
-                    raise Exception("Falha na confirmação de leitura") 
-            except Exception as e:
-                    print(f"Sem necessidade de confirmação de leitura {e}")
-            
             try: 
                 if not convenio.troca_senha():
                     raise Exception("Sem necessidade de troca de senha")
             except Exception as e:
                 print(f"Sem necessidade de troca de senha {e}")
 
+            try:
+                if not convenio.confirmacao_leitura():
+                    raise Exception("Falha na confirmação de leitura") 
+            except Exception as e:
+                    print(f"Sem necessidade de confirmação de leitura {e}")
+        
             if not convenio.navegar_menu():
                 raise Exception("Falha na navegação do menu")
             

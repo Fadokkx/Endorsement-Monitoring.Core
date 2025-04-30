@@ -119,7 +119,7 @@ Caso seja apenas um usuário, sem intenções de mexer no código, o README term
 > **`CIP\CORE:`**
 > - `cip_checkbox.py` - Caminhos por XPATH das checkbox necessárias para a geração do arquivo, quaisquer adições ou mudanças de checkbox serão feitas por aqui<br><br>
 >  - `cip_date_var.py` - Variáveis de data formatadas para inserção sem problemas nos parâmetros da processadora<br><br>
-> - `coord.py` - Necessária utilização para reconhecer as coordenadas do seu monitor para o botão de extração de relatório da processadora CIP.<br>Caso não seja utilizado de acordo com a recomendação na sessão de **criação de ambiente** os arquivos da CIP provavelmente terão de ser baixados **A MÃO**<br><br>
+> - `cip_paths` - Pega os caminhos importantes para o funcionamento da extração de relatórios da processadora, atualmente pega caminhos da pasta `cip\resources` para a automatização do download do relatório<br><br>
 ---
 
 > **`CONSIGFACIL\CORE`:**

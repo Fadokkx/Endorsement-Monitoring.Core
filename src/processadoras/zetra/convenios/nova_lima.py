@@ -26,7 +26,8 @@ class NovalimaLocators:
     SELEC_OPCOES =(By.XPATH, '//*[@id="formato"]')
     OPCAO_CSV = (By.XPATH, '//*[@id="formato"]/option[4]')
     SENHA_AUTORIZER = (By.XPATH, '//*[@id="senha2aAutorizacao"]')
-    
+    BOTAO_VOLTA_TROCA_SENHA = (By.XPATH, '//*[@id="no-back"]/div/div[1]/div[3]/button')
+        
 class ConvenioNovaLima:
     def __init__(self, driver: WebDriver):
         self.driver = driver
@@ -60,6 +61,29 @@ class ConvenioNovaLima:
             print(f"Erro no login: {e}")
             return False
         
+    def troca_senha(self):
+        time.sleep(1)
+        try:
+            self.driver.find_element(By.XPATH,'//*[@id="senha"]').click()
+            self.driver.execute_script("document.body.style.zoom='80%'")
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH,'//*[@id="senha"]')))
+            self.driver.find_element(By.XPATH,'//*[@id="senha"]').send_keys(self.second_password)
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
+            self.driver.find_element(By.XPATH, '/html/body').send_keys(Keys.PAGE_DOWN)
+            time.sleep(1)
+            self.driver.find_element(By.ID,"senhaNova").send_keys(self.password)           
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
+            self.driver.find_element(By.ID,"senhaNovaConfirmacao").send_keys(self.password)
+            self.driver.find_element(By.XPATH,'//*[@id="no-back"]/div[3]/div/div[4]/a[2]').click()
+            self.driver.find_element(*NovalimaLocators.BOTAO_VOLTA_TROCA_SENHA).click()
+            return True
+        except:
+            print(f"Sem necessidade de troca de senha")
+            return True
+    
     def confirmacao_leitura(self):
         time.sleep(1)
         try:
@@ -69,7 +93,6 @@ class ConvenioNovaLima:
             print("Confirmação de leitura realizada com sucesso.")
         except Exception as e:
             print(f"Sem necessidade de confirmação de leitura")
-            #logger. e
             return True
 
     def navegar_menu(self):
@@ -100,12 +123,9 @@ class ConvenioNovaLima:
             
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
-            #CHECKBOX
+            
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(NovalimaLocators.CHECKBOX_DEFERIDA)).click()
-            time.sleep(1)
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            
             time.sleep(1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             
