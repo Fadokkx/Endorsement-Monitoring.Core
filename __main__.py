@@ -37,7 +37,7 @@ def main():
     try:
         cip = CipController(driver)
         
-        convenios = ['govsp', 'govmt', 'govsefazsp'] #[None] OU ['govmt', 'govsp', 'govsefazsp']
+        convenios = ['govsp', 'govsefazsp', 'govmt'] #[None] OU ['govmt', 'govsp', 'govsefazsp']
         
         resultados = cip.executar_todos_convenios(convenios)
 

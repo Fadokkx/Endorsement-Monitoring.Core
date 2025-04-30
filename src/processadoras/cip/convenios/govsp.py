@@ -6,7 +6,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from src.processadoras.cip.core.cip_paths import Diretorios_Imagem as PC
-from src.processadoras.cip.core.coord import CipCoord as CC
 from dotenv import load_dotenv
 import time
 import os
@@ -157,41 +156,63 @@ class ConvenioGovSP:
             self.driver.find_element(*check.LAST_PRCL).send_keys(Keys.SPACE)
             self.driver.find_element(*check.CONTRACT_INICIO).send_keys(Keys.SPACE)
             self.driver.find_element(*check.DATA_INCLUSAO_AVERB).send_keys(Keys.SPACE)
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
-            try:
-                self.driver.find_element(*CipLocators.BOTAO_GERAR_REL).send_keys(Keys.SPACE)
-            except Exception as e:
-                print(f"Erro {e}")
+            time.sleep(0.1)
+            
+            self.driver.find_element(*CipLocators.BOTAO_GERAR_REL).send_keys(Keys.SPACE)
             time.sleep(5)
             return True
         
         except Exception as e:
             print(f"Erro: {e}")
             return False
-        
+
     def download_arquivo(self):
         try:
             try:
-                janela_relatorio = pg.locateOnScreen(
-                PC.janela_relatorio,
-                confidence=0.9,
-                minSearchTime=10
+                Sem_relatorio = pg.locateOnScreen(
+                    PC.sem_relatorio,
+                    confidence= 0.8,
+                    minSearchTime= 3
                 )
-                if janela_relatorio:
-                    pg.moveTo(CC.ExportarBotão, duration=1)
-                    pg.moveTo(CC.TipoCSV, duration=1)
-                    pg.click()
-                    time.sleep(4)
-                    pg.hotkey('ctrl', 'w')
-                    time.sleep(1)
+                if Sem_relatorio:
+                    print("Sem relatórios com os parâmetros")
                     return True
-                
+            except:
+                pass
+
+            try:
+                janela_relatorio = pg.locateOnScreen(
+                    PC.janela_relatorio,
+                    confidence= 0.8,
+                    minSearchTime= 3
+                )
+
+                if janela_relatorio:
+                    exportar = pg.locateOnScreen(
+                    PC.ExportarBotao,
+                    confidence= 0.8,
+                    minSearchTime=3
+                    )
+
+                    if exportar:
+                        pg.moveTo(exportar)
+                        csv_option = pg.locateOnScreen(
+                            PC.TipoCSV,
+                            confidence= 0.8,
+                            minSearchTime= 3
+                        )
+                        if csv_option:
+                            pg.moveTo(csv_option)
+                            pg.click(csv_option)
+                            time.sleep(2)
+                            pg.hotkey('ctrl', 'w')
+                            return True
+
             except Exception as e:
                 print(f"Erro ao procurar imagens: {str(e)}")
                 return False
-            
         except Exception as e:
             print(f"Erro geral no download: {str(e)}")
             return False
