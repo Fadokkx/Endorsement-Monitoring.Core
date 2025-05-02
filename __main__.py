@@ -115,9 +115,25 @@ def main():
     try:
         consiglog = ConsigLogController(driver)
         
-        convenios = ['amazonas'] #[None] ou ['amazonas', 'duque_de_caxias']
+        convenios = [None] #[None] ou ['amazonas', 'duque_de_caxias']
         
         resultados = consiglog.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    
+    except Exception as e:
+        print(f"Erro {e}")
+        
+    try:
+        consigtec = ConsigTecController(driver)
+        
+        convenios = ['porto_nacional', 'maringa'] #[None] ou ['maringa', 'porto_nacional']
+        
+        resultados = consigtec.executar_todos_convenios(convenios)
 
         print("\n=== RESUMO DE EXECUÇÃO ===")
         for convenio, dados in resultados.items():
