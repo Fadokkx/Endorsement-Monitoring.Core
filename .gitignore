@@ -38,6 +38,5 @@ msedgedriver.log
 logs/
 
 # Arquivos de processadoras não funcionais
-src/controllers/sicon_controller.py/
-
+src/controllers/sicon_controller.py
 src/processadoras/sicon/
