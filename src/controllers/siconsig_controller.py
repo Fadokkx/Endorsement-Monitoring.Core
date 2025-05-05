@@ -28,11 +28,11 @@ class SiConsigController():
             if not convenio.opcoes_relatorio():
                 raise Exception("Falha na seleção de opção de relatório")
             
-            if not convenio.baixar_relatorio():
+            if not convenio.download_relatorio():
                 raise Exception("Falha ao baixar relatório")
             
             try:
-                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "Relatorio_Contratos_Averbados", novo_nome=(f"safeconsig_{nome_convenio}_{data.DATA_ARQUIVO}"))
+                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "CUSTOMIZAVELDEAVERBACAO", novo_nome=(f"siconsig_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except Exception as e:
                 print(f"{e}")
                 
