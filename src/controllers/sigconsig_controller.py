@@ -22,8 +22,17 @@ class SigConsigController():
             if not convenio.login():
                 raise Exception("Falha no login")
             
+            if not convenio.navega_menu():
+                raise Exception("Falha na navegação do menu")
+            
+            if not convenio.opcoes_relatorio():
+                raise Exception("Falha nas opções de relatorio")
+            
+            if not convenio.baixar_relatorio():
+                raise Exception("Falha no download do relatório")
+            
             try:
-                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "Relatorio_Contratos_Averbados", novo_nome=(f"safeconsig_{nome_convenio}_{data.DATA_ARQUIVO}"))
+                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "baseconsig", novo_nome=(f"safeconsig_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except Exception as e:
                 print(f"{e}")
                 
