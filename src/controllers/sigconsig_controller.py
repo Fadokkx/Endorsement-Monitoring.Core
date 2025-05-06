@@ -1,4 +1,4 @@
-#from src.processadoras.sig.convenios.SantaCatarina import ConvenioSantaCatarina
+from src.processadoras.sig.convenios.SantaCatarina import ConvenioSantaCatarina
 from src.core.file_manager import renomear_e_mover_arquivos as file_manager
 from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
@@ -9,7 +9,7 @@ class SigConsigController():
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.convenios: Dict[str, Type] = {
-         #   'santa_catarina': ConvenioSantaCatarina
+           'santa_catarina': ConvenioSantaCatarina
         }
     
     def executar_fluxo_completo(self, nome_convenio: str) -> bool:
@@ -21,15 +21,6 @@ class SigConsigController():
         try:
             if not convenio.login():
                 raise Exception("Falha no login")
-            
-            if not convenio.navega_menu():
-                raise Exception("Falha na navegação de menu")
-            
-            if not convenio.opcoes_relatorio():
-                raise Exception("Falha na seleção de opção de relatório")
-            
-            if not convenio.baixar_relatorio():
-                raise Exception("Falha ao baixar relatório")
             
             try:
                 file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "Relatorio_Contratos_Averbados", novo_nome=(f"safeconsig_{nome_convenio}_{data.DATA_ARQUIVO}"))

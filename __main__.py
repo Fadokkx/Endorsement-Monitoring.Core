@@ -115,7 +115,7 @@ def main():
     try:
         consiglog = ConsigLogController(driver)
         
-        convenios = ['iprev_santo_andre'] #[None] ou ['iprev_santo_andre', 'amazonas', 'duque_de_caxias']
+        convenios = [None] #[None] ou ['iprev_santo_andre', 'amazonas', 'duque_de_caxias']
         
         resultados = consiglog.executar_todos_convenios(convenios)
 
@@ -211,7 +211,7 @@ def main():
     try:
         sigconsig = SigConsigController(driver)
         
-        convenios = [None] #[None] ou ['santa_catarina']
+        convenios = ['santa_catarina'] #[None] ou ['santa_catarina']
         
         resultados = sigconsig.executar_todos_convenios(convenios)
 
