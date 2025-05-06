@@ -22,7 +22,7 @@ def main():
     try:
         zetra = ZetraController(driver)
         
-        convenios = [None] #[None] Ou ['nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']  #[None] #para todos
+        convenios = [None] #[None] Ou ['pref_rio', 'nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']  #[None] #para todos
         
         resultados = zetra.executar_todos_convenios(convenios)
 
@@ -37,7 +37,7 @@ def main():
     try:
         cip = CipController(driver)
         
-        convenios = ['govsp', 'govsefazsp', 'govmt'] #[None] OU ['govmt', 'govsp', 'govsefazsp']
+        convenios = ['govmt', 'govsp', 'govsefazsp'] #[None] OU ['govmt', 'govsp', 'govsefazsp']
         
         resultados = cip.executar_todos_convenios(convenios)
 
@@ -52,7 +52,7 @@ def main():
     try:
         consigfacil = ConsigFacilController(driver)
 
-        convenios = [None] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
+        convenios = ['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
         
         resultados = consigfacil.executar_todos_convenios(convenios)
 
@@ -84,7 +84,7 @@ def main():
     try:
         Asban = AsbanController(driver)
 
-        convenios = [None] #[None] OU ['cachoeirinha']
+        convenios = ['cachoeirinha'] #[None] OU ['cachoeirinha']
         
         resultados = Asban.executar_todos_convenios(convenios)
 
@@ -99,7 +99,7 @@ def main():
     try:
         consignet = ConsigNetController(driver)    
         
-        convenios = [None] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
+        convenios = ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev'] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
         
         resultados = consignet.executar_todos_convenios(convenios)
                 
@@ -112,6 +112,118 @@ def main():
     except Exception as e:
         print(f"Erro {e}")
     
+    try:
+        consiglog = ConsigLogController(driver)
+        
+        convenios = ['iprev_santo_andre', 'amazonas', 'duque_de_caxias'] #[None] ou ['iprev_santo_andre', 'amazonas', 'duque_de_caxias']
+        
+        resultados = consiglog.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    
+    except Exception as e:
+        print(f"Erro {e}")
+        
+    try:
+        consigtec = ConsigTecController(driver)
+        
+        convenios = ['maringa', 'porto_nacional'] #[None] ou ['maringa', 'porto_nacional']
+        
+        resultados = consigtec.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    
+    except Exception as e:
+        print(f"Erro {e}")
+    
+    try:
+        digitalconsig = DigitalConsigController(driver)
+        
+        convenios = ['sorriso'] #[None] ou ['sorriso']
+        
+        resultados = digitalconsig.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    
+    except Exception as e:
+        print(f"Erro {e}")
+        
+    try:
+        safeconsig = SafeConsigController(driver)
+        
+        convenios = ['ceara', 'cabo_frio'] #[None] ou ['ceara', 'cabo_frio']
+        
+        resultados = safeconsig.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    
+    except Exception as e:
+        print(f"Erro {e}")
+        
+    try:
+        serpro = SerproController(driver)
+        
+        convenios = [None] #[None] ou ['guarulhos']
+        
+        resultados = serpro.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    
+    except Exception as e:
+        print(f"Erro {e}")
+        
+    try:
+        siconsig = SiConsigController(driver)
+        
+        convenios = ['tocantins'] #[None] ou ['tocantins']
+        
+        resultados = siconsig.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    
+    except Exception as e:
+        print(f"Erro {e}")
+        
+    try:
+        sigconsig = SigConsigController(driver)
+        
+        convenios = ['santa_catarina'] #[None] ou ['santa_catarina']
+        
+        resultados = sigconsig.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    
+    except Exception as e:
+        print(f"Erro {e}")
+        
     finally:
         driver.quit()
         

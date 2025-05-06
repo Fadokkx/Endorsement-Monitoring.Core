@@ -9,13 +9,13 @@ import os
 
 load_dotenv()
 
-class DuqueLocators:
+class SantoAndreLocators:
     CAMPO_USER = (By.XPATH, '//*[@id="txtLogin"]')
     BOTAO_CONTINUAR = (By.XPATH, '//*[@id="Entrar"]')
     CAMPO_SENHA = (By.XPATH, '//*[@id="txtSenha"]')
     BOTAO_ENTRAR = (By.XPATH, '//*[@id="Entrar"]')
     BOTAO_LOGOUT_SESSAO_INATIV = (By.XPATH, '//*[@id="ucAjaxModalPopupConfirmacao1_btnConfirmarPopup"]')
-    CONVENIO_PREFDUQUE = (By.XPATH, "/html/body/form/div[5]/div[1]/div/div[1]/div/table/tbody/tr[1]/td[3]/input")
+    CONVENIO_IPREVSANTOANDRE = (By.XPATH, "/html/body/form/div[5]/div[1]/div/div[1]/div/table/tbody/tr[6]/td[3]/input")
     CONFIRMACAO_LEITURA = (By.XPATH, '//*[@id="body_ucModalPopupAvisos1_btnConfirmarPopup"]')
     FECHA_POPUP_CONF_LEITURA = (By.XPATH, '//*[@id="body_ucModalPopupAvisos1_ucAjaxModalDoModal1_btnConfirmarPopup"]')
     COOKIES_NOTIF = (By.XPATH, '//*[@id="entendi-cookies"]')
@@ -36,12 +36,12 @@ class DuqueLocators:
     OPCAO_XLSX = (By.XPATH, '//*[@id="body_ddlTipoVisualizacao"]/option[3]')
     BOTAO_GERAR_REL = (By.XPATH, '//*[@id="body_pesquisarButton"]')
     
-class ConvenioDuqueDeCaxias:
+class ConvenioIprevSantoAndre:
     def __init__(self, driver: WebDriver):
         self.driver = driver
-        self.url = os.getenv("CONSIGLOG_DUQUE_DE_CAXIAS_URL")
-        self.user = os.getenv("CONSIGLOG_USER")
-        self.password = os.getenv("CONSIGLOG_PASS")
+        self.url = os.getenv("CONSIGLOG_IPREV_SANTO_ANDRE_URL")
+        self.user = os.getenv("CONSIGLOG_IPREV_SANTO_ANDRE_USER")
+        self.password = os.getenv("CONSIGLOG_IPREV_SANTO_ANDRE_PASS")
 
         if not all([self.url, self.user, self.password]):
             raise ValueError("Variáveis de ambiente faltando!")
@@ -50,15 +50,16 @@ class ConvenioDuqueDeCaxias:
         try:
             self.driver.get(self.url)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(DuqueLocators.CAMPO_USER)).send_keys(self.user)
-            self.driver.find_element(*DuqueLocators.BOTAO_CONTINUAR).click()
+                EC.element_to_be_clickable(SantoAndreLocators.CAMPO_USER)).send_keys(self.user)
+            self.driver.find_element(*SantoAndreLocators.BOTAO_CONTINUAR).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(DuqueLocators.CAMPO_SENHA)).send_keys(self.password)
-            self.driver.find_element(*DuqueLocators.BOTAO_ENTRAR).click()
+                EC.element_to_be_clickable(SantoAndreLocators.CAMPO_SENHA)).send_keys(self.password)
+            time.sleep(1)
+            self.driver.find_element(*SantoAndreLocators.BOTAO_ENTRAR).click()
             
             try:
                 WebDriverWait(self.driver, 1.5).until(
-                    EC.element_to_be_clickable(DuqueLocators.BOTAO_LOGOUT_SESSAO_INATIV)).click()
+                    EC.element_to_be_clickable(SantoAndreLocators.BOTAO_LOGOUT_SESSAO_INATIV)).click()
             except:
                 print("Sem necessidade de logout de outras sessões")
                 
@@ -71,7 +72,7 @@ class ConvenioDuqueDeCaxias:
         try:
             time.sleep(0.5)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(DuqueLocators.CONVENIO_PREFDUQUE)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.CONVENIO_IPREVSANTOANDRE)).click()
             time.sleep(0.1)
             return True
         except Exception as e:
@@ -83,25 +84,25 @@ class ConvenioDuqueDeCaxias:
             try:
                 while True:
                     WebDriverWait(self.driver, 2).until(
-                        EC.element_to_be_clickable(DuqueLocators.CONFIRMACAO_LEITURA)).click()
+                        EC.element_to_be_clickable(SantoAndreLocators.CONFIRMACAO_LEITURA)).click()
                     WebDriverWait(self.driver, 2).until(
-                        EC.element_to_be_clickable(DuqueLocators.FECHA_POPUP_CONF_LEITURA)).click()
+                        EC.element_to_be_clickable(SantoAndreLocators.FECHA_POPUP_CONF_LEITURA)).click()
                     time.sleep(0.5)
             except:
                 print("Sem necessidade de confirmação")
             
             try:
                 WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable(DuqueLocators.COOKIES_NOTIF)).click()        
+                    EC.element_to_be_clickable(SantoAndreLocators.COOKIES_NOTIF)).click()        
             except:
                 print("Sem necessidade de confirmação de cookies")
                 
             WebDriverWait(self.driver, 20).until(
-                EC.element_to_be_clickable(DuqueLocators.ABA_RELATORIO)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.ABA_RELATORIO)).click()
             WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(DuqueLocators.OPCOES_CONSIGNACOES)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.OPCOES_CONSIGNACOES)).click()
             WebDriverWait(self.driver, 3).until(
-                EC.element_to_be_clickable(DuqueLocators.OPCAO_CONSIGNACAO)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.OPCAO_CONSIGNACAO)).click()
             return True
         
         except Exception as e:
@@ -111,37 +112,37 @@ class ConvenioDuqueDeCaxias:
     def opcoes_relatorio(self):
         try:
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(DuqueLocators.BOTAO_TIPO_REL)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.BOTAO_TIPO_REL)).click()
             WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(DuqueLocators.TIPO_ANDEFERIDO)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.TIPO_ANDEFERIDO)).click()
             time.sleep(0.5)
             WebDriverWait(self.driver, 3).until(
-                EC.element_to_be_clickable(DuqueLocators.BOTAO_CONV_SELEC)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.BOTAO_CONV_SELEC)).click()
             WebDriverWait(self.driver, 3).until(
-                EC.element_to_be_clickable(DuqueLocators.CHECK_ALL_CONV)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.CHECK_ALL_CONV)).click()
             time.sleep(0.5)
             WebDriverWait(self.driver, 3).until(
-                EC.element_to_be_clickable(DuqueLocators.BOTAO_ORGAOS_SELEC)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.BOTAO_ORGAOS_SELEC)).click()
             WebDriverWait(self.driver, 3).until(
-                EC.element_to_be_clickable(DuqueLocators.CHECK_ALL_ORG)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.CHECK_ALL_ORG)).click()
             time.sleep(0.5)
             try:
-                self.driver.find_element(*DuqueLocators.BOTAO_ORGAOS_SELEC).click()
+                self.driver.find_element(*SantoAndreLocators.BOTAO_ORGAOS_SELEC).click()
             except Exception as e:
                 print(f"Erro: {e}")
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(DuqueLocators.CAMPO_PER_INI)).send_keys(data.DATA_INICIO)
+                EC.element_to_be_clickable(SantoAndreLocators.CAMPO_PER_INI)).send_keys(data.DATA_INICIO)
             time.sleep(0.1)
             WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(DuqueLocators.CAMPO_PER_FIM)).send_keys(data.DATA_FINAL)
+                EC.element_to_be_clickable(SantoAndreLocators.CAMPO_PER_FIM)).send_keys(data.DATA_FINAL)
             time.sleep(0.5)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(DuqueLocators.BOTAO_SERVICO)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.BOTAO_SERVICO)).click()
             WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(DuqueLocators.CHECK_ALL_SERVICES)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.CHECK_ALL_SERVICES)).click()
             time.sleep(0.5)
             try:
-                self.driver.find_element(*DuqueLocators.BOTAO_SERVICO).click()
+                self.driver.find_element(*SantoAndreLocators.BOTAO_SERVICO).click()
             except Exception as e:
                 print(f"Erro: {e}")                
             return True
@@ -153,17 +154,17 @@ class ConvenioDuqueDeCaxias:
     def download_relatorio(self):
         try:
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(DuqueLocators.BOTAO_OPCOES_REL)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.BOTAO_OPCOES_REL)).click()
             WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(DuqueLocators.OPCAO_XLSX)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.OPCAO_XLSX)).click()
             
             try:
-                self.driver.find_element(*DuqueLocators.BOTAO_OPCOES_REL).click()
+                self.driver.find_element(*SantoAndreLocators.BOTAO_OPCOES_REL).click()
             except Exception as e:
                 print(f"Erro: {e}")
                 
             WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(DuqueLocators.BOTAO_GERAR_REL)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.BOTAO_GERAR_REL)).click()
             time.sleep(1.5)
             return True
         

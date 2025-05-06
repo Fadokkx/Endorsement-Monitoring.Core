@@ -158,7 +158,7 @@ class ConvenioGovMT:
             time.sleep(0.1)
             
             self.driver.find_element(*CipLocators.BOTAO_GERAR_REL).send_keys(Keys.SPACE)
-            time.sleep(5)
+            time.sleep(7)
             return True
         
         except Exception as e:

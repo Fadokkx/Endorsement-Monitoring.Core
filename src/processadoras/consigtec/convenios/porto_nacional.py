@@ -11,22 +11,22 @@ import pyautogui as pg
 
 load_dotenv()
 
-class MaringaLocators:
+class PortoNacionalLocators:
     CAMPO_USER = (By.XPATH, '//*[@id="username"]')
     CAMPO_SENHA = (By.XPATH, '//*[@id="password"]')
     BOTAO_ENTRAR = (By.XPATH, '//*[@id="form"]/div/div/div[2]/div[1]/div[3]/div[2]/div[2]/button')
     BOTAO_PERFIL = (By.XPATH, '/html/body/div[2]/div[1]/div/div[2]/ul/li[3]/a')
     BOTAO_TROCA_PERFIL = (By.XPATH, '/html/body/div[2]/div[1]/div/div[2]/ul/li[3]/ul/li[3]/a')
-    OPCAO_MARINGA = (By.XPATH, '//*[@id="j_idt73:tbl_data"]/tr[1]/td[1]/div/a')
+    OPCAO_PORTO_NACIONAL = (By.XPATH, '//*[@id="j_idt73:tbl_data"]/tr[4]/td[1]/div/a')
     MENU_RELATORIO = (By.XPATH, '//*[@id="menuform:j_idt107"]/a')
     OPCAO_PRODUCAO = (By.XPATH, '//*[@id="menuform:j_idt109"]/a')
     CAMPO_DATA_INI = (By.XPATH, '//*[@id="j_idt169:startDate_input"]')
     CAMPO_DATA_FIM = (By.XPATH, '//*[@id="j_idt169:endDate_input"]')
     BOTAO_OPERACOES = (By.XPATH, '//*[@id="j_idt169:j_idt181"]')
     OPCAO_OPERACAO_ATIVA = (By.XPATH, '//*[@id="j_idt169:j_idt181_1"]')
-    BOTAO_GERAR = (By.XPATH, '//*[@id="j_idt169:endDate_input"]')
+    BOTAO_GERAR = (By.XPATH, '//*[@id="j_idt169"]/div[2]/div/div/table/tbody/tr/td/input')
     
-class ConvenioMaringa:
+class ConvenioPortoNacional:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.url = os.getenv("CONSIGTEC_MARINGA_URL")
@@ -40,23 +40,24 @@ class ConvenioMaringa:
     def login (self):
         try:
             try:
-                WebDriverWait(self.driver, 2).until(
-                    EC.element_to_be_clickable(MaringaLocators.BOTAO_PERFIL)).click()
+                WebDriverWait(self.driver, 1.5).until(
+                    EC.element_to_be_clickable(PortoNacionalLocators.BOTAO_PERFIL)).click()
                 WebDriverWait(self.driver, 5).until(
-                    EC.element_to_be_clickable(MaringaLocators.BOTAO_TROCA_PERFIL)).click()
+                    EC.element_to_be_clickable(PortoNacionalLocators.BOTAO_TROCA_PERFIL)).click()
                 WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable(MaringaLocators.OPCAO_MARINGA)).click()
+                    EC.element_to_be_clickable(PortoNacionalLocators.OPCAO_PORTO_NACIONAL)).click()
                 return True
             
             except:
                 self.driver.get(self.url)
+                self.driver.find_element(*PortoNacionalLocators.CAMPO_USER).click()
                 WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable(MaringaLocators.CAMPO_USER)).send_keys(self.user)
+                    EC.element_to_be_clickable(PortoNacionalLocators.CAMPO_USER)).send_keys(self.user)
                 WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable(MaringaLocators.CAMPO_SENHA)).send_keys(self.password)
-                self.driver.find_element(*MaringaLocators.BOTAO_ENTRAR).click()
+                    EC.element_to_be_clickable(PortoNacionalLocators.CAMPO_SENHA)).send_keys(self.password)
+                self.driver.find_element(*PortoNacionalLocators.BOTAO_ENTRAR).click()
                 WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable(MaringaLocators.OPCAO_MARINGA)).click()
+                    EC.element_to_be_clickable(PortoNacionalLocators.OPCAO_PORTO_NACIONAL)).click()
                 return True
             
         except Exception as e:
@@ -66,9 +67,9 @@ class ConvenioMaringa:
     def navega_meu(self):
         try:
             WebDriverWait(self.driver, 2).until(
-                EC.element_to_be_clickable(MaringaLocators.MENU_RELATORIO)).click()
+                EC.element_to_be_clickable(PortoNacionalLocators.MENU_RELATORIO)).click()
             WebDriverWait(self.driver, 1).until(
-                EC.element_to_be_clickable(MaringaLocators.OPCAO_PRODUCAO)).click()
+                EC.element_to_be_clickable(PortoNacionalLocators.OPCAO_PRODUCAO)).click()
             return True
         except Exception as e:
             print(f"Erro: {e}")
@@ -77,10 +78,11 @@ class ConvenioMaringa:
     def opcoes_relatorio(self):
         try:
             WebDriverWait(self.driver, 3).until(
-                EC.element_to_be_clickable(MaringaLocators.CAMPO_DATA_INI)).send_keys(data.DATA_INICIO)
-            time.sleep(0.5)
+                EC.element_to_be_clickable(PortoNacionalLocators.CAMPO_DATA_INI)).send_keys(data.DATA_INICIO)
+            time.sleep(1)
+            self.driver.find_element(*PortoNacionalLocators.CAMPO_DATA_FIM).click()
             WebDriverWait(self.driver, 1).until(
-                EC.element_to_be_clickable(MaringaLocators.CAMPO_DATA_FIM)).send_keys(data.DATA_FINAL)
+                EC.element_to_be_clickable(PortoNacionalLocators.CAMPO_DATA_FIM)).send_keys(data.DATA_FINAL)
             time.sleep(0.1)
             return True
         except Exception as e:
@@ -90,7 +92,7 @@ class ConvenioMaringa:
     def download_relatorio(self):
         try:
             WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(MaringaLocators.BOTAO_GERAR)).click()
+                EC.element_to_be_clickable(PortoNacionalLocators.BOTAO_GERAR)).click()
             time.sleep(1)
             try:
                 pg.locateOnScreen(
@@ -100,8 +102,8 @@ class ConvenioMaringa:
                 )
                 print("Sem relatórios encontrados com os parâmetros")
                 return True
-            except:
-                pass
+            except Exception as e:
+                print (f"Erro: {e}")
             return True
         except Exception as e:
             print(f"Erro: {e}")
