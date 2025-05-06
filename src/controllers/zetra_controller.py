@@ -9,6 +9,7 @@ from src.processadoras.zetra.convenios.curitiba import ConvenioCuritiba
 from src.processadoras.zetra.convenios.HospServPublico import ConvenioHospServPublico
 from src.processadoras.zetra.convenios.hortolandia import ConvenioHortolandia
 from src.processadoras.zetra.convenios.pref_rio import ConvenioPrefRio
+from src.processadoras.zetra.convenios.maua import ConvenioMaua
 from src.core.file_manager import renomear_e_mover_arquivos as file_manager
 from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
@@ -30,7 +31,8 @@ class ZetraController:
             'hospital_do_servidor_publico': ConvenioHospServPublico,
             'hortolandia': ConvenioHortolandia,
             'nova_lima': ConvenioNovaLima,
-            'pref_rio': ConvenioPrefRio
+            'pref_rio': ConvenioPrefRio,
+            'maua': ConvenioMaua
         }
 
     def executar_fluxo_completo(self, nome_convenio: str) -> bool:

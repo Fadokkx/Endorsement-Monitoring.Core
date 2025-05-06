@@ -128,19 +128,19 @@ class ConvenioPrefRio:
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(PrefRioLocators.DATA_INICIO)
             ).send_keys(data.DATA_OPERACOES)
-            self.driver.execute_script("document.body.style.zoom='80%'")
+            self.driver.execute_script("document.body.style.zoom='60%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)
             time.sleep(1)
             
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
             
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.CHECKBOX_DEFERIDA)).click()
             time.sleep(1)
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
             
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.SELEC_OPCOES))
