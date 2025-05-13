@@ -37,7 +37,7 @@ def main():
     try:
         cip = CipController(driver)
         
-        convenios = ['govmt', 'govsp', 'govsefazsp'] #[None] OU ['govmt', 'govsp', 'govsefazsp']
+        convenios = [None] #[None] OU ['govmt', 'govsp', 'govsefazsp']
         
         resultados = cip.executar_todos_convenios(convenios)
 
@@ -52,7 +52,7 @@ def main():
     try:
         consigfacil = ConsigFacilController(driver)
 
-        convenios = ['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
+        convenios = ['porto_velho'] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
         
         resultados = consigfacil.executar_todos_convenios(convenios)
 
