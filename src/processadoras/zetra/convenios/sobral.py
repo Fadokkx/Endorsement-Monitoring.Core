@@ -11,7 +11,7 @@ import os
 
 load_dotenv()
 class SobralLocators:
-    MENU_PRINCIPAL = (By.XPATH, '//*[@id="container"]/ul/li[2]/a')
+    MENU_PRINCIPAL = (By.XPATH, '//*[@id="container"]/ul/li[3]/a')
     MENU_RELATORIOS = (By.XPATH, '//*[@id="menuRelatorio"]/ul/li/a')
     CAMPO_USUARIO = (By.NAME, "username")
     BOTAO_CONTINUAR = (By.XPATH, '//*[@id="no-back"]/div/div[1]/form/div[2]/div[2]/button')
