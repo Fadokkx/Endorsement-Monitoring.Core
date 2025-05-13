@@ -1,0 +1,17 @@
+trigger: none
+
+pr: none
+
+stages:
+- stage: Deploy
+  jobs:
+  - job: DeployJob
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - checkout: self
+
+    - script: |
+        echo "Deployando commit específico: $(Build.SourceVersion)"
+        echo fazendo download de dependências
+        pip install -r requirements.txt
