@@ -12,7 +12,6 @@ from src.controllers.serpro_controller import SerproController
 from src.controllers.siconsig_controller import SiConsigController
 from src.controllers.sigconsig_controller import SigConsigController
 from src.controllers.zetra_controller import ZetraController
-
 from dotenv import load_dotenv
 
 def main():
@@ -37,7 +36,7 @@ def main():
     try:
         cip = CipController(driver)
         
-        convenios = ['govmt', 'govsp', 'govsefazsp'] #[None] OU ['govmt', 'govsp', 'govsefazsp']
+        convenios = [None] #[None] OU ['govmt', 'govsp', 'govsefazsp']
         
         resultados = cip.executar_todos_convenios(convenios)
 
@@ -52,7 +51,7 @@ def main():
     try:
         consigfacil = ConsigFacilController(driver)
 
-        convenios = ['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
+        convenios = [None] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
         
         resultados = consigfacil.executar_todos_convenios(convenios)
 
@@ -84,7 +83,7 @@ def main():
     try:
         Asban = AsbanController(driver)
 
-        convenios = ['cachoeirinha'] #[None] OU ['cachoeirinha']
+        convenios = [None] #[None] OU ['cachoeirinha']
         
         resultados = Asban.executar_todos_convenios(convenios)
 
@@ -99,7 +98,7 @@ def main():
     try:
         consignet = ConsigNetController(driver)    
         
-        convenios = ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev'] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
+        convenios = [None] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
         
         resultados = consignet.executar_todos_convenios(convenios)
                 
@@ -115,7 +114,7 @@ def main():
     try:
         consiglog = ConsigLogController(driver)
         
-        convenios = ['iprev_santo_andre', 'amazonas', 'duque_de_caxias'] #[None] ou ['iprev_santo_andre', 'amazonas', 'duque_de_caxias']
+        convenios = [None] #[None] ou ['iprev_santo_andre', 'amazonas', 'duque_de_caxias']
         
         resultados = consiglog.executar_todos_convenios(convenios)
 

@@ -91,16 +91,16 @@ class ConvenioDuqueDeCaxias:
                 print("Sem necessidade de confirmação")
             
             try:
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 4).until(
                     EC.element_to_be_clickable(DuqueLocators.COOKIES_NOTIF)).click()        
             except:
                 print("Sem necessidade de confirmação de cookies")
                 
-            WebDriverWait(self.driver, 20).until(
-                EC.element_to_be_clickable(DuqueLocators.ABA_RELATORIO)).click()
-            WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(DuqueLocators.OPCOES_CONSIGNACOES)).click()
             WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable(DuqueLocators.ABA_RELATORIO)).click()
+            WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable(DuqueLocators.OPCOES_CONSIGNACOES)).click()
+            WebDriverWait(self.driver, 1).until(
                 EC.element_to_be_clickable(DuqueLocators.OPCAO_CONSIGNACAO)).click()
             return True
         

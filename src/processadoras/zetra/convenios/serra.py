@@ -62,7 +62,7 @@ class ConvenioSerra:
             return False
         
     def troca_senha(self):
-        time.sleep(1)
+        time.sleep(0.5)
         try:
             self.driver.find_element(By.XPATH,'//*[@id="senha"]').click()
             self.driver.execute_script("document.body.style.zoom='80%'")
@@ -72,7 +72,7 @@ class ConvenioSerra:
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
             self.driver.find_element(By.XPATH, '/html/body').send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.ID,"senhaNova").send_keys(self.password)           
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
@@ -84,7 +84,7 @@ class ConvenioSerra:
             return True
     
     def confirmacao_leitura(self):
-        time.sleep(1)
+        time.sleep(0.5)
         try:
             self.driver.find_element(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div/div/fieldset/div/label[1]').click()
             WebDriverWait(self.driver, 10).until(
@@ -96,7 +96,7 @@ class ConvenioSerra:
 
     def navegar_menu(self):
         try:
-            time.sleep(1)
+            time.sleep(0.1)
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(SerraLocators.MENU_PRINCIPAL)
             ).click()
@@ -118,14 +118,14 @@ class ConvenioSerra:
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SerraLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)
-            time.sleep(1)
+            time.sleep(0.1)
             
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             #CHECKBOX
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SerraLocators.CHECKBOX_DEFERIDA)).click()
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             
             WebDriverWait(self.driver, 10).until(
@@ -134,13 +134,13 @@ class ConvenioSerra:
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SerraLocators.OPCAO_CSV)
             ).click()
-            time.sleep(1)
+            time.sleep(0.1)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SerraLocators.BOTAO_GERAR))
             self.driver.find_element(*SerraLocators.BOTAO_GERAR).click()    
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(SerraLocators.SENHA_AUTORIZER))
-            time.sleep(1)  
+            time.sleep(0.1)  
             return True
         except Exception as e:
             print(f"Erro nas opções de relatório: {e}")
@@ -148,11 +148,11 @@ class ConvenioSerra:
         
     def autorizacao_gerador(self):
         try:
-            time.sleep(1)
+            time.sleep(0.5)
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(SerraLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
             self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
-            time.sleep(1)
+            time.sleep(0.1)
             WebDriverWait(self.driver, 60).until(
                 EC.presence_of_element_located(SerraLocators.DATA_INICIO))
             return True
@@ -162,11 +162,11 @@ class ConvenioSerra:
             
     def download_arquivo(self):
         try:
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.execute_script("document.body.style.zoom='33%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SerraLocators.OPCOES_DOWNLOAD)).click()
