@@ -42,21 +42,21 @@ class ConvenioPortoNacional:
             try:
                 WebDriverWait(self.driver, 1.5).until(
                     EC.element_to_be_clickable(PortoNacionalLocators.BOTAO_PERFIL)).click()
-                WebDriverWait(self.driver, 5).until(
+                WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(PortoNacionalLocators.BOTAO_TROCA_PERFIL)).click()
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 3).until(
                     EC.element_to_be_clickable(PortoNacionalLocators.OPCAO_PORTO_NACIONAL)).click()
                 return True
             
             except:
                 self.driver.get(self.url)
                 self.driver.find_element(*PortoNacionalLocators.CAMPO_USER).click()
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(PortoNacionalLocators.CAMPO_USER)).send_keys(self.user)
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(PortoNacionalLocators.CAMPO_SENHA)).send_keys(self.password)
                 self.driver.find_element(*PortoNacionalLocators.BOTAO_ENTRAR).click()
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(PortoNacionalLocators.OPCAO_PORTO_NACIONAL)).click()
                 return True
             

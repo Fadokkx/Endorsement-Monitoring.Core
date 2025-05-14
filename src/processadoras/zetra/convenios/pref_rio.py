@@ -15,11 +15,11 @@ class PrefRioLocators:
     CAMPO_SENHA = (By.NAME, "senha")
     CAMPO_CAPTCHA = (By.ID, "captcha")
     BOTAO_LOGIN = (By.XPATH, '//*[@id="btnOK"]')
-    MENU_PRINCIPAL = (By.XPATH, '//*[@id="container"]/ul/li[2]/a')
+    MENU_PRINCIPAL = (By.XPATH, '//*[@id="container"]/ul/li[3]/a')
     MENU_RELATORIOS = (By.XPATH, '//*[@id="menuRelatorio"]/ul/li[1]/a')
     DATA_INICIO = (By.XPATH, '//*[@id="periodoIni"]')
     DATA_FIM = (By.XPATH, '//*[@id="periodoFim"]')
-    CHECKBOX_DEFERIDA = (By.XPATH, '//*[@id="SAD_CODIGO7"]')
+    CHECKBOX_DEFERIDA = (By.XPATH, '//*[@id="SAD_CODIGO5"]')
     BOTAO_GERAR = (By.XPATH, '//*[@id="btnEnvia"]')
     BOTAO_AUTORIZA_GERADOR = (By.XPATH, "/html/body/div[2]/div[3]/div/button[2]")
     OPCOES_DOWNLOAD = (By.XPATH, '//*[@id="userMenu"]/div/span')
@@ -132,39 +132,39 @@ class ConvenioPrefRio:
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)
-            time.sleep(1)
+            time.sleep(0.1)
             
             self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.CHECKBOX_DEFERIDA)).click()
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
             
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.SELEC_OPCOES))
             self.driver.find_element(*PrefRioLocators.SELEC_OPCOES).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(PrefRioLocators.OPCAO_CSV)
-            ).click()
-            time.sleep(1)
+                EC.element_to_be_clickable(PrefRioLocators.OPCAO_CSV)).click()
+            time.sleep(0.1)
+            self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.BOTAO_GERAR))
             self.driver.find_element(*PrefRioLocators.BOTAO_GERAR).click()    
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(PrefRioLocators.SENHA_AUTORIZER))
-            time.sleep(1)  
+                EC.presence_of_element_located(PrefRioLocators.SENHA_AUTORIZER)) 
             return True
         except Exception as e:
             print(f"Erro nas opções de relatório: {e}")
             return False     
         
     def autorizacao_gerador(self):
-        try:
+        try: 
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(PrefRioLocators.SENHA_AUTORIZER)).send_keys(self.password)
-            self.driver.find_element(*PrefRioLocators.BOTAO_AUTORIZA_GERADOR).click()
+            WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(PrefRioLocators.BOTAO_AUTORIZA_GERADOR)).click()
             time.sleep(1)
             WebDriverWait(self.driver, 60).until(
                 EC.presence_of_element_located(PrefRioLocators.DATA_INICIO))

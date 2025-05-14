@@ -42,6 +42,12 @@ class ConsigFacilController():
             if not convenio.login():
                 raise Exception("Falha no login")
             
+            try:
+                if not convenio.troca_senha():
+                    raise Exception("Falha na troca de senha")
+            except:
+                print("Sem necessidade de troca de senha")
+
             if not convenio.confirmacao_leitura_novidades():
                 raise Exception ("Falha na Confirmação de leitura.") 
             

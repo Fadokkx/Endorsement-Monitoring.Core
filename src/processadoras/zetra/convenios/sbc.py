@@ -10,7 +10,7 @@ import os
 
 load_dotenv()
 class SBCLocators:
-    MENU_PRINCIPAL = (By.XPATH, '//*[@id="container"]/ul/li[2]/a')
+    MENU_PRINCIPAL = (By.XPATH, '//*[@id="container"]/ul/li[3]/a')
     MENU_RELATORIOS = (By.XPATH, '//*[@id="menuRelatorio"]/ul/li/a')
     CAMPO_USUARIO = (By.NAME, "username")
     BOTAO_CONTINUAR = (By.XPATH, '//*[@id="no-back"]/div/div[1]/form/div[2]/div/button')
@@ -27,6 +27,7 @@ class SBCLocators:
     OPCAO_CSV = (By.XPATH, '//*[@id="formato"]/option[4]')
     SENHA_AUTORIZER = (By.XPATH, '//*[@id="senha2aAutorizacao"]')
     BOTAO_VOLTA_TROCA_SENHA = (By.XPATH, '//*[@id="no-back"]/div/div[1]/div[3]/button')
+    BODY = (By.XPATH, "/html/body")
         
 class ConvenioSbc:
     def __init__(self, driver: WebDriver):
@@ -62,7 +63,7 @@ class ConvenioSbc:
             return False
         
     def troca_senha(self):
-        time.sleep(1)
+        time.sleep(0.5)
         try:
             self.driver.find_element(By.XPATH,'//*[@id="senha"]').click()
             self.driver.execute_script("document.body.style.zoom='80%'")
@@ -71,7 +72,7 @@ class ConvenioSbc:
             self.driver.find_element(By.XPATH,'//*[@id="senha"]').send_keys(self.second_password)
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
-            self.driver.find_element(By.XPATH, '/html/body').send_keys(Keys.PAGE_DOWN)
+            self.driver.find_element(SBCLocators.BODY).send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
             self.driver.find_element(By.ID,"senhaNova").send_keys(self.password)           
             WebDriverWait(self.driver, 10).until(
@@ -84,7 +85,7 @@ class ConvenioSbc:
             return True
     
     def confirmacao_leitura(self):
-        time.sleep(1)
+        time.sleep(0.5)
         try:
             self.driver.find_element(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div/div/fieldset/div/label[1]').click()
             WebDriverWait(self.driver, 10).until(
@@ -96,7 +97,7 @@ class ConvenioSbc:
 
     def navegar_menu(self):
         try:
-            time.sleep(1)
+            time.sleep(0.1)
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(SBCLocators.MENU_PRINCIPAL)
             ).click()
@@ -118,29 +119,29 @@ class ConvenioSbc:
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SBCLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)
-            time.sleep(1)
+            time.sleep(0.1)
             
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            self.driver.find_element(*SBCLocators.BODY).send_keys(Keys.PAGE_DOWN)
+            time.sleep(0.1)
+            
             #CHECKBOX
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SBCLocators.CHECKBOX_DEFERIDA)).click()
-            time.sleep(1)
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-
+            time.sleep(0.3)
+            self.driver.find_element(*SBCLocators.BODY).send_keys(Keys.PAGE_DOWN)
+            time.sleep(0.3)
+            self.driver.find_element(*SBCLocators.BODY).send_keys(Keys.PAGE_DOWN)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.SELEC_OPCOES))
-            self.driver.find_element(*SBCLocators.SELEC_OPCOES).click()
+                EC.element_to_be_clickable(SBCLocators.SELEC_OPCOES)).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.OPCAO_CSV)
-            ).click()
-            time.sleep(1)
+                EC.element_to_be_clickable(SBCLocators.OPCAO_CSV)).click()
+            time.sleep(0.1)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SBCLocators.BOTAO_GERAR))
             self.driver.find_element(*SBCLocators.BOTAO_GERAR).click()    
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(SBCLocators.SENHA_AUTORIZER))
-            time.sleep(1)  
+            time.sleep(0.1)  
             return True
         except Exception as e:
             print(f"Erro nas opções de relatório: {e}")
@@ -148,11 +149,11 @@ class ConvenioSbc:
         
     def autorizacao_gerador(self):
         try:
-            time.sleep(1)
+            time.sleep(0.1)
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(SBCLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
             self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
-            time.sleep(1)
+            time.sleep(0.5)
             WebDriverWait(self.driver, 60).until(
                 EC.presence_of_element_located(SBCLocators.DATA_INICIO))
             return True
@@ -162,17 +163,17 @@ class ConvenioSbc:
             
     def download_arquivo(self):
         try:
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.execute_script("document.body.style.zoom='33%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SBCLocators.OPCOES_DOWNLOAD)).click()
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SBCLocators.BOTAO_DOWNLOAD)).click()
-            time.sleep(1)
+            time.sleep(0.5)
             return True
         
         except Exception as e:

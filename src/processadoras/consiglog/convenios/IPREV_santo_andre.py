@@ -51,10 +51,16 @@ class ConvenioIprevSantoAndre:
             self.driver.get(self.url)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SantoAndreLocators.CAMPO_USER)).send_keys(self.user)
+            try:
+                WebDriverWait(self.driver, 5).until(
+                    EC.element_to_be_clickable(SantoAndreLocators.COOKIES_NOTIF)).click()
+            except:
+                pass
+            time.sleep(0.1)
             self.driver.find_element(*SantoAndreLocators.BOTAO_CONTINUAR).click()
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SantoAndreLocators.CAMPO_SENHA)).send_keys(self.password)
-            time.sleep(1)
+            time.sleep(0.5)
             self.driver.find_element(*SantoAndreLocators.BOTAO_ENTRAR).click()
             
             try:
@@ -90,18 +96,12 @@ class ConvenioIprevSantoAndre:
                     time.sleep(0.5)
             except:
                 print("Sem necessidade de confirmação")
-            
-            try:
-                WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable(SantoAndreLocators.COOKIES_NOTIF)).click()        
-            except:
-                print("Sem necessidade de confirmação de cookies")
                 
-            WebDriverWait(self.driver, 20).until(
-                EC.element_to_be_clickable(SantoAndreLocators.ABA_RELATORIO)).click()
             WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(SantoAndreLocators.OPCOES_CONSIGNACOES)).click()
+                EC.element_to_be_clickable(SantoAndreLocators.ABA_RELATORIO)).click()
             WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable(SantoAndreLocators.OPCOES_CONSIGNACOES)).click()
+            WebDriverWait(self.driver, 1).until(
                 EC.element_to_be_clickable(SantoAndreLocators.OPCAO_CONSIGNACAO)).click()
             return True
         

@@ -42,20 +42,20 @@ class ConvenioMaringa:
             try:
                 WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(MaringaLocators.BOTAO_PERFIL)).click()
-                WebDriverWait(self.driver, 5).until(
+                WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(MaringaLocators.BOTAO_TROCA_PERFIL)).click()
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(MaringaLocators.OPCAO_MARINGA)).click()
                 return True
             
             except:
                 self.driver.get(self.url)
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(MaringaLocators.CAMPO_USER)).send_keys(self.user)
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(MaringaLocators.CAMPO_SENHA)).send_keys(self.password)
                 self.driver.find_element(*MaringaLocators.BOTAO_ENTRAR).click()
-                WebDriverWait(self.driver, 10).until(
+                WebDriverWait(self.driver, 2).until(
                     EC.element_to_be_clickable(MaringaLocators.OPCAO_MARINGA)).click()
                 return True
             

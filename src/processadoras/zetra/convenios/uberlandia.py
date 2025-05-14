@@ -180,7 +180,8 @@ class ConvenioUberlandia:
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(UberlandiaLocators.OPCAO_CSV)
             ).click()
-            time.sleep(1)
+            time.sleep(0.3)
+            self.driver.find_element(*UberlandiaLocators.BODY).send_keys(Keys.PAGE_DOWN)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(UberlandiaLocators.BOTAO_GERAR))
             self.driver.find_element(*UberlandiaLocators.BOTAO_GERAR).click()    

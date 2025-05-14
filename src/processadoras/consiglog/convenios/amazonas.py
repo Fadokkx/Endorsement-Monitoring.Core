@@ -92,11 +92,11 @@ class ConvenioAmazonas:
             except:
                 print("Sem necessidade de confirmação de cookies")
                 
-            WebDriverWait(self.driver, 20).until(
-                EC.element_to_be_clickable(AmazonasLocators.ABA_RELATORIO)).click()
-            WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(AmazonasLocators.OPCOES_CONSIGNACOES)).click()
             WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable(AmazonasLocators.ABA_RELATORIO)).click()
+            WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable(AmazonasLocators.OPCOES_CONSIGNACOES)).click()
+            WebDriverWait(self.driver, 1).until(
                 EC.element_to_be_clickable(AmazonasLocators.OPCAO_CONSIGNACAO)).click()
             return True
         
