@@ -51,20 +51,44 @@ class ConvenioCuritiba:
                 EC.element_to_be_clickable(CuritibaLocators.BOTAO_CONTINUAR)
             ).click()
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(CuritibaLocators.CAMPO_SENHA)
-            ).send_keys(self.second_password)
-            
+                EC.presence_of_element_located(CuritibaLocators.CAMPO_SENHA)).send_keys(self.second_password)
             ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter...: ")
             self.driver.find_element(*CuritibaLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
             self.driver.find_element(*CuritibaLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
-            return True
+            
+            try:
+                WebDriverWait(self.driver, 1.5).until(
+                            EC.presence_of_element_located(CuritibaLocators.MENU_PRINCIPAL))
+                return True
+            except Exception as e:
+                print(f"Falha no login ou CAPTCHA incorreto. Tentando novamente")
+                
+            while True:
+                try:
+                    WebDriverWait(self.driver, 1.5).until(
+                        EC.presence_of_element_located(CuritibaLocators.CAMPO_USUARIO)).send_keys(self.user)
+                    WebDriverWait(self.driver, 2).until(
+                        EC.element_to_be_clickable(CuritibaLocators.BOTAO_CONTINUAR)).click()
+                    WebDriverWait(self.driver, 2).until(
+                        EC.element_to_be_clickable(CuritibaLocators.CAMPO_SENHA)).send_keys(self.second_password)
+                    ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
+                    WebDriverWait(self.driver, 1).until(
+                        EC.presence_of_element_located(CuritibaLocators.CAMPO_CAPTCHA)).send_keys(ZetraCaptchaResolver)
+                    self.driver.find_element(*CuritibaLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
+                    WebDriverWait(self.driver, 1.5).until(
+                        EC.presence_of_element_located(CuritibaLocators.MENU_PRINCIPAL))
+                    return True
+
+                except Exception as e:
+                    print(f"Falha no login ou CAPTCHA incorreto. Tentando novamente")
+                    time.sleep(0.5)
             
         except Exception as e:
             print(f"Erro no login: {e}")
             return False
         
     def troca_senha(self):
-        time.sleep(1)
+        time.sleep(0.5)
         try:
             self.driver.find_element(By.XPATH,'//*[@id="senha"]').click()
             self.driver.execute_script("document.body.style.zoom='80%'")
