@@ -127,10 +127,12 @@ class ConvenioSbc:
             #CHECKBOX
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SBCLocators.CHECKBOX_DEFERIDA)).click()
+            time.sleep(0.3)
+            self.driver.find_element(*SBCLocators.BODY).send_keys(Keys.PAGE_DOWN)
+            time.sleep(0.3)
             self.driver.find_element(*SBCLocators.BODY).send_keys(Keys.PAGE_DOWN)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SBCLocators.SELEC_OPCOES))
-            self.driver.find_element(*SBCLocators.SELEC_OPCOES).click()
+                EC.element_to_be_clickable(SBCLocators.SELEC_OPCOES)).click()
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SBCLocators.OPCAO_CSV)).click()
             time.sleep(0.1)

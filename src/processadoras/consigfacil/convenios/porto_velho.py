@@ -17,11 +17,11 @@ class PortoVelhoLocators:
     BOTAO_LOGIN = (By.XPATH,'//*[@id="html"]/body/div[1]/div[2]/form/button')
     CAMPO_SENHA_TROCA = (By.XPATH, '//*[@id="t_dadosp"]/tbody/tr[2]/td/table/tbody/tr[2]/td/input')
     CAMPO_NOVA_SENHA_TROCA = (By.XPATH, "/html/body/div[3]/div/div[2]/div/div/div/div/div/form/table/tbody/tr[2]/td/table/tbody/tr[4]/td/input")
-    CAMPO_NOVA_SENHA_CONFIRMA = (By.XPATH, '//*[@id="confirmacao_senha"]')
+    CAMPO_NOVA_SENHA_CONFIRMA = (By.XPATH, "/html/body/div[3]/div/div[2]/div/div/div/div/div/form/table/tbody/tr[2]/td/table/tbody/tr[6]/td/input")
     BOTAO_ENTRAR_TROCA_SENHA = (By.XPATH, "/html/body/div[3]/div/div[2]/div/div/div/div/div/form/table/tbody/tr[3]/td/input")
     BOTAO_CONFIRMA_LEITURA = (By.XPATH, '//*[@id="staticBackdrop"]/div/div/div[3]/button[1]')
     BOTAO_NOVIDADES = (By.XPATH, '//*[@id="modalExibeBanners"]/div/div/div[1]/button')
-    ABA_RELATORIO = (By.XPATH, '//*[@id="sidebar"]/ul/div[1]/div[2]/div/div/div/li[6]/a')
+    ABA_RELATORIO = (By.XPATH, '//*[@id="sidebar"]/ul/div[1]/div[2]/div/div/div/li[2]/a')
     SELEC_RELATORIO = (By.XPATH, '//*[@id="objeto_1009"]')
     DATA_INICIO = (By.XPATH, '//*[@id="de"]')
     DATA_FIM = (By.XPATH, '//*[@id="ate"]')
@@ -36,6 +36,7 @@ class ConvenioPortoVelho:
         self.driver = driver
         self.url = os.getenv("CONSIGFACIL_PORTO_VELHO_URL")
         self.user = os.getenv("CONSIGFACIL_USER")
+        self.second_password = os.getenv("CONSIGFACIL_SECOND_PASS")
         self.password = os.getenv("CONSIGFACIL_PASS")
         
         if not all([self.url, self.user, self.password]):
@@ -48,7 +49,7 @@ class ConvenioPortoVelho:
                 EC.presence_of_element_located(PortoVelhoLocators.CAMPO_LOGIN)
             )
             self.driver.find_element(*PortoVelhoLocators.CAMPO_LOGIN).send_keys(self.user)
-            self.driver.find_element(*PortoVelhoLocators.CAMPO_SENHA).send_keys(self.password)
+            self.driver.find_element(*PortoVelhoLocators.CAMPO_SENHA).send_keys(self.second_password)
             CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
             self.driver.find_element(*PortoVelhoLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
             self.driver.find_element(*PortoVelhoLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
@@ -69,8 +70,6 @@ class ConvenioPortoVelho:
             WebDriverWait(self.driver, 1.5).until(
                 EC.element_to_be_clickable(PortoVelhoLocators.CAMPO_NOVA_SENHA_CONFIRMA)).send_keys(self.second_password)
             time.sleep(0.3)
-            WebDriverWait(self.driver, 1.0).until(
-                EC.element_to_be_clickable(PortoVelhoLocators.BODY)).click()
             self.driver.find_element(*PortoVelhoLocators.BODY).send_keys(Keys.PAGE_DOWN)
             time.sleep(0.1)
             WebDriverWait(self.driver, 1.5).until(
@@ -78,7 +77,7 @@ class ConvenioPortoVelho:
             return True
         except Exception as e:
             print(f"Erro: {e}")
-            return False        
+            return False 
         
     def confirmacao_leitura_novidades(self):
         try:
