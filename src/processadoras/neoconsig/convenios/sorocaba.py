@@ -50,20 +50,17 @@ class ConvenioSorocaba:
     def login(self):
         try:
             self.driver.get(self.url)
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(SorocabaLocators.SELEC_PORTAL)).click()
             
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SorocabaLocators.SELEC_PORTAL))
-            self.driver.find_element(*SorocabaLocators.SELEC_PORTAL).click()
-            
+                EC.element_to_be_clickable(SorocabaLocators.PORTAL_CONSIG)).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(SorocabaLocators.PORTAL_CONSIG))
-            self.driver.find_element(*SorocabaLocators.PORTAL_CONSIG).click()
-            
-            WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(SorocabaLocators.CAMPO_LOGIN))
-            self.driver.find_element(*SorocabaLocators.CAMPO_LOGIN).send_keys(self.user)
+                EC.presence_of_element_located(SorocabaLocators.CAMPO_LOGIN)).send_keys(self.user)
             time.sleep(0.5)
-            self.driver.find_element(*SorocabaLocators.BOTAO_SEQUENCIA).click()
+            WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable(SorocabaLocators.BOTAO_SEQUENCIA)).click()
+            
             time.sleep(4)
             
             self.driver.find_element(*SorocabaLocators.SELEC_CONVENIO_BOTAO).click()
@@ -79,11 +76,33 @@ class ConvenioSorocaba:
             
             NC_CAPTCHA_RESOLVER = input("Digite o Captcha e aperte enter: ")
             self.driver.find_element(*SorocabaLocators.CAMPO_CAPTCHA).send_keys(NC_CAPTCHA_RESOLVER)
-            
             self.driver.find_element(*SorocabaLocators.BOTAO_LOGIN).click()
-            return True
+            try:
+                WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(SorocabaLocators.BOTAO_SENHA))
+                return True
+            except:
+                print("Captcha digitado incorretamente, tentar novamente")
+            while True:
+                try:
+                    self.driver.find_element(*SorocabaLocators.SELEC_CONVENIO_BOTAO).click()
+                    self.driver.find_element(*SorocabaLocators.SELEC_CONVENIO_BUSCA).send_keys("PREFEITURA MUNICIPAL DE SOROCABA")
+                    self.driver.find_element(*SorocabaLocators.SELEC_CONVENIO_BUSCA).send_keys(Keys.ENTER)
+                    self.driver.find_element(*SorocabaLocators.SELEC_ACESSO_BOTAO).click()
+                    WebDriverWait(self.driver, 10).until(
+                        EC.element_to_be_clickable(SorocabaLocators.SELEC_ACESSO_BOTAO))
+                    self.driver.find_element(*SorocabaLocators.SELEC_ACESSO_OPCAO).click()
+                    self.driver.find_element(By.XPATH, "/html/body").click()
+                    NC_CAPTCHA_RESOLVER = input("Digite o Captcha e aperte enter: ")
+                    self.driver.find_element(*SorocabaLocators.CAMPO_CAPTCHA).send_keys(NC_CAPTCHA_RESOLVER)
+                    self.driver.find_element(*SorocabaLocators.BOTAO_LOGIN).click()
+                    WebDriverWait(self.driver, 2).until(
+                        EC.element_to_be_clickable(SorocabaLocators.BOTAO_SENHA))
+                    return True
+                except:
+                    print("Captcha digitado incorretamente, favor digitar novamente")
         except Exception as e:
-            pass
+            print(f"Erro: {e}")
     
     def acesso_senha(self):
         try:
