@@ -52,7 +52,7 @@ class ConvenioCuritiba:
             ).click()
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(CuritibaLocators.CAMPO_SENHA)).send_keys(self.second_password)
-            ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter...: ")
+            ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
             self.driver.find_element(*CuritibaLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
             self.driver.find_element(*CuritibaLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
             
