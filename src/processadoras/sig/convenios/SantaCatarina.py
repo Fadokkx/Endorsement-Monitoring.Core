@@ -40,9 +40,29 @@ class ConvenioSantaCatarina:
             SigConsigCaptchaResolver = input("Resolva o captcha e pressione Enter...: ")
             self.driver.find_element(*SantaCatarinaLocators.CAMPO_CAPTCHA).send_keys(SigConsigCaptchaResolver)
             self.driver.find_element(*SantaCatarinaLocators.BOTAO_ENTRAR).click()
-            time.sleep (10)
-            return True
-            
+            try:
+                WebDriverWait(self.driver, 2).until(
+                    EC.presence_of_element_located(SantaCatarinaLocators.ABA_RELATORIO))
+                return True
+            except:
+                print("Captcha incorreto digitado, favor tentar novamente")
+                while True:
+                    try:
+                        WebDriverWait(self.driver, 15).until(
+                            EC.presence_of_element_located(SantaCatarinaLocators.CAMPO_USER)).send_keys(self.user)
+                        self.driver.find_element(*SantaCatarinaLocators.CAMPO_SENHA).clear()
+                        WebDriverWait(self.driver, 10).until(
+                            EC.presence_of_element_located(SantaCatarinaLocators.CAMPO_SENHA)).send_keys(self.password)
+
+                        SigConsigCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
+                        self.driver.find_element(*SantaCatarinaLocators.CAMPO_CAPTCHA).clear()
+                        self.driver.find_element(*SantaCatarinaLocators.CAMPO_CAPTCHA).send_keys(SigConsigCaptchaResolver)
+                        self.driver.find_element(*SantaCatarinaLocators.BOTAO_ENTRAR).click()
+                        WebDriverWait(self.driver, 1.5).until(
+                            EC.presence_of_element_located(SantaCatarinaLocators.ABA_RELATORIO))
+                        return True
+                    except:
+                        print("Captcha incorreto digitado, favor tentar novamente")    
         except Exception as e:
             print(f"Erro no login: {e}")
             return False

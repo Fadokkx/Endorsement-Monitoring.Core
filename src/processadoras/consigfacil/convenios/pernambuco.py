@@ -47,8 +47,27 @@ class ConvenioPernambuco:
             CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
             self.driver.find_element(*PernambucoLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
             self.driver.find_element(*PernambucoLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
-            time.sleep(1)
-            return True
+            try:
+                WebDriverWait(self.driver, 1).until(
+                    EC.presence_of_element_located(PernambucoLocators.ABA_RELATORIO))
+                return True
+            except:
+                print("Captcha digitado incorretamente, tentar novamente")
+    
+            while True:
+                try:
+                    WebDriverWait(self.driver, 1).until(
+                        EC.presence_of_element_located(PernambucoLocators.CAMPO_LOGIN)).send_keys(self.user)
+                    self.driver.find_element(*PernambucoLocators.CAMPO_SENHA).send_keys(self.password)
+                    CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
+                    self.driver.find_element(*PernambucoLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
+                    self.driver.find_element(*PernambucoLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
+                    WebDriverWait(self.driver, 1.5).until(
+                        EC.element_to_be_clickable(PernambucoLocators.BOTAO_NOVIDADES))
+                    return True
+                except:
+                    print("Captcha digitado incorretamente, tentar novamente")
+                    time.sleep(0.5)
         
         except Exception as e:
             print(f"Erro: {e}")
@@ -57,20 +76,18 @@ class ConvenioPernambuco:
     def confirmacao_leitura_novidades(self):
         try:
             try:
-                if not self.driver.find_element(*PernambucoLocators.BOTAO_NOVIDADES).click():
-                    raise Exception("Sem novidades")
-            except Exception as e:
+                WebDriverWait(self.driver, 3.5).until(
+                    EC.element_to_be_clickable(PernambucoLocators.BOTAO_NOVIDADES)).click()
+            except:
                 print("Sem novidades.")
+            
+            time.sleep(1)
             
             try:
                 WebDriverWait(self.driver, 5).until(
-                    EC.element_to_be_clickable(PernambucoLocators.BOTAO_CAIXA_ENTRADA)
-                )
-                if not self.driver.find_element(*PernambucoLocators.BOTAO_CAIXA_ENTRADA).click():
-                    raise Exception("Sem novidades")
-                print(f"Erro {e}")
-            except Exception as e:
-                print(f"Erro: {e}")
+                    EC.element_to_be_clickable(PernambucoLocators.BOTAO_CONFIRMA_LEITURA)).click()
+            except:
+                print(f"Sem mensagens para serem confirmadas")
             return True
             
         except Exception as e:

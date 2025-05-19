@@ -1,5 +1,5 @@
 from src.processadoras.asban.core.asban_date_var import variaveis_data as data
-from src.processadoras.asban.core.asban_coord import AsbanCoord as AC
+from src.processadoras.asban.core.asban_paths import Diretorios_Imagem as DI
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -39,12 +39,15 @@ class ConvenioCachoeirinha:
         try:
             self.driver.get(self.url)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(CachoerinhaLocator.BOTAO_ENTRAR)).click()
-            WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(CachoerinhaLocator.CAMPO_LOGIN)).send_keys(self.user)
             self.driver.find_element(*CachoerinhaLocator.CAMPO_SENHA).send_keys(self.password)
             
-            pg.moveTo(AC.Campo_Captcha)
+            campo_captcha = pg.locateOnScreen(
+                DI.campo_captcha,
+                confidence=0.8,
+                minSearchTime=3
+            )
+            pg.moveTo(campo_captcha)
             pg.click()
             
             #Tempo pra clicar e fazer o captcha

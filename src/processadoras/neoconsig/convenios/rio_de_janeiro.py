@@ -59,7 +59,30 @@ class ConvenioRio:
             NC_CAPTCHA_RESOLVER = input("Digite o Captcha e aperte enter: ")
             self.driver.find_element(*RioLocators.CAMPO_CAPTCHA).send_keys(NC_CAPTCHA_RESOLVER)
             self.driver.find_element(*RioLocators.BOTAO_LOGIN).click()
-            return True
+            try:
+                WebDriverWait(self.driver, 3).until(
+                    EC.presence_of_element_located(RioLocators.BOTAO_SENHA))
+                return True
+            except:
+                print("Captcha digitado incorretamente, tentar novamente")
+            while True:
+                try:
+                    WebDriverWait(self.driver, 10).until(
+                    EC.element_to_be_clickable(RioLocators.SELEC_ACESSO)).click()
+                    WebDriverWait(self.driver, 10).until(
+                        EC.element_to_be_clickable(RioLocators.SELEC_TIPO_ACESSO)).click()
+                    WebDriverWait(self.driver, 10).until(
+                        EC.presence_of_element_located(RioLocators.CAMPO_LOGIN))
+                    self.driver.find_element(*RioLocators.CAMPO_LOGIN).send_keys(self.user)
+                    time.sleep(1)
+                    NC_CAPTCHA_RESOLVER = input("Digite o Captcha e aperte enter: ")
+                    self.driver.find_element(*RioLocators.CAMPO_CAPTCHA).send_keys(NC_CAPTCHA_RESOLVER)
+                    self.driver.find_element(*RioLocators.BOTAO_LOGIN).click()
+                    WebDriverWait(self.driver, 3).until(
+                    EC.presence_of_element_located(RioLocators.BOTAO_SENHA))
+                    return True
+                except:
+                    print("Captcha Digitado incorretamente, favor digitar novamente")
         except Exception as e:
             print(f"Erro: {e}")
     

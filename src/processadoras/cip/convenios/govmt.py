@@ -48,26 +48,42 @@ class ConvenioGovMT:
         try:
             try:
                 WebDriverWait(self.driver, 2).until(
-                    EC.element_to_be_clickable(CipLocators.BOTAO_TROCA_PERFIL)
-                )
-                self.driver.find_element(*CipLocators.BOTAO_TROCA_PERFIL).click()
-                    
+                    EC.element_to_be_clickable(CipLocators.BOTAO_TROCA_PERFIL)).click()
+                WebDriverWait(self.driver, 2.5).until(
+                    EC.element_to_be_clickable(CipLocators.SELEC_PERFIL))
+                return True
+            
             except:
                 self.driver.get(self.url)
                 WebDriverWait(self.driver, 15).until(
-                    EC.element_to_be_clickable(CipLocators.ABA_LOGIN))
-                self.driver.find_element(*CipLocators.ABA_LOGIN).click()
-                WebDriverWait(self.driver, 15).until(
-                    EC.presence_of_element_located(CipLocators.CAMPO_USUARIO))
-
-                self.driver.find_element(*CipLocators.CAMPO_USUARIO).send_keys(self.user)
+                    EC.element_to_be_clickable(CipLocators.ABA_LOGIN)).click()
+                WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located(CipLocators.CAMPO_USUARIO)).send_keys(self.user)
                 self.driver.find_element(*CipLocators.CAMPO_SENHA).send_keys(self.password)
                 CipCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
                 self.driver.find_element(*CipLocators.CAMPO_CAPTCHA).send_keys(CipCaptchaResolver)
                 self.driver.find_element(*CipLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
-                time.sleep(1)
-                
-            return True
+                try:
+                    WebDriverWait(self.driver, 1.5).until(
+                        EC.presence_of_element_located(CipLocators.SELEC_PERFIL))
+                    return True
+                except:
+                    print("Captcha digitado incorretamente, tentar novamente")
+    
+                while True:
+                    try:
+                        WebDriverWait(self.driver, 1).until(
+                            EC.presence_of_element_located(CipLocators.CAMPO_USUARIO)).send_keys(self.user)
+                        self.driver.find_element(*CipLocators.CAMPO_SENHA).send_keys(self.password)
+                        CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
+                        self.driver.find_element(*CipLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
+                        self.driver.find_element(*CipLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
+                        WebDriverWait(self.driver, 1.5).until(
+                            EC.element_to_be_clickable(CipLocators.SELEC_PERFIL))
+                        return True
+                    except:
+                        print("Captcha digitado incorretamente, tentar novamente")
+                        time.sleep(1)
 
         except Exception as e:
                 print(f"Erro {e}")
@@ -76,14 +92,12 @@ class ConvenioGovMT:
     
     def selec_perfil(self):
         try:
-            WebDriverWait(self.driver, 15).until(
-                EC.element_to_be_clickable(CipLocators.SELEC_PERFIL))
-            self.driver.find_element(*CipLocators.SELEC_PERFIL).click()
-            
-            WebDriverWait(self.driver, 15).until(
-                EC.element_to_be_clickable(CipLocators.OPCAO_PERFIL))
-            self.driver.find_element(*CipLocators.OPCAO_PERFIL).click()
-            time.sleep(1)
+            WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(CipLocators.SELEC_PERFIL)).click()
+
+            WebDriverWait(self.driver, 2).until(
+                EC.element_to_be_clickable(CipLocators.OPCAO_PERFIL)).click()
+            time.sleep(0.1)
             
             self.driver.find_element(*CipLocators.BOTAO_CONTINUAR).click()
             time.sleep(1)
@@ -204,6 +218,7 @@ class ConvenioGovMT:
                             pg.moveTo(csv_option)
                             pg.click(csv_option)
                             time.sleep(2)
+                            pg.press('esc')
                             pg.hotkey('ctrl', 'w')
                             return True
 

@@ -58,11 +58,36 @@ class ConvenioPrefRio:
                 EC.element_to_be_clickable(PrefRioLocators.BOTAO_CONTINUAR)).click()
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(PrefRioLocators.CAMPO_SENHA)).send_keys(self.password)
-            
             ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter...: ")
             self.driver.find_element(*PrefRioLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
             self.driver.find_element(*PrefRioLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
-            return True
+            time.sleep(0.1)
+            try:
+                WebDriverWait(self.driver, 1.5).until(
+                            EC.presence_of_element_located(PrefRioLocators.MENU_PRINCIPAL))
+                return True
+            except Exception as e:
+                print(f"Falha no login ou CAPTCHA incorreto. Tentando novamente")
+            
+            while True:
+                try:
+                    WebDriverWait(self.driver, 1.5).until(
+                        EC.presence_of_element_located(PrefRioLocators.CAMPO_USUARIO)).send_keys(self.second_user)
+                    WebDriverWait(self.driver, 2).until(
+                        EC.element_to_be_clickable(PrefRioLocators.BOTAO_CONTINUAR)).click()
+                    WebDriverWait(self.driver, 2).until(
+                        EC.element_to_be_clickable(PrefRioLocators.CAMPO_SENHA)).send_keys(self.password)
+                    ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
+                    WebDriverWait(self.driver, 1).until(
+                        EC.presence_of_element_located(PrefRioLocators.CAMPO_CAPTCHA)).send_keys(ZetraCaptchaResolver)
+                    self.driver.find_element(*PrefRioLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
+                    WebDriverWait(self.driver, 1.5).until(
+                        EC.presence_of_element_located(PrefRioLocators.MENU_PRINCIPAL))
+                    return True
+
+                except Exception as e:
+                    print(f"Falha no login ou CAPTCHA incorreto. Tentando novamente")
+                    time.sleep(0.7)
             
         except Exception as e:
             print(f"Erro no login: {e}")
@@ -128,27 +153,22 @@ class ConvenioPrefRio:
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(PrefRioLocators.DATA_INICIO)
             ).send_keys(data.DATA_OPERACOES)
-            self.driver.execute_script("document.body.style.zoom='60%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)
             time.sleep(0.1)
-            
             self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
-            time.sleep(0.1)
-            
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.CHECKBOX_DEFERIDA)).click()
             time.sleep(0.1)
             self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
-            
+            self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.SELEC_OPCOES))
             self.driver.find_element(*PrefRioLocators.SELEC_OPCOES).click()
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.OPCAO_CSV)).click()
             time.sleep(0.1)
-            self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.BOTAO_GERAR))
             self.driver.find_element(*PrefRioLocators.BOTAO_GERAR).click()    

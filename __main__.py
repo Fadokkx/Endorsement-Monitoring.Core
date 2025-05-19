@@ -7,6 +7,7 @@ from src.controllers.consignet_controller import ConsigNetController
 from src.controllers.consigtec_controller import ConsigTecController
 from src.controllers.digitalconsig_controller import DigitalConsigController
 from src.controllers.neoconsig_controller import NeoConsigController
+from src.controllers.quantumweb_controller import QuantumWebController
 from src.controllers.safeconsig_controller import SafeConsigController
 from src.controllers.serpro_controller import SerproController
 from src.controllers.siconsig_controller import SiConsigController
@@ -83,7 +84,7 @@ def main():
     try:
         Asban = AsbanController(driver)
 
-        convenios = [None] #[None] OU ['cachoeirinha']
+        convenios = ['cachoeirinha'] #[None] OU ['cachoeirinha']
         
         resultados = Asban.executar_todos_convenios(convenios)
 
@@ -130,7 +131,7 @@ def main():
     try:
         consigtec = ConsigTecController(driver)
         
-        convenios = ['maringa', 'porto_nacional'] #[None] ou ['maringa', 'porto_nacional']
+        convenios = [None] #[None] ou ['maringa', 'porto_nacional']
         
         resultados = consigtec.executar_todos_convenios(convenios)
 
@@ -146,7 +147,7 @@ def main():
     try:
         digitalconsig = DigitalConsigController(driver)
         
-        convenios = ['sorriso'] #[None] ou ['sorriso']
+        convenios = [None] #[None] ou ['sorriso']
         
         resultados = digitalconsig.executar_todos_convenios(convenios)
 
@@ -162,7 +163,7 @@ def main():
     try:
         safeconsig = SafeConsigController(driver)
         
-        convenios = ['ceara', 'cabo_frio'] #[None] ou ['ceara', 'cabo_frio']
+        convenios = [None] #[None] ou ['ceara', 'cabo_frio']
         
         resultados = safeconsig.executar_todos_convenios(convenios)
 
@@ -194,7 +195,7 @@ def main():
     try:
         siconsig = SiConsigController(driver)
         
-        convenios = ['tocantins'] #[None] ou ['tocantins']
+        convenios = [None] #[None] ou ['tocantins']
         
         resultados = siconsig.executar_todos_convenios(convenios)
 
@@ -210,7 +211,7 @@ def main():
     try:
         sigconsig = SigConsigController(driver)
         
-        convenios = ['santa_catarina'] #[None] ou ['santa_catarina']
+        convenios = [None] #[None] ou ['santa_catarina']
         
         resultados = sigconsig.executar_todos_convenios(convenios)
 
@@ -222,6 +223,21 @@ def main():
     
     except Exception as e:
         print(f"Erro {e}")
+        
+    try:
+        quantum = QuantumWebController(driver)
+        
+        convenios = [None] #[None] Ou ['ribeirao']
+        
+        resultados = quantum.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")           
+    except Exception as e:
+        print(f"\n ERRO GLOBAL: {str(e)}")        
         
     finally:
         driver.quit()
