@@ -55,7 +55,33 @@ class ConvenioNovaLima:
             ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter...: ")
             self.driver.find_element(*NovalimaLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
             self.driver.find_element(*NovalimaLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
-            return True
+            
+            try:
+                WebDriverWait(self.driver, 1.5).until(
+                            EC.presence_of_element_located(NovalimaLocators.MENU_PRINCIPAL))
+                return True
+            except Exception as e:
+                print(f"Falha no login ou CAPTCHA incorreto. Tentando novamente")
+                
+            while True:
+                try:
+                    WebDriverWait(self.driver, 1.5).until(
+                        EC.presence_of_element_located(NovalimaLocators.CAMPO_USUARIO)).send_keys(self.user)
+                    WebDriverWait(self.driver, 2).until(
+                        EC.element_to_be_clickable(NovalimaLocators.BOTAO_CONTINUAR)).click()
+                    WebDriverWait(self.driver, 2).until(
+                        EC.element_to_be_clickable(NovalimaLocators.CAMPO_SENHA)).send_keys(self.second_password)
+                    ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
+                    WebDriverWait(self.driver, 1).until(
+                        EC.presence_of_element_located(NovalimaLocators.CAMPO_CAPTCHA)).send_keys(ZetraCaptchaResolver)
+                    self.driver.find_element(*NovalimaLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
+                    WebDriverWait(self.driver, 1.5).until(
+                        EC.presence_of_element_located(NovalimaLocators.MENU_PRINCIPAL))
+                    return True
+
+                except Exception as e:
+                    print(f"Falha no login ou CAPTCHA incorreto. Tentando novamente")
+                    time.sleep(0.3)
             
         except Exception as e:
             print(f"Erro no login: {e}")

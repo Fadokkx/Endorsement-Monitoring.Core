@@ -53,8 +53,27 @@ class ConvenioJoaoPessoa:
             CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
             self.driver.find_element(*JoaoPessoaLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
             self.driver.find_element(*JoaoPessoaLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
-            time.sleep(0.1)
-            return True
+            try:
+                WebDriverWait(self.driver, 1).until(
+                    EC.presence_of_element_located(JoaoPessoaLocators.BOTAO_CONFIRMA_LEITURA))
+                return True
+            except:
+                print("Captcha digitado incorretamente, tentar novamente")
+    
+            while True:
+                try:
+                    WebDriverWait(self.driver, 1).until(
+                        EC.presence_of_element_located(JoaoPessoaLocators.CAMPO_LOGIN)).send_keys(self.user)
+                    self.driver.find_element(*JoaoPessoaLocators.CAMPO_SENHA).send_keys(self.second_password)
+                    CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
+                    self.driver.find_element(*JoaoPessoaLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
+                    self.driver.find_element(*JoaoPessoaLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
+                    WebDriverWait(self.driver, 1.5).until(
+                        EC.element_to_be_clickable(JoaoPessoaLocators.BOTAO_CONFIRMA_LEITURA))
+                    return True
+                except:
+                    print("Captcha digitado incorretamente, tentar novamente")
+                    time.sleep(0.5)
         
         except Exception as e:
             print(f"Erro: {e}")

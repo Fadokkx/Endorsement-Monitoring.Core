@@ -31,6 +31,7 @@ class ConvenioCampinaGrande:
         self.url = os.getenv("CONSIGFACIL_CAMPINA_GRANDE_URL")
         self.user = os.getenv("CONSIGFACIL_USER")
         self.password = os.getenv("CONSIGFACIL_PASS")
+        self.second_password = os.getenv("CONSIGFACIL_SECOND_PASS")
         
         if not all([self.url, self.user, self.password]):
             raise ValueError("Variáveis de ambiente faltando!")
@@ -46,8 +47,27 @@ class ConvenioCampinaGrande:
             CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
             self.driver.find_element(*CampinaGrandeLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
             self.driver.find_element(*CampinaGrandeLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
-            time.sleep(1)
-            return True
+            try:
+                WebDriverWait(self.driver, 1).until(
+                    EC.presence_of_element_located(CampinaGrandeLocators.BOTAO_CONFIRMA_LEITURA))
+                return True
+            except:
+                print("Captcha digitado incorretamente, tentar novamente")
+    
+            while True:
+                try:
+                    WebDriverWait(self.driver, 1).until(
+                        EC.presence_of_element_located(CampinaGrandeLocators.CAMPO_LOGIN)).send_keys(self.user)
+                    self.driver.find_element(*CampinaGrandeLocators.CAMPO_SENHA).send_keys(self.password)
+                    CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
+                    self.driver.find_element(*CampinaGrandeLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
+                    self.driver.find_element(*CampinaGrandeLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
+                    WebDriverWait(self.driver, 1.5).until(
+                        EC.element_to_be_clickable(CampinaGrandeLocators.BOTAO_CONFIRMA_LEITURA))
+                    return True
+                except:
+                    print("Captcha digitado incorretamente, tentar novamente")
+                    time.sleep(0.5)
         
         except Exception as e:
             print(f"Erro: {e}")
