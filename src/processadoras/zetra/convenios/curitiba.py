@@ -54,16 +54,16 @@ class ConvenioCuritiba:
             ).click()
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(CuritibaLocators.CAMPO_SENHA)).send_keys(self.second_password)
-            try:
-                base64_image, timestamp = self.captcha_resolver.get_image()  # Chamada via instância
-                captcha_text = self.captcha_resolver.captcha_resolver(base64_image)
-                WebDriverWait(self.driver, 10).until(
-                    EC.presence_of_element_located(CuritibaLocators.CAMPO_CAPTCHA)
-                ).send_keys(captcha_text)
-            except Exception as e:
-                print(f"Erro: {e}")
-            #ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
-            #self.driver.find_element(*CuritibaLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
+            #try:
+            #    base64_image, timestamp = self.captcha_resolver.get_image()  # Chamada via instância
+            #    captcha_text = self.captcha_resolver.captcha_resolver(base64_image)
+            #    WebDriverWait(self.driver, 10).until(
+            #        EC.presence_of_element_located(CuritibaLocators.CAMPO_CAPTCHA)
+            #    ).send_keys(captcha_text)
+            #except Exception as e:
+            #    print(f"Erro: {e}")
+            ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
+            self.driver.find_element(*CuritibaLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
             self.driver.find_element(*CuritibaLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
             try:
                 WebDriverWait(self.driver, 1.5).until(

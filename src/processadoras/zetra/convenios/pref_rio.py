@@ -94,7 +94,7 @@ class ConvenioPrefRio:
             return False
         
     def troca_senha(self):
-        time.sleep(1)
+        time.sleep(0.5)
         try:
             self.driver.find_element(PrefRioLocators.CAMPO_SENHA).click()
             self.driver.execute_script("document.body.style.zoom='80%'")
@@ -135,13 +135,11 @@ class ConvenioPrefRio:
 
     def navegar_menu(self):
         try:
-            time.sleep(1)
+            time.sleep(0.5)
             WebDriverWait(self.driver, 15).until(
-                EC.element_to_be_clickable(PrefRioLocators.MENU_PRINCIPAL)
-            ).click()
+                EC.element_to_be_clickable(PrefRioLocators.MENU_PRINCIPAL)).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(PrefRioLocators.MENU_RELATORIOS)
-            ).click()
+                EC.element_to_be_clickable(PrefRioLocators.MENU_RELATORIOS)).click()
             return True
         
         except Exception as e:
@@ -158,11 +156,11 @@ class ConvenioPrefRio:
             ).send_keys(data.DATA_FINAL)
             time.sleep(0.1)
             self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
+            self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.CHECKBOX_DEFERIDA)).click()
             time.sleep(0.1)
             self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
-            self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.SELEC_OPCOES))
             self.driver.find_element(*PrefRioLocators.SELEC_OPCOES).click()

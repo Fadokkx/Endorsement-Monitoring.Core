@@ -50,7 +50,7 @@ class ConvenioNovaLima:
             ).click()
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(NovalimaLocators.CAMPO_SENHA)
-            ).send_keys(self.second_password)
+            ).send_keys(self.password)
             
             ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter...: ")
             self.driver.find_element(*NovalimaLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
@@ -70,7 +70,7 @@ class ConvenioNovaLima:
                     WebDriverWait(self.driver, 2).until(
                         EC.element_to_be_clickable(NovalimaLocators.BOTAO_CONTINUAR)).click()
                     WebDriverWait(self.driver, 2).until(
-                        EC.element_to_be_clickable(NovalimaLocators.CAMPO_SENHA)).send_keys(self.second_password)
+                        EC.element_to_be_clickable(NovalimaLocators.CAMPO_SENHA)).send_keys(self.password)
                     ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
                     WebDriverWait(self.driver, 1).until(
                         EC.presence_of_element_located(NovalimaLocators.CAMPO_CAPTCHA)).send_keys(ZetraCaptchaResolver)
@@ -94,7 +94,7 @@ class ConvenioNovaLima:
             self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.XPATH,'//*[@id="senha"]')))
-            self.driver.find_element(By.XPATH,'//*[@id="senha"]').send_keys(self.second_password)
+            self.driver.find_element(By.XPATH,'//*[@id="senha"]').send_keys(self.password)
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
             self.driver.find_element(By.XPATH, '/html/body').send_keys(Keys.PAGE_DOWN)
@@ -102,9 +102,10 @@ class ConvenioNovaLima:
             self.driver.find_element(By.ID,"senhaNova").send_keys(self.password)           
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
-            self.driver.find_element(By.ID,"senhaNovaConfirmacao").send_keys(self.password)
+            self.driver.find_element(By.ID,"senhaNovaConfirmacao").send_keys(self.second_password)
             self.driver.find_element(By.XPATH,'//*[@id="no-back"]/div[3]/div/div[4]/a[2]').click()
-            self.driver.find_element(*NovalimaLocators.BOTAO_VOLTA_TROCA_SENHA).click()
+            WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable(NovalimaLocators.BOTAO_VOLTA_TROCA_SENHA)).click()
             return True
         except:
             print(f"Sem necessidade de troca de senha")
@@ -174,11 +175,11 @@ class ConvenioNovaLima:
         
     def autorizacao_gerador(self):
         try:
-            time.sleep(1)
+            time.sleep(0.5)
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(NovalimaLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
+                EC.presence_of_element_located(NovalimaLocators.SENHA_AUTORIZER)).send_keys(self.password)
             self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
-            time.sleep(1)
+            time.sleep(0.5)
             WebDriverWait(self.driver, 60).until(
                 EC.presence_of_element_located(NovalimaLocators.DATA_INICIO))
             return True
