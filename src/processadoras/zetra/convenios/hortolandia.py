@@ -140,20 +140,17 @@ class ConvenioHortolandia:
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(HortolandiaLocators.DATA_INICIO)
             ).send_keys(data.DATA_OPERACOES)
-            self.driver.execute_script("document.body.style.zoom='60%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(HortolandiaLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)
-            time.sleep(1)
-            
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
-
+            time.sleep(0.1)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(HortolandiaLocators.CHECKBOX_DEFERIDA)).click()
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-
+            self.driver.execute_script("document.body.style.zoom='60%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(HortolandiaLocators.SELEC_OPCOES))
             self.driver.find_element(*HortolandiaLocators.SELEC_OPCOES).click()
@@ -174,7 +171,7 @@ class ConvenioHortolandia:
         
     def autorizacao_gerador(self):
         try:
-            time.sleep(1)
+            time.sleep(0.1)
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(HortolandiaLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
             self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
@@ -188,11 +185,11 @@ class ConvenioHortolandia:
             
     def download_arquivo(self):
         try:
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.execute_script("document.body.style.zoom='33%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(HortolandiaLocators.OPCOES_DOWNLOAD)).click()
