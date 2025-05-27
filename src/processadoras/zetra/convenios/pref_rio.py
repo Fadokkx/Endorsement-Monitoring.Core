@@ -135,7 +135,7 @@ class ConvenioPrefRio:
 
     def navegar_menu(self):
         try:
-            time.sleep(1)
+            time.sleep(0.5)
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(PrefRioLocators.MENU_PRINCIPAL)
             ).click()
@@ -151,18 +151,16 @@ class ConvenioPrefRio:
     def opcoes_relatorios(self):
         try:
             WebDriverWait(self.driver, 15).until(
-                EC.element_to_be_clickable(PrefRioLocators.DATA_INICIO)
-            ).send_keys(data.DATA_OPERACOES)
+                EC.element_to_be_clickable(PrefRioLocators.DATA_INICIO)).send_keys(data.DATA_OPERACOES)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(PrefRioLocators.DATA_FIM)
-            ).send_keys(data.DATA_FINAL)
+                EC.element_to_be_clickable(PrefRioLocators.DATA_FIM)).send_keys(data.DATA_FINAL)
             time.sleep(0.1)
             self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
+            self.driver.execute_script("document.body.style.zoom='55%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.CHECKBOX_DEFERIDA)).click()
             time.sleep(0.1)
             self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
-            self.driver.execute_script("document.body.style.zoom='80%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.SELEC_OPCOES))
             self.driver.find_element(*PrefRioLocators.SELEC_OPCOES).click()

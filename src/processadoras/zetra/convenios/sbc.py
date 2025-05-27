@@ -179,15 +179,17 @@ class ConvenioSbc:
                 EC.presence_of_element_located(SBCLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
             self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
             time.sleep(0.5)
-            WebDriverWait(self.driver, 60).until(
-                EC.presence_of_element_located(SBCLocators.DATA_INICIO))
+            return True
         except Exception as e:
             print(f"Erro na autorização: {e}")
             return False  
             
     def download_arquivo(self):
         try:
-            time.sleep(0.1)
+            time.sleep(0.5)
+            WebDriverWait(self.driver, 40).until(
+                EC.presence_of_element_located(SBCLocators.DATA_INICIO))
+            time.sleep(0.5)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
