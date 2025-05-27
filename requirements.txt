@@ -6,5 +6,7 @@ python-dotenv>=1.1.0
 Pillow>=10.2.0
 opencv-python>=4.9.0.80
 pyscreeze>=1.0
+requests>=2.30
+pandas>=2.2
 
 #Opcionais
