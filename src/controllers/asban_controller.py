@@ -36,8 +36,9 @@ class AsbanController:
             except:
                 print ("Falha na renomeação e a alternar caminho")
             
+            return True
+            
         except Exception as e:
-            # Adiciona o nome do convênio ao erro
             raise Exception(f"[{nome_convenio.upper()}] {str(e)}") from e
 
     def executar_todos_convenios(self, convenios_selecionados: list = None):
