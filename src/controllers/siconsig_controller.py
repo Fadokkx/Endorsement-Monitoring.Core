@@ -13,7 +13,6 @@ class SiConsigController():
         }
     
     def executar_fluxo_completo(self, nome_convenio: str) -> bool:
-        #Executa todo o fluxo para um convênio específico com tratamento detalhado de erros
         if nome_convenio not in self.convenios:
             raise ValueError(f"Convênio {nome_convenio} não existe")
         
@@ -35,6 +34,8 @@ class SiConsigController():
                 file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "CUSTOMIZAVELDEAVERBACAO", novo_nome=(f"siconsig_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except Exception as e:
                 print(f"{e}")
+            
+            return True
                 
         except Exception as e:
             raise Exception(f"[{nome_convenio.upper()}] {str(e)}") from e

@@ -38,6 +38,7 @@ class ConsigTecController():
             except Exception as e:
                 print(f"{e}")
                 
+            return True
         except Exception as e:
             raise Exception(f"[{nome_convenio.upper()}] {str(e)}") from e
             

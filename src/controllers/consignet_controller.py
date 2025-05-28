@@ -43,6 +43,8 @@ class ConsigNetController():
                 file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "RelConsignacaoMensal_", novo_nome=(f"consignet_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except:
                 print(f"Erro: {e}")
+                
+            return True
 
         except Exception as e:
             print(f"Erro: {e}")

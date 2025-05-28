@@ -28,8 +28,10 @@ class CuritibaLocators:
     OPCAO_CSV = (By.XPATH, '//*[@id="formato"]/option[4]')
     SENHA_AUTORIZER = (By.XPATH, '//*[@id="senha2aAutorizacao"]')
     BOTAO_VOLTA_TROCA_SENHA = (By.XPATH, '//*[@id="no-back"]/div/div[1]/div[3]/button')
-    BOTAO_CONFIRMA_LEITURA = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div/div/fieldset/div/label[1]')
-    BOTAO_CONFIRMA_SEG_LEITURA =(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[2]/div/fieldset/div/label[1]')    
+    RADIO_CONFIRMA_LEITURA = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[1]/div/fieldset/div/label[1]')
+    RADIO_CONFIRMA_SEG_LEITURA =(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[2]/div/fieldset/div/label[1]')
+    BOTAO_CONFIRMA_LEITURA = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[2]/a')
+    BODY = (By.XPATH, "/html/body")
     
 class ConvenioCuritiba:
     def __init__(self, driver: WebDriver):
@@ -119,12 +121,17 @@ class ConvenioCuritiba:
             return True
     
     def confirmacao_leitura(self):
-        time.sleep(1)
         try:
-            self.driver.find_element(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div/div/fieldset/div/label[1]').click()
-            WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[2]/a'))).click()
-            print("Confirmação de leitura realizada com sucesso.")
+            time.sleep(0.3)
+            WebDriverWait(self.driver, 2.5).until(
+                EC.element_to_be_clickable(CuritibaLocators.RADIO_CONFIRMA_LEITURA)).click()
+            time.sleep(0.1)
+            self.driver.find_element(*CuritibaLocators.BODY).send_keys(Keys.PAGE_DOWN)
+            time.sleep(0.1)
+            WebDriverWait(self.driver, 1.5).until(
+                EC.element_to_be_clickable(CuritibaLocators.RADIO_CONFIRMA_SEG_LEITURA)).click()
+            WebDriverWait(self.driver, 1).until(
+                EC.element_to_be_clickable(CuritibaLocators.BOTAO_CONFIRMA_LEITURA)).click()
         except Exception as e:
             print(f"Sem necessidade de confirmação de leitura")
             return True

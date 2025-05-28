@@ -99,7 +99,7 @@ class ConvenioNovaLima:
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
             self.driver.find_element(By.XPATH, '/html/body').send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
-            self.driver.find_element(By.ID,"senhaNova").send_keys(self.password)           
+            self.driver.find_element(By.ID,"senhaNova").send_keys(self.second_password)           
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
             self.driver.find_element(By.ID,"senhaNovaConfirmacao").send_keys(self.second_password)
@@ -112,7 +112,7 @@ class ConvenioNovaLima:
             return True
     
     def confirmacao_leitura(self):
-        time.sleep(1)
+        time.sleep(0.5)
         try:
             self.driver.find_element(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div/div/fieldset/div/label[1]').click()
             WebDriverWait(self.driver, 10).until(
@@ -124,7 +124,7 @@ class ConvenioNovaLima:
 
     def navegar_menu(self):
         try:
-            time.sleep(1)
+            time.sleep(0.5)
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(NovalimaLocators.MENU_PRINCIPAL)
             ).click()

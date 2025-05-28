@@ -2,9 +2,9 @@ from selenium.webdriver.common.by import By
 
 class CheckBoxes():
     #Selecionar Matricula
-    MATRICULA =(By.NAME,"campos:listCamposServidor:6:column:0:checkCampos") #(By.XPATH,"/html/body/div/div/div[2]/div/form/div[4]/div/div[6]/div/div[2]/table[1]/tbody/tr[2]/td[2]/input")
+    MATRICULA =(By.XPATH,"/html/body/div/div/div[2]/div/form/div[4]/div/div[6]/div/div[2]/table[1]/tbody/tr[8]/td[1]/input")
     #Selecionar CPF
-    CPF =(By.XPATH, "/html/body/div/div/div[2]/div/form/div[4]/div/div[6]/div/div[2]/table[1]/tbody/tr[3]/td[2]/input")
+    CPF =(By.XPATH, "/html/body/div/div/div[2]/div/form/div[4]/div/div[6]/div/div[2]/table[1]/tbody/tr[2]/td[2]/input")
     #Selecionar Nome 
     NOME =(By.XPATH,"/html/body/div/div/div[2]/div/form/div[4]/div/div[6]/div/div[2]/table[1]/tbody/tr[7]/td[1]/input")
     #Selcionar Nome reduzido do Órgão

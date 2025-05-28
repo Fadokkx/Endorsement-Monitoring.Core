@@ -70,7 +70,7 @@ class ZetraController:
                 raise Exception("Falha no download do arquivo")
     
             try:
-                time.sleep(1)
+                time.sleep(0.5)
                 file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "consignacoes_", novo_nome=(f"zetra_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except Exception as e:
                 print(f"{e}")

@@ -35,6 +35,8 @@ class QuantumWebController:
             #    file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "RA015", novo_nome=(f"cip_{nome_convenio}_{data.DATA_ARQUIVO}"))
             #except Exception as e:
             #    print(f"{e}")
+            
+            return True
 
         except Exception as e:
             raise Exception(f"[{nome_convenio.upper()}] {str(e)}") from e

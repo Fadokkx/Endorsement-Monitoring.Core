@@ -52,26 +52,6 @@ para a criação do arquivo `.env` utilize o comando `ECHO text>.env` no cmd abe
 
 4. Ao mudar o diretório, utilize o comando `py -m  pip install -r requirements.txt`<br><br>
 
-5. Abra a pasta da extração do arquivo e vá em `C:\Endorsement-Monitoring.Core\src\processadoras\cip\core` e abra o arquivo `coord.py` com seu bloco de notas e remova as aspas grifadas na imagem a baixo e salve o arquivo:<br>
-<img src="./resources/Remove_aspas.png"/><br><br>
-
-6. Digite o comando `cd C:\Endorsement-Monitoring.Core\src\processadoras\cip\core` e aperte enter<br><br>
-
-7. Vá para o [link da processadora CIP](https://www.portaldoconsignado.org.br/home?37) e, utilizando suas credenciais acesse até a parte do download dos relatórios e,utilizando o mesmo cmd use o comando `py coord.py`.
-Esse comando terá um timer de 5 segundos para você colocar o cursor em cima do botão de download.
-Exemplo a baixo:<br>
-<img src=".\resources\Botao_download_CIP.gif"/><br><br>
-**APÓS OBTER ESSES PRIMEIROS VALORES, COLOQUE OS VALORES DADOS PELO TERMINAL NESTA ÁREA GRIFADA SEGUINDO A ORDEM DE SAIDA<br> (EX: 'X:284, Y:200' --> 284, 200**):<br>
-<img src="./resources/Local_primeira_coord_var.png"/><br><br>
-
-8. Utilize novamente o comando `py coord.py` só que dessa vez, para a opção de baixar o arquivo CSV.
-Exemplo a baixo:<br>
-<img src="./resources/botao_opcao_CIP.gif"/><br><br>
-**APÓS OBTER OS SEGUNDOS VALORES, COLOQUE OS VALORES DADOS PELO TERMINAL NESTA ÁREA GRIFADA TAMBÉM SEGUINDO A ORDEM DE SAIDA<br> (EX: 'X:284, Y:280' --> 284, 280**):<br>
-<img src="./resources/Local_segunda_coord_var.png"/><br><br>
-
-9. Após realizada as mudanças (Caso tenham sido necessárias) nas coordenadas do seu monitor, salve o arquivo.
-
 ---
 
 ## Instalação e execução

@@ -6,6 +6,7 @@ from src.controllers.consiglog_controller import ConsigLogController
 from src.controllers.consignet_controller import ConsigNetController
 from src.controllers.consigtec_controller import ConsigTecController
 from src.controllers.digitalconsig_controller import DigitalConsigController
+from src.controllers.infoconsig_controller import InfoConsigController
 from src.controllers.neoconsig_controller import NeoConsigController
 from src.controllers.proconsig_controller import ProConsigController
 from src.controllers.quantumweb_controller import QuantumWebController
@@ -19,13 +20,13 @@ from dotenv import load_dotenv
 def main():
     load_dotenv()
     driver = iniciar_navegador()
+    
     try:
-        proconsig = ProConsigController(driver)
+        infoconsig = InfoConsigController(driver)
         
         convenios = [None]
         
-        resultados = proconsig.executar_todos_convenios(convenios)
-        
+        resultados = infoconsig.executar_todos_convenios(convenios)
         print("\n=== RESUMO DE EXECUÇÃO ===")
         for convenio, dados in resultados.items():
             print(f"{convenio.upper():<15} {dados['status']}")
@@ -34,6 +35,16 @@ def main():
     except Exception as e:
         print(f"\n ERRO GLOBAL: {str(e)}")
 
+    try:
+        proconsig = ProConsigController(driver)
+        
+        convenios = [None]
+        
+        resultados = proconsig.executar_todos_convenios(convenios)
+        
+    except Exception as e:
+        print(f"\n ERRO GLOBAL: {str(e)}")
+        
     try:
         zetra = ZetraController(driver)
         
@@ -77,12 +88,12 @@ def main():
             if dados['erro']:
                 print(f"   → {dados['erro']}")           
     except Exception as e:
-        print(f"\n ERRO GLOBAL: {str(e)}")  
-    
+        print(f"\n ERRO GLOBAL: {str(e)}")
+        
     try:
         Asban = AsbanController(driver)
 
-        convenios = ['cachoeirinha'] #[None] OU ['cachoeirinha']
+        convenios = [None] #[None] OU ['cachoeirinha']
         
         resultados = Asban.executar_todos_convenios(convenios)
 
@@ -235,12 +246,12 @@ def main():
             if dados['erro']:
                 print(f"   → {dados['erro']}")           
     except Exception as e:
-        print(f"\n ERRO GLOBAL: {str(e)}")
+        print(f"\n ERRO GLOBAL: {str(e)}") 
         
     try:
         NeoConsig = NeoConsigController(driver)
 
-        convenios = ['goias', 'rio', 'sorocaba', 'alagoas'] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
+        convenios = ['alagoas'] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
         
         resultados = NeoConsig.executar_todos_convenios(convenios)
 
@@ -251,6 +262,8 @@ def main():
                 print(f"   → {dados['erro']}")
     except Exception as e:
         print(f"Erro {e}")    
+    
+           
         
     finally:
         driver.quit()

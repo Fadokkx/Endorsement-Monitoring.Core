@@ -29,7 +29,7 @@ class AlagoasLocators:
     CAMPO_SENHA = (By.XPATH, '/html/body/div[4]/div/div/div[2]/div[1]/div[2]/form/div[1]/input')
     MENU_COMERCIAL = (By.XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/a')
     ABA_CONSIGNACOES = (By.XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/a')
-    OPCAO_CONSULTAR = (By. XPATH, '/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/ul/li/a')
+    OPCAO_CONSULTAR = (By. XPATH, "/html/body/div[5]/div[1]/div/ul/li[5]/ul/li/ul/li[2]/a")
     SELEC_MES_BOTAO = (By.XPATH, '//*[@id="s2id_mes"]/a')
     SELEC_MES_BUSCA = (By.XPATH, '//*[@id="s2id_autogen1_search"]')
     SELEC_ANO_BOTAO = (By.XPATH, '//*[@id="s2id_ano"]/a')

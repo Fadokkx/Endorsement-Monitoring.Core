@@ -21,6 +21,7 @@ class HospServPublicoLocators:
     DATA_FIM = (By.XPATH, '//*[@id="periodoFim"]')
     CHECKBOX_DEFERIDA = (By.XPATH, '//*[@id="SAD_CODIGO7"]')
     BOTAO_GERAR = (By.XPATH, '//*[@id="btnEnvia"]')
+    BOTAO_AUTORIZADOR = (By.XPATH, "/html/body/div[2]/div[3]/div/button[2]")
     OPCOES_DOWNLOAD = (By.XPATH, '//*[@id="userMenu"]/div/span')
     BOTAO_DOWNLOAD = (By.XPATH, '//*[@id="dataTables"]/tbody/tr[1]/td[4]/div/div/div/a[1]')
     SELEC_OPCOES =(By.XPATH, '//*[@id="formato"]')
@@ -49,8 +50,7 @@ class ConvenioHospServPublico:
                 EC.element_to_be_clickable(HospServPublicoLocators.BOTAO_CONTINUAR)
             ).click()
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(HospServPublicoLocators.CAMPO_SENHA)
-            ).send_keys(self.second_password)
+                EC.presence_of_element_located(HospServPublicoLocators.CAMPO_SENHA)).send_keys(self.second_password)
             ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
             self.driver.find_element(*HospServPublicoLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
             self.driver.find_element(*HospServPublicoLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
@@ -137,35 +137,27 @@ class ConvenioHospServPublico:
     def opcoes_relatorios(self):
         try:
             WebDriverWait(self.driver, 15).until(
-                EC.element_to_be_clickable(HospServPublicoLocators.DATA_INICIO)
-            ).send_keys(data.DATA_OPERACOES)
+                EC.element_to_be_clickable(HospServPublicoLocators.DATA_INICIO)).send_keys(data.DATA_OPERACOES)
             self.driver.execute_script("document.body.style.zoom='60%'")
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(HospServPublicoLocators.DATA_FIM)
-            ).send_keys(data.DATA_FINAL)
-            time.sleep(1)
+                EC.element_to_be_clickable(HospServPublicoLocators.DATA_FIM)).send_keys(data.DATA_FINAL)
+            time.sleep(0.1)
             
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(HospServPublicoLocators.CHECKBOX_DEFERIDA)).click()
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(HospServPublicoLocators.SELEC_OPCOES))
-            self.driver.find_element(*HospServPublicoLocators.SELEC_OPCOES).click()
+                EC.element_to_be_clickable(HospServPublicoLocators.SELEC_OPCOES)).click()
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(HospServPublicoLocators.OPCAO_CSV)
-            ).click()
-            time.sleep(1)
+                EC.element_to_be_clickable(HospServPublicoLocators.OPCAO_CSV)).click()
+            time.sleep(0.1)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(HospServPublicoLocators.BOTAO_GERAR))
-            self.driver.find_element(*HospServPublicoLocators.BOTAO_GERAR).click()    
-            WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(HospServPublicoLocators.SENHA_AUTORIZER))
-            time.sleep(1)  
+                EC.element_to_be_clickable(HospServPublicoLocators.BOTAO_GERAR)).click()  
             return True
         except Exception as e:
             print(f"Erro nas opções de relatório: {e}")
@@ -173,11 +165,11 @@ class ConvenioHospServPublico:
         
     def autorizacao_gerador(self):
         try:
-            time.sleep(1)
+            time.sleep(0.1)
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(HospServPublicoLocators.SENHA_AUTORIZER)).send_keys(self.second_password)
-            self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
-            time.sleep(1)
+            self.driver.find_element(*HospServPublicoLocators.BOTAO_AUTORIZADOR).click()
+            time.sleep(0.5)
             WebDriverWait(self.driver, 60).until(
                 EC.presence_of_element_located(HospServPublicoLocators.DATA_INICIO))
             return True
