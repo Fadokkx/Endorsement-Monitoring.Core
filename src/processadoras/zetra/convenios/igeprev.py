@@ -9,6 +9,7 @@ import time
 import os
 
 load_dotenv()
+
 class IgeprevLocators:
     MENU_PRINCIPAL = (By.XPATH, '//*[@id="container"]/ul/li[3]/a')
     MENU_RELATORIOS = (By.XPATH, '//*[@id="menuRelatorio"]/ul/li[2]/a')

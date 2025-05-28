@@ -6,6 +6,7 @@ from src.controllers.consiglog_controller import ConsigLogController
 from src.controllers.consignet_controller import ConsigNetController
 from src.controllers.consigtec_controller import ConsigTecController
 from src.controllers.digitalconsig_controller import DigitalConsigController
+from src.controllers.infoconsig_controller import InfoConsigController
 from src.controllers.neoconsig_controller import NeoConsigController
 from src.controllers.quantumweb_controller import QuantumWebController
 from src.controllers.safeconsig_controller import SafeConsigController
@@ -18,11 +19,25 @@ from dotenv import load_dotenv
 def main():
     load_dotenv()
     driver = iniciar_navegador()
+    
+    try:
+        infoconsig = InfoConsigController(driver)
+        
+        convenios = ['barra_mansa']
+        
+        resultados = infoconsig.executar_todos_convenios(convenios)
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")           
+    except Exception as e:
+        print(f"\n ERRO GLOBAL: {str(e)}")
 
     try:
         zetra = ZetraController(driver)
         
-        convenios = [None] #[None] Ou ['pref_rio', 'nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']  #[None] #para todos
+        convenios = ['pref_rio', 'nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia'] #[None] Ou ['pref_rio', 'nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']  #[None] #para todos
         
         resultados = zetra.executar_todos_convenios(convenios)
 
@@ -37,7 +52,7 @@ def main():
     try:
         cip = CipController(driver)
         
-        convenios = [None] #[None] OU ['govmt', 'govsp', 'govsefazsp']
+        convenios = ['govmt', 'govsp', 'govsefazsp'] #[None] OU ['govmt', 'govsp', 'govsefazsp']
         
         resultados = cip.executar_todos_convenios(convenios)
 
@@ -52,7 +67,7 @@ def main():
     try:
         consigfacil = ConsigFacilController(driver)
 
-        convenios = [None] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
+        convenios = ['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
         
         resultados = consigfacil.executar_todos_convenios(convenios)
 
@@ -64,23 +79,6 @@ def main():
     except Exception as e:
         print(f"\n ERRO GLOBAL: {str(e)}")
         
-    
-    try:
-        NeoConsig = NeoConsigController(driver)
-
-        convenios = ['goias', 'rio', 'sorocaba', 'alagoas'] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
-        
-        resultados = NeoConsig.executar_todos_convenios(convenios)
-
-        print("\n=== RESUMO DE EXECUÇÃO ===")
-        for convenio, dados in resultados.items():
-            print(f"{convenio.upper():<15} {dados['status']}")
-            if dados['erro']:
-                print(f"   → {dados['erro']}")
-    except Exception as e:
-        print(f"Erro {e}")    
-    
-    
     try:
         Asban = AsbanController(driver)
 
@@ -179,7 +177,7 @@ def main():
     try:
         serpro = SerproController(driver)
         
-        convenios = ['guarulhos'] #[None] ou ['guarulhos']
+        convenios = [None] #[None] ou ['guarulhos']
         
         resultados = serpro.executar_todos_convenios(convenios)
 
@@ -227,7 +225,7 @@ def main():
     try:
         quantum = QuantumWebController(driver)
         
-        convenios = [None] #[None] Ou ['ribeirao']
+        convenios = ['ribeirao'] #[None] Ou ['ribeirao']
         
         resultados = quantum.executar_todos_convenios(convenios)
 
@@ -237,7 +235,24 @@ def main():
             if dados['erro']:
                 print(f"   → {dados['erro']}")           
     except Exception as e:
-        print(f"\n ERRO GLOBAL: {str(e)}")        
+        print(f"\n ERRO GLOBAL: {str(e)}") 
+        
+    try:
+        NeoConsig = NeoConsigController(driver)
+
+        convenios = ['goias', 'rio', 'sorocaba', 'alagoas'] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
+        
+        resultados = NeoConsig.executar_todos_convenios(convenios)
+
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")
+    except Exception as e:
+        print(f"Erro {e}")    
+    
+           
         
     finally:
         driver.quit()

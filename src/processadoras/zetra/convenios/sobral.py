@@ -89,7 +89,7 @@ class ConvenioSobral:
             return False
 
     def troca_senha(self):
-        time.sleep(1)
+        time.sleep(0.5)
         try:
             self.driver.find_element(By.XPATH,'//*[@id="senha"]').click()
             self.driver.execute_script("document.body.style.zoom='80%'")
@@ -99,7 +99,7 @@ class ConvenioSobral:
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
             self.driver.find_element(By.XPATH, '/html/body').send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.1)
             self.driver.find_element(By.ID,"senhaNova").send_keys(self.password)           
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID,"senhaNovaConfirmacao")))
@@ -111,7 +111,7 @@ class ConvenioSobral:
             return True
     
     def confirmacao_leitura(self):
-        time.sleep(1)
+        time.sleep(0.5)
         try:
             self.driver.find_element(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div/div/fieldset/div/label[1]').click()
             WebDriverWait(self.driver, 10).until(
@@ -123,7 +123,7 @@ class ConvenioSobral:
         
     def navegar_menu(self):
         try:
-            time.sleep(1)
+            time.sleep(0.5)
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(SobralLocators.MENU_PRINCIPAL)
             ).click()
