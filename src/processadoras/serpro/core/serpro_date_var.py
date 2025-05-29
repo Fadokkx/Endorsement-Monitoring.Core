@@ -1,7 +1,8 @@
-from datetime import date, timedelta, datetime
+import pandas as pd
 
-DATA_OPERACAO = date.today() - timedelta(days=3)
-DATA_FIM = date.today() - timedelta(days=1)    
+TODAY = pd.Timestamp.today().date()
+DATA_OPERACAO = (TODAY - pd.offsets.BDay(3)).date()
+DATA_FIM = (TODAY - pd.offsets.BDay(1)).date()
 
 class variaveis_data():
     DATA_INICIAL = DATA_OPERACAO.strftime('%d%m%Y')

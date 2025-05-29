@@ -36,10 +36,10 @@ class ConvenioPortoVelho:
         self.driver = driver
         self.url = os.getenv("CONSIGFACIL_PORTO_VELHO_URL")
         self.user = os.getenv("CONSIGFACIL_USER")
-        self.second_password = os.getenv("CONSIGFACIL_SECOND_PASS")
         self.password = os.getenv("CONSIGFACIL_PASS")
+        self.second_password = os.getenv("CONSIGFACIL_SECOND_PASS")
         
-        if not all([self.url, self.user, self.password]):
+        if not all([self.url, self.user, self.password, self.second_password]):
             raise ValueError("Variáveis de ambiente faltando!")
     
     def login(self):
@@ -81,6 +81,8 @@ class ConvenioPortoVelho:
         
     def troca_senha(self):
         try:
+            WebDriverWait(self.driver, 1.5).until(
+                EC.element_to_be_clickable(PortoVelhoLocators.CAMPO_NOVA_SENHA_CONFIRMA))
             self.driver.find_element(*PortoVelhoLocators.CAMPO_SENHA_TROCA).click()
             self.driver.find_element(*PortoVelhoLocators.CAMPO_SENHA_TROCA).send_keys(self.password)
             time.sleep(0.5)

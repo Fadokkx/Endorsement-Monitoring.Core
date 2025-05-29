@@ -33,7 +33,7 @@ class ConvenioCampinaGrande:
         self.password = os.getenv("CONSIGFACIL_PASS")
         self.second_password = os.getenv("CONSIGFACIL_SECOND_PASS")
         
-        if not all([self.url, self.user, self.password]):
+        if not all([self.url, self.user, self.password, self.second_password]):
             raise ValueError("Variáveis de ambiente faltando!")
     
     def login(self):

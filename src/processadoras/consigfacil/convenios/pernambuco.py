@@ -26,14 +26,16 @@ class PernambucoLocators:
     OPCAO_REL = (By.XPATH, '//*[@id="opcao_geracao_relatorio"]')
     BOTAO_GERAR = (By.XPATH, '//*[@id="t_dadosp"]/tbody/tr[13]/td/p/input')
     TIPO_CSV = (By.XPATH, '//*[@id="opcao_geracao_relatorio"]/option[2]')
+    
 class ConvenioPernambuco:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.url = os.getenv("CONSIGFACIL_PERNAMBUCO_URL")
         self.user = os.getenv("CONSIGFACIL_USER")
         self.password = os.getenv("CONSIGFACIL_PASS")
+        self.second_password = os.getenv("CONSIGFACIL_SECOND_PASS")
         
-        if not all([self.url, self.user, self.password]):
+        if not all([self.url, self.user, self.password, self.second_password]):
             raise ValueError("Variáveis de ambiente faltando!")
     
     def login(self):
