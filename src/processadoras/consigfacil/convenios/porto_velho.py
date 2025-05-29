@@ -1,10 +1,12 @@
 from src.processadoras.consigfacil.core.consigfacil_date_var import variaveis_data as data
+from src.processadoras.consigfacil.core.cf_paths import Diretorios_Imagem as DI
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
+import pyautogui as pg
 import time
 import os
 
@@ -55,7 +57,7 @@ class ConvenioPortoVelho:
             self.driver.find_element(*PortoVelhoLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
             try:
                 WebDriverWait(self.driver, 1).until(
-                    EC.presence_of_element_located(PortoVelhoLocators.BOTAO_CONFIRMA_LEITURA))
+                    EC.presence_of_element_located(PortoVelhoLocators.ABA_RELATORIO))
                 return True
             except:
                 print("Captcha digitado incorretamente, tentar novamente")
@@ -69,7 +71,7 @@ class ConvenioPortoVelho:
                     self.driver.find_element(*PortoVelhoLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
                     self.driver.find_element(*PortoVelhoLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
                     WebDriverWait(self.driver, 1.5).until(
-                        EC.element_to_be_clickable(PortoVelhoLocators.BOTAO_CONFIRMA_LEITURA))
+                        EC.presence_of_element_located(PortoVelhoLocators.ABA_RELATORIO))
                     return True
                 except:
                     print("Captcha digitado incorretamente, tentar novamente")
@@ -78,27 +80,31 @@ class ConvenioPortoVelho:
         except Exception as e:
             print(f"Erro: {e}")
             return False
-        
+    
     def troca_senha(self):
         try:
-            WebDriverWait(self.driver, 1.5).until(
-                EC.element_to_be_clickable(PortoVelhoLocators.CAMPO_NOVA_SENHA_CONFIRMA))
-            self.driver.find_element(*PortoVelhoLocators.CAMPO_SENHA_TROCA).click()
-            self.driver.find_element(*PortoVelhoLocators.CAMPO_SENHA_TROCA).send_keys(self.password)
-            time.sleep(0.5)
-            WebDriverWait(self.driver, 1.5).until(
-                EC.element_to_be_clickable(PortoVelhoLocators.CAMPO_NOVA_SENHA_TROCA)).send_keys(self.second_password)
-            WebDriverWait(self.driver, 1.5).until(
-                EC.element_to_be_clickable(PortoVelhoLocators.CAMPO_NOVA_SENHA_CONFIRMA)).send_keys(self.second_password)
-            time.sleep(0.3)
-            self.driver.find_element(*PortoVelhoLocators.BODY).send_keys(Keys.PAGE_DOWN)
-            time.sleep(0.1)
-            WebDriverWait(self.driver, 1.5).until(
-                EC.element_to_be_clickable(PortoVelhoLocators.BOTAO_ENTRAR_TROCA_SENHA)).click()
+            try:
+                self.driver.find_element(*PortoVelhoLocators.CAMPO_SENHA_TROCA).click()
+                self.driver.find_element(*PortoVelhoLocators.CAMPO_SENHA_TROCA).send_keys(self.password)
+                time.sleep(0.5)
+                WebDriverWait(self.driver, 1.5).until(
+                    EC.element_to_be_clickable(PortoVelhoLocators.CAMPO_NOVA_SENHA_TROCA)).send_keys(self.second_password)
+                WebDriverWait(self.driver, 1.5).until(
+                    EC.element_to_be_clickable(PortoVelhoLocators.CAMPO_NOVA_SENHA_CONFIRMA)).send_keys(self.second_password)
+                time.sleep(0.3)
+                WebDriverWait(self.driver, 1.0).until(
+                    EC.element_to_be_clickable(PortoVelhoLocators.BODY)).click()
+                self.driver.find_element(*PortoVelhoLocators.BODY).send_keys(Keys.PAGE_DOWN)
+                time.sleep(0.1)
+                WebDriverWait(self.driver, 1.5).until(
+                    EC.element_to_be_clickable(PortoVelhoLocators.BOTAO_ENTRAR_TROCA_SENHA)).click()
+                return True
+            except Exception as e:
+                print(f"Erro: {e}")
+                return False
+        except:
+            print("Sem necessidade de troca de senha")
             return True
-        except Exception as e:
-            print(f"Erro: {e}")
-            return False 
         
     def confirmacao_leitura_novidades(self):
         try:
@@ -165,8 +171,22 @@ class ConvenioPortoVelho:
         try:
             self.driver.execute_script("document.body.style.zoom='80%'")
             self.driver.find_element(*PortoVelhoLocators.BOTAO_GERAR).click()
-            time.sleep(2)
+            time.sleep(1.5)
+            try:
+                Sem_relatorio = pg.locateOnScreen(
+                    DI.sem_relatorio,
+                    confidence= 0.8,
+                    minSearchTime= 3
+                )
+                if Sem_relatorio:
+                    print("Sem relatórios com os parâmetros")
+                    pg.hotkey('ctrl', 'w')
+                    return True
+            except:
+                pass
+                return True
             return True
         except Exception as e:
-            print (f"Erro: {e}")
+            print(f"Erro: {e}")
+            return False
         

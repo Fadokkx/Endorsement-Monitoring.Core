@@ -78,8 +78,7 @@ def main():
     try:
         consigfacil = ConsigFacilController(driver)
 
-        convenios = ['piaui', 'porto_velho', 'recife', 'teresina'] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
-        
+        convenios = ['pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] 
         resultados = consigfacil.executar_todos_convenios(convenios)
 
         print("\n=== RESUMO DE EXECUÇÃO ===")

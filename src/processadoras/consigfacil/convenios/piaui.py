@@ -1,10 +1,12 @@
 from src.processadoras.consigfacil.core.consigfacil_date_var import variaveis_data as data
+from src.processadoras.consigfacil.core.cf_paths import Diretorios_Imagem as DI
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
+import pyautogui as pg
 import time
 import os
 
@@ -49,7 +51,7 @@ class ConvenioPiaui:
                 EC.presence_of_element_located(PiauiLocators.CAMPO_LOGIN)
             )
             self.driver.find_element(*PiauiLocators.CAMPO_LOGIN).send_keys(self.user)
-            self.driver.find_element(*PiauiLocators.CAMPO_SENHA).send_keys(self.password)
+            self.driver.find_element(*PiauiLocators.CAMPO_SENHA).send_keys(self.second_password)
             CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
             self.driver.find_element(*PiauiLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
             self.driver.find_element(*PiauiLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
@@ -64,12 +66,12 @@ class ConvenioPiaui:
                 try:
                     WebDriverWait(self.driver, 1).until(
                         EC.presence_of_element_located(PiauiLocators.CAMPO_LOGIN)).send_keys(self.user)
-                    self.driver.find_element(*PiauiLocators.CAMPO_SENHA).send_keys(self.password)
+                    self.driver.find_element(*PiauiLocators.CAMPO_SENHA).send_keys(self.second_password)
                     CF_CAPTCHA_RESOLVER = input ("Digite o Captcha: ")
                     self.driver.find_element(*PiauiLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
                     self.driver.find_element(*PiauiLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
                     WebDriverWait(self.driver, 1.5).until(
-                        EC.element_to_be_clickable(PiauiLocators.ABA_RELATORIO)) 
+                        EC.presence_of_element_located(PiauiLocators.ABA_RELATORIO))
                     return True
                 except:
                     print("Captcha digitado incorretamente, tentar novamente")
@@ -78,34 +80,39 @@ class ConvenioPiaui:
         except Exception as e:
             print(f"Erro: {e}")
             return False
-        
+    
     def troca_senha(self):
         try:
-            WebDriverWait(self.driver, 1.5).until(
-                EC.element_to_be_clickable(PiauiLocators.CAMPO_NOVA_SENHA_CONFIRMA))
-            self.driver.find_element(*PiauiLocators.CAMPO_SENHA_TROCA).click()
-            self.driver.find_element(*PiauiLocators.CAMPO_SENHA_TROCA).send_keys(self.password)
-            time.sleep(0.5)
-            WebDriverWait(self.driver, 1.5).until(
-                EC.element_to_be_clickable(PiauiLocators.CAMPO_NOVA_SENHA_TROCA)).send_keys(self.second_password)
-            WebDriverWait(self.driver, 1.5).until(
-                EC.element_to_be_clickable(PiauiLocators.CAMPO_NOVA_SENHA_CONFIRMA)).send_keys(self.second_password)
-            time.sleep(0.3)
-            self.driver.find_element(*PiauiLocators.BODY).send_keys(Keys.PAGE_DOWN)
-            time.sleep(0.1)
-            WebDriverWait(self.driver, 1.5).until(
-                EC.element_to_be_clickable(PiauiLocators.BOTAO_ENTRAR_TROCA_SENHA)).click()
+            try:
+                self.driver.find_element(*PiauiLocators.CAMPO_SENHA_TROCA).click()
+                self.driver.find_element(*PiauiLocators.CAMPO_SENHA_TROCA).send_keys(self.second_password)
+                time.sleep(0.5)
+                WebDriverWait(self.driver, 1.5).until(
+                    EC.element_to_be_clickable(PiauiLocators.CAMPO_NOVA_SENHA_TROCA)).send_keys(self.password)
+                WebDriverWait(self.driver, 1.5).until(
+                    EC.element_to_be_clickable(PiauiLocators.CAMPO_NOVA_SENHA_CONFIRMA)).send_keys(self.password)
+                time.sleep(0.3)
+                WebDriverWait(self.driver, 1.0).until(
+                    EC.element_to_be_clickable(PiauiLocators.BODY)).click()
+                self.driver.find_element(*PiauiLocators.BODY).send_keys(Keys.PAGE_DOWN)
+                time.sleep(0.1)
+                WebDriverWait(self.driver, 1.5).until(
+                    EC.element_to_be_clickable(PiauiLocators.BOTAO_ENTRAR_TROCA_SENHA)).click()
+                return True
+            except Exception as e:
+                print(f"Erro: {e}")
+                return False
+        except:
+            print("Sem necessidade de troca de senha")
             return True
-        except Exception as e:
-            print(f"Erro: {e}")
-            return False 
+         
     def confirmacao_leitura_novidades(self):
         try:
             try:
                 if not self.driver.find_element(*PiauiLocators.BOTAO_NOVIDADES).click():
                     raise Exception("Sem novidades")
             except Exception as e:
-                print("Sem novidades.")
+                print(f"Erro: {e}")
             
             try:
                 WebDriverWait(self.driver, 5).until(
@@ -164,8 +171,22 @@ class ConvenioPiaui:
         try:
             self.driver.execute_script("document.body.style.zoom='80%'")
             self.driver.find_element(*PiauiLocators.BOTAO_GERAR).click()
-            time.sleep(2)
+            time.sleep(1.5)
+            try:
+                Sem_relatorio = pg.locateOnScreen(
+                    DI.sem_relatorio,
+                    confidence= 0.8,
+                    minSearchTime= 3
+                )
+                if Sem_relatorio:
+                    print("Sem relatórios com os parâmetros")
+                    pg.hotkey('ctrl', 'w')
+                    return True
+            except:
+                pass
+                return True
             return True
         except Exception as e:
-            print (f"Erro: {e}")
+            print(f"Erro: {e}")
+            return False
         
