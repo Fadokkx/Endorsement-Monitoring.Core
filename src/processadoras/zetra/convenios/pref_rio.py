@@ -159,6 +159,7 @@ class ConvenioPrefRio:
                 EC.element_to_be_clickable(PrefRioLocators.CHECKBOX_DEFERIDA)).click()
             time.sleep(0.1)
             self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
+            self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(PrefRioLocators.SELEC_OPCOES))
             self.driver.find_element(*PrefRioLocators.SELEC_OPCOES).click()
@@ -177,7 +178,8 @@ class ConvenioPrefRio:
             return False     
         
     def autorizacao_gerador(self):
-        try: 
+        try:
+            time.sleep(0.3) 
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(PrefRioLocators.SENHA_AUTORIZER)).send_keys(self.password)
             WebDriverWait(self.driver, 5).until(

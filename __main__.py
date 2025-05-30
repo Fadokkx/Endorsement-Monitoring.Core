@@ -48,7 +48,7 @@ def main():
     try:
         zetra = ZetraController(driver)
         
-        convenios = [None] #[None] Ou ['pref_rio', 'nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']
+        convenios = ['uberlandia'] #[None] Ou ['pref_rio', 'nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']
         
         resultados = zetra.executar_todos_convenios(convenios)
 
@@ -63,7 +63,7 @@ def main():
     try:
         cip = CipController(driver)
         
-        convenios = ['govmt', 'govsp', 'govsefazsp'] #[None] OU ['govmt', 'govsp', 'govsefazsp']
+        convenios = [None] #[None] OU ['govmt', 'govsp', 'govsefazsp']
         
         resultados = cip.executar_todos_convenios(convenios)
 
@@ -78,8 +78,7 @@ def main():
     try:
         consigfacil = ConsigFacilController(driver)
 
-        convenios = ['joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
-        
+        convenios = [None] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] 
         resultados = consigfacil.executar_todos_convenios(convenios)
 
         print("\n=== RESUMO DE EXECUÇÃO ===")
@@ -108,7 +107,7 @@ def main():
     try:
         consignet = ConsigNetController(driver)    
         
-        convenios = ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev'] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
+        convenios = [None] #[None] ou ['balneario', 'campo_largo', 'maringa_prev', 'navegantes', 'navegantes_prev']
         
         resultados = consignet.executar_todos_convenios(convenios)
                 
@@ -124,7 +123,7 @@ def main():
     try:
         consiglog = ConsigLogController(driver)
         
-        convenios = ['iprev_santo_andre', 'amazonas', 'duque_de_caxias'] #[None] ou ['iprev_santo_andre', 'amazonas', 'duque_de_caxias']
+        convenios = [None] #[None] ou ['iprev_santo_andre', 'amazonas', 'duque_de_caxias']
         
         resultados = consiglog.executar_todos_convenios(convenios)
 
@@ -140,7 +139,7 @@ def main():
     try:
         consigtec = ConsigTecController(driver)
         
-        convenios = ['maringa', 'porto_nacional'] #[None] ou ['maringa', 'porto_nacional']
+        convenios = [None] #[None] ou ['maringa', 'porto_nacional']
         
         resultados = consigtec.executar_todos_convenios(convenios)
 
@@ -156,7 +155,7 @@ def main():
     try:
         digitalconsig = DigitalConsigController(driver)
         
-        convenios = ['sorriso'] #[None] ou ['sorriso']
+        convenios = [None] #[None] ou ['sorriso']
         
         resultados = digitalconsig.executar_todos_convenios(convenios)
 
@@ -172,7 +171,7 @@ def main():
     try:
         safeconsig = SafeConsigController(driver)
         
-        convenios = ['ceara', 'cabo_frio'] #[None] ou ['ceara', 'cabo_frio']
+        convenios = [None] #[None] ou ['ceara', 'cabo_frio']
         
         resultados = safeconsig.executar_todos_convenios(convenios)
 
@@ -188,7 +187,7 @@ def main():
     try:
         serpro = SerproController(driver)
         
-        convenios = ['guarulhos'] #[None] ou ['guarulhos']
+        convenios = [None] #[None] ou ['guarulhos']
         
         resultados = serpro.executar_todos_convenios(convenios)
 
@@ -204,7 +203,7 @@ def main():
     try:
         siconsig = SiConsigController(driver)
         
-        convenios = ['tocantins'] #[None] ou ['tocantins']
+        convenios = [None] #[None] ou ['tocantins']
         
         resultados = siconsig.executar_todos_convenios(convenios)
 
@@ -220,7 +219,7 @@ def main():
     try:
         sigconsig = SigConsigController(driver)
         
-        convenios = ['santa_catarina'] #[None] ou ['santa_catarina']
+        convenios = [None] #[None] ou ['santa_catarina']
         
         resultados = sigconsig.executar_todos_convenios(convenios)
 
@@ -236,7 +235,7 @@ def main():
     try:
         quantum = QuantumWebController(driver)
         
-        convenios = ['ribeirao'] #[None] Ou ['ribeirao']
+        convenios = [None] #[None] Ou ['ribeirao']
         
         resultados = quantum.executar_todos_convenios(convenios)
 
@@ -251,7 +250,7 @@ def main():
     try:
         NeoConsig = NeoConsigController(driver)
 
-        convenios = ['alagoas'] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
+        convenios = [None] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
         
         resultados = NeoConsig.executar_todos_convenios(convenios)
 
@@ -262,9 +261,7 @@ def main():
                 print(f"   → {dados['erro']}")
     except Exception as e:
         print(f"Erro {e}")    
-    
-           
-        
+
     finally:
         driver.quit()
         
