@@ -1,4 +1,5 @@
 from src.processadoras.zetra.core.zetra_date_var import variaveis_data as data
+from src.processadoras.zetra.core.paths import Diretorios_Imagem as DI
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -34,7 +35,7 @@ class UberlandiaLocators:
     RADIO_CONFIRMA_LEITURA4 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[4]/div/fieldset/div/label[1]')
     RADIO_CONFIRMA_LEITURA5 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[5]/div/fieldset/div/label[1]')
     RADIO_CONFIRMA_LEITURA6 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[6]/div/fieldset/div/label[1]')
-    BOTAO_CONFIRMA_LEITURA = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[2]/a')
+    BOTAO_CONFIRMA_LEITURA = (By.XPATH, "/html/body/section/div[3]/div/form/div[2]/a")
     BODY = (By.XPATH, "/html/body")
 
 class ConvenioUberlandia:
@@ -118,49 +119,82 @@ class ConvenioUberlandia:
             return True
     
     def confirmacao_leitura(self):
+        
         time.sleep(0.5)
         try:
             self.driver.find_element(*UberlandiaLocators.RADIO_CONFIRMA_LEITURA).click()
             pg.hotkey('pagedown')
             time.sleep(0.5)
+            
             try:
-                WebDriverWait(self.driver, 0.5).until(
-                    EC.element_to_be_clickable(UberlandiaLocators.RADIO_CONFIRMA_LEITURA2)).click()
                 try:
                     WebDriverWait(self.driver, 0.5).until(
-                        EC.element_to_be_clickable(UberlandiaLocators.RADIO_CONFIRMA_LEITURA3)).click()
-                    time.sleep(0.1)
-                    pg.hotkey('pagedown')
+                        EC.element_to_be_clickable(UberlandiaLocators.RADIO_CONFIRMA_LEITURA2)).click()
+                except:
+                    pass
+                
+                try:
                     try:
                         WebDriverWait(self.driver, 0.5).until(
-                            EC.element_to_be_clickable(UberlandiaLocators.RADIO_CONFIRMA_LEITURA4)).click()
+                            EC.element_to_be_clickable(UberlandiaLocators.RADIO_CONFIRMA_LEITURA3)).click()
                         time.sleep(0.1)
+                        pg.hotkey('pagedown')
+                    except:
+                        pass
+                    
+                    try:
                         try:
                             WebDriverWait(self.driver, 0.5).until(
-                                EC.element_to_be_clickable(UberlandiaLocators.RADIO_CONFIRMA_LEITURA5)).click()
+                                EC.element_to_be_clickable(UberlandiaLocators.RADIO_CONFIRMA_LEITURA4)).click()
                             time.sleep(0.1)
+                        except:
+                            pass
+                        
+                        try:
                             try:
                                 WebDriverWait(self.driver, 0.5).until(
-                                    EC.element_to_be_clickable(UberlandiaLocators.RADIO_CONFIRMA_LEITURA6)).click()
+                                    EC.element_to_be_clickable(UberlandiaLocators.RADIO_CONFIRMA_LEITURA5)).click()
                                 time.sleep(0.1)
-                                pg.hotkey('pagedown')  
-                                try:
-                                    time.sleep(0.1)
-                                    self.driver.find_element(*UberlandiaLocators.BOTAO_CONFIRMA_LEITURA).click()
-                                    time.sleep(0.1)
-                                    return True
-                                except:
-                                    return False
                             except:
-                                return True
-                        except:
-                            return True
-                    except:
-                        return True
-                except:
-                    return True
-            except:
-                return True
+                                pass
+                            
+                            try:
+                                try:
+                                    WebDriverWait(self.driver, 0.5).until(
+                                        EC.element_to_be_clickable(UberlandiaLocators.RADIO_CONFIRMA_LEITURA6)).click()
+                                    time.sleep(0.1)
+                                    pg.hotkey('pagedown')
+                                except:
+                                    pass
+                                  
+                                try:
+                                    WebDriverWait(self.driver, 1.5).until(
+                                        EC.element_to_be_clickable(UberlandiaLocators.BOTAO_CONFIRMA_LEITURA)).click()
+                                    
+                                except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                            except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                        except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                    except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+            except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
         except Exception as e:
             print(f"Sem necessidade de confirmação de leitura")
             return True

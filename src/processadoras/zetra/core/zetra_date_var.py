@@ -1,7 +1,7 @@
 import pandas as pd
 
 TODAY = pd.Timestamp.today().date()
-DATA_OPERACAO = (TODAY - pd.offsets.BDay(2)).date()
+DATA_OPERACAO = (TODAY - pd.offsets.BDay(3)).date()
 DATA_FIM = (TODAY - pd.offsets.BDay(1)).date()
 
 class variaveis_data():
