@@ -1,6 +1,6 @@
 from src.processadoras.consigtec.convenios.maringa import ConvenioMaringa
 from src.processadoras.consigtec.convenios.porto_nacional import ConvenioPortoNacional
-from src.core.file_manager import renomear_e_mover_arquivos as file_manager
+from src.core.file_manager import data_management as DM
 from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
 from typing import Dict, Type
@@ -34,7 +34,7 @@ class ConsigTecController():
                 raise Exception("Falha no download")
             
             try:
-                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "produção", novo_nome=(f"consigtec_{nome_convenio}_{data.DATA_ARQUIVO}"))
+                DM.renomear_e_mover_arquivos(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "produção", novo_nome=(f"consigtec_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except Exception as e:
                 print(f"{e}")
                 

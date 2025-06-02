@@ -3,7 +3,7 @@ from src.processadoras.consignet.convenios.CampoLargo import ConvenioCampoLargo
 from src.processadoras.consignet.convenios.MaringaPrev import ConvenioMaringaPrev
 from src.processadoras.consignet.convenios.NavegantesPrev import ConvenioNavegantesPrev
 from src.processadoras.consignet.convenios.navegantes import ConvenioNavegantes
-from src.core.file_manager import renomear_e_mover_arquivos as file_manager
+from src.core.file_manager import data_management as DM
 from selenium.webdriver.remote.webdriver import WebDriver
 from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
@@ -40,7 +40,7 @@ class ConsigNetController():
             if not convenio.baixa_relatorio():
                 raise Exception("Falha no download de relatórios")
             try:
-                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "RelConsignacaoMensal_", novo_nome=(f"consignet_{nome_convenio}_{data.DATA_ARQUIVO}"))
+                DM.renomear_e_mover_arquivos(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "RelConsignacaoMensal_", novo_nome=(f"consignet_{nome_convenio}_{data.DATA_ARQUIVO}"))
             except:
                 print(f"Erro: {e}")
                 

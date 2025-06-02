@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
+import pyautogui as pg
 import time
 import os
 
@@ -32,9 +33,13 @@ class PrefRioLocators:
     CAMPO_NOVA_SENHA_TROCA = (By.ID,"senhaNova")
     BOTAO_CONFIRMA_TROCA = (By.XPATH,'//*[@id="no-back"]/div[3]/div/div[4]/a[2]')
     BOTAO_VOLTA_TROCA_SENHA = (By.XPATH, '//*[@id="no-back"]/div/div[1]/div[3]/button') 
-    BOTAO_CONFIRMA_LEITURA = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[2]/a')
     RADIO_CONFIRMA_LEITURA = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[1]/div/fieldset/div/label[1]')
-    RADIO_CONFIRMA_SEG_LEITURA =(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[2]/div/fieldset/div/label[1]')    
+    RADIO_CONFIRMA_LEITURA2 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[2]/div/fieldset/div/label[1]')
+    RADIO_CONFIRMA_LEITURA3 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[3]/div/fieldset/div/label[1]')
+    RADIO_CONFIRMA_LEITURA4 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[4]/div/fieldset/div/label[1]')
+    RADIO_CONFIRMA_LEITURA5 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[5]/div/fieldset/div/label[1]')
+    RADIO_CONFIRMA_LEITURA6 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[6]/div/fieldset/div/label[1]')
+    BOTAO_CONFIRMA_LEITURA = (By.XPATH, "/html/body/section/div[3]/div/form/div[2]/a") 
     BODY = (By.XPATH, "/html/body")
     
 class ConvenioPrefRio:
@@ -115,20 +120,84 @@ class ConvenioPrefRio:
             print(f"Sem necessidade de troca de senha")
             return True
     
+    
     def confirmacao_leitura(self):
+        
         time.sleep(0.5)
         try:
             self.driver.find_element(*PrefRioLocators.RADIO_CONFIRMA_LEITURA).click()
-            time.sleep(0.1)
-            self.driver.find_element(*PrefRioLocators.BODY).send_keys(Keys.PAGE_DOWN)
+            pg.hotkey('pagedown')
+            time.sleep(0.5)
+            
             try:
-                WebDriverWait(self.driver, 1.5).until(
-                    EC.element_to_be_clickable(PrefRioLocators.RADIO_CONFIRMA_SEG_LEITURA)).click()
-            except:
-                print("Sem segunda leitura necessária")
-            WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(PrefRioLocators.BOTAO_CONFIRMA_LEITURA)).click()
-            print("Confirmação de leitura realizada com sucesso.")
+                try:
+                    WebDriverWait(self.driver, 0.5).until(
+                        EC.element_to_be_clickable(PrefRioLocators.RADIO_CONFIRMA_LEITURA2)).click()
+                except:
+                    pass
+                
+                try:
+                    try:
+                        WebDriverWait(self.driver, 0.5).until(
+                            EC.element_to_be_clickable(PrefRioLocators.RADIO_CONFIRMA_LEITURA3)).click()
+                        time.sleep(0.1)
+                        pg.hotkey('pagedown')
+                    except:
+                        pass
+                    
+                    try:
+                        try:
+                            WebDriverWait(self.driver, 0.5).until(
+                                EC.element_to_be_clickable(PrefRioLocators.RADIO_CONFIRMA_LEITURA4)).click()
+                            time.sleep(0.1)
+                        except:
+                            pass
+                        
+                        try:
+                            try:
+                                WebDriverWait(self.driver, 0.5).until(
+                                    EC.element_to_be_clickable(PrefRioLocators.RADIO_CONFIRMA_LEITURA5)).click()
+                                time.sleep(0.1)
+                            except:
+                                pass
+                            
+                            try:
+                                try:
+                                    WebDriverWait(self.driver, 0.5).until(
+                                        EC.element_to_be_clickable(PrefRioLocators.RADIO_CONFIRMA_LEITURA6)).click()
+                                    time.sleep(0.1)
+                                    pg.hotkey('pagedown')
+                                except:
+                                    pass
+                                  
+                                try:
+                                    WebDriverWait(self.driver, 1.5).until(
+                                        EC.element_to_be_clickable(PrefRioLocators.BOTAO_CONFIRMA_LEITURA)).click()
+                                    
+                                except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                            except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                        except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                    except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+            except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
         except Exception as e:
             print(f"Sem necessidade de confirmação de leitura")
             return True

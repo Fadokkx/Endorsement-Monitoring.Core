@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
+import pyautogui as pg
 import time
 import os
 
@@ -26,7 +27,15 @@ class NovalimaLocators:
     SELEC_OPCOES =(By.XPATH, '//*[@id="formato"]')
     OPCAO_CSV = (By.XPATH, '//*[@id="formato"]/option[4]')
     SENHA_AUTORIZER = (By.XPATH, '//*[@id="senha2aAutorizacao"]')
+    BOTAO_AUTORIZER = (By.XPATH, '/html/body/div[2]/div[3]/div/button[2]')
     BOTAO_VOLTA_TROCA_SENHA = (By.XPATH, '//*[@id="no-back"]/div/div[1]/div[3]/button')
+    RADIO_CONFIRMA_LEITURA = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[1]/div/fieldset/div/label[1]')
+    RADIO_CONFIRMA_LEITURA2 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[2]/div/fieldset/div/label[1]')
+    RADIO_CONFIRMA_LEITURA3 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[3]/div/fieldset/div/label[1]')
+    RADIO_CONFIRMA_LEITURA4 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[4]/div/fieldset/div/label[1]')
+    RADIO_CONFIRMA_LEITURA5 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[5]/div/fieldset/div/label[1]')
+    RADIO_CONFIRMA_LEITURA6 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[6]/div/fieldset/div/label[1]')
+    BOTAO_CONFIRMA_LEITURA = (By.XPATH, "/html/body/section/div[3]/div/form/div[2]/a")
         
 class ConvenioNovaLima:
     def __init__(self, driver: WebDriver):
@@ -111,13 +120,84 @@ class ConvenioNovaLima:
             print(f"Sem necessidade de troca de senha")
             return True
     
+    
     def confirmacao_leitura(self):
+        
         time.sleep(0.5)
         try:
-            self.driver.find_element(By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div/div/fieldset/div/label[1]').click()
-            WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[2]/a'))).click()
-            print("Confirmação de leitura realizada com sucesso.")
+            self.driver.find_element(*NovalimaLocators.RADIO_CONFIRMA_LEITURA).click()
+            pg.hotkey('pagedown')
+            time.sleep(0.5)
+            
+            try:
+                try:
+                    WebDriverWait(self.driver, 0.5).until(
+                        EC.element_to_be_clickable(NovalimaLocators.RADIO_CONFIRMA_LEITURA2)).click()
+                except:
+                    pass
+                
+                try:
+                    try:
+                        WebDriverWait(self.driver, 0.5).until(
+                            EC.element_to_be_clickable(NovalimaLocators.RADIO_CONFIRMA_LEITURA3)).click()
+                        time.sleep(0.1)
+                        pg.hotkey('pagedown')
+                    except:
+                        pass
+                    
+                    try:
+                        try:
+                            WebDriverWait(self.driver, 0.5).until(
+                                EC.element_to_be_clickable(NovalimaLocators.RADIO_CONFIRMA_LEITURA4)).click()
+                            time.sleep(0.1)
+                        except:
+                            pass
+                        
+                        try:
+                            try:
+                                WebDriverWait(self.driver, 0.5).until(
+                                    EC.element_to_be_clickable(NovalimaLocators.RADIO_CONFIRMA_LEITURA5)).click()
+                                time.sleep(0.1)
+                            except:
+                                pass
+                            
+                            try:
+                                try:
+                                    WebDriverWait(self.driver, 0.5).until(
+                                        EC.element_to_be_clickable(NovalimaLocators.RADIO_CONFIRMA_LEITURA6)).click()
+                                    time.sleep(0.1)
+                                    pg.hotkey('pagedown')
+                                except:
+                                    pass
+                                  
+                                try:
+                                    WebDriverWait(self.driver, 1.5).until(
+                                        EC.element_to_be_clickable(NovalimaLocators.BOTAO_CONFIRMA_LEITURA)).click()
+                                    
+                                except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                            except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                        except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                    except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+                except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
+            except Exception as e:
+                                    print(f"Erro: {e}")
+                                    pass
+                                    return True  
         except Exception as e:
             print(f"Sem necessidade de confirmação de leitura")
             return True
@@ -178,7 +258,8 @@ class ConvenioNovaLima:
             time.sleep(0.5)
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(NovalimaLocators.SENHA_AUTORIZER)).send_keys(self.password)
-            self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div/button[2]").click()
+            WebDriverWait(self.driver, 1.5).until(
+                EC.element_to_be_clickable(NovalimaLocators.BOTAO_AUTORIZER)).click()
             time.sleep(0.5)
             WebDriverWait(self.driver, 60).until(
                 EC.presence_of_element_located(NovalimaLocators.DATA_INICIO))
@@ -190,6 +271,8 @@ class ConvenioNovaLima:
     def download_arquivo(self):
         try:    
             time.sleep(1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             self.driver.execute_script("document.body.style.zoom='33%'")
             

@@ -1,5 +1,5 @@
 from src.processadoras.infoconsig.convenios.barra_mansa import ConvenioBarraMansa
-from src.core.file_manager import renomear_e_mover_arquivos as file_manager
+from src.core.file_manager import data_management as DM
 from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
 from typing import Dict, Type
