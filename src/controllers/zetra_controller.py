@@ -10,12 +10,14 @@ from src.processadoras.zetra.convenios.HospServPublico import ConvenioHospServPu
 from src.processadoras.zetra.convenios.hortolandia import ConvenioHortolandia
 from src.processadoras.zetra.convenios.pref_rio import ConvenioPrefRio
 from src.processadoras.zetra.convenios.maua import ConvenioMaua
-from src.core.file_manager import renomear_e_mover_arquivos as file_manager
+from src.core.file_manager import renomear_e_mover_arquivos as file_manager, extracao_zetra, upload_s3
+from src.core.aws_config import Paths as Paths_S3
 from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
 from typing import Dict, Type
 from selenium.webdriver.remote.webdriver import WebDriver
 import time
+import os
 
 class ZetraController:
     def __init__(self, driver: WebDriver):
@@ -71,7 +73,22 @@ class ZetraController:
     
             try:
                 time.sleep(0.5)
-                file_manager(pasta_origem=paths.pasta_download, pasta_destino=rf"C:\Relatórios\{data.DATA_PASTA}", parametro_nome= "consignacoes_", novo_nome=(f"zetra_{nome_convenio}_{data.DATA_ARQUIVO}"))
+                file_manager(pasta_origem=paths.pasta_download,
+                            pasta_destino=paths.pasta_download,
+                            parametro_nome= "consignacoes_",
+                            novo_nome=(f"zetra_{nome_convenio}_{data.DATA_ARQUIVO}"))
+                
+                arquivo_local = extracao_zetra(pasta_download=paths.pasta_download, nome_convenio=nome_convenio,data_arquivo=data.DATA_ARQUIVO)
+                
+                s3_key = f"{Paths_S3.Diretorio}/{data.DATA_PASTA}/{os.path.basename(arquivo_local)}"
+                upload_s3(arquivo_local, s3_key)
+                
+                file_manager(pasta_origem=paths.pasta_download,
+                            pasta_destino=rf"C:\Relatórios\BackupsS3\{data.DATA_PASTA}",
+                            parametro_nome= rf"zetra_{nome_convenio}_{data.DATA_ARQUIVO}",
+                            novo_nome=(f"zetra_{nome_convenio}_{data.DATA_ARQUIVO}_Uploaded_S3"))
+                
+                
             except Exception as e:
                 print(f"{e}")
             

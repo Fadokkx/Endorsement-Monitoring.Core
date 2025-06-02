@@ -24,7 +24,7 @@ def main():
     try:
         infoconsig = InfoConsigController(driver)
         
-        convenios = [None]
+        convenios = [None] #None ou ['barra_mansa', 'florianopolis']
         
         resultados = infoconsig.executar_todos_convenios(convenios)
         print("\n=== RESUMO DE EXECUÇÃO ===")
@@ -38,17 +38,21 @@ def main():
     try:
         proconsig = ProConsigController(driver)
         
-        convenios = [None]
+        convenios = [None] #None ou ['porto_alegre']
         
         resultados = proconsig.executar_todos_convenios(convenios)
-        
+        print("\n=== RESUMO DE EXECUÇÃO ===")
+        for convenio, dados in resultados.items():
+            print(f"{convenio.upper():<15} {dados['status']}")
+            if dados['erro']:
+                print(f"   → {dados['erro']}")           
     except Exception as e:
         print(f"\n ERRO GLOBAL: {str(e)}")
         
     try:
         zetra = ZetraController(driver)
         
-        convenios = ['uberlandia'] #[None] Ou ['pref_rio', 'nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']
+        convenios = ['pref_rio', 'nova_lima','embu', 'sbc'] #[None] Ou ['pref_rio', 'nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']
         
         resultados = zetra.executar_todos_convenios(convenios)
 
@@ -78,7 +82,8 @@ def main():
     try:
         consigfacil = ConsigFacilController(driver)
 
-        convenios = [None] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina'] 
+        convenios = [None] #[None] #OU #['campina_grande', 'cuiaba', 'ipatinga', 'joao_pessoa', 'juazeiro', 'maranhao', 'pernambuco', 'piaui', 'porto_velho', 'recife', 'teresina']        
+        
         resultados = consigfacil.executar_todos_convenios(convenios)
 
         print("\n=== RESUMO DE EXECUÇÃO ===")
@@ -250,7 +255,7 @@ def main():
     try:
         NeoConsig = NeoConsigController(driver)
 
-        convenios = [None] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
+        convenios = ['rio', 'sorocaba', 'alagoas'] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
         
         resultados = NeoConsig.executar_todos_convenios(convenios)
 

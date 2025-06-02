@@ -56,7 +56,7 @@ class ConvenioCuiaba:
             self.driver.find_element(*CuiabaLocators.CAMPO_CAPTCHA).send_keys(CF_CAPTCHA_RESOLVER)
             self.driver.find_element(*CuiabaLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
             try:
-                WebDriverWait(self.driver, 1).until(
+                WebDriverWait(self.driver, 1.5).until(
                     EC.presence_of_element_located(CuiabaLocators.ABA_RELATORIO))
                 return True
             except:

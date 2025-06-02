@@ -1,4 +1,3 @@
-#Obrigatórias
 selenium>=4.10.0
 webdriver-manager>=3.8.6
 pyautogui>=0.9.54
@@ -8,5 +7,4 @@ opencv-python>=4.9.0.80
 pyscreeze>=1.0
 requests>=2.30
 pandas>=2.2
-
-#Opcionais
+boto3>=1.38

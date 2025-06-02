@@ -57,7 +57,7 @@ class ConvenioMaranhao:
             self.driver.find_element(*MaranhaoLocators.CAMPO_CAPTCHA).send_keys(Keys.ENTER)
             try:
                 WebDriverWait(self.driver, 1).until(
-                    EC.presence_of_element_located(MaranhaoLocators.BOTAO_CONFIRMA_LEITURA))
+                    EC.presence_of_element_located(MaranhaoLocators.ABA_RELATORIO))
                 return True
             except:
                 print("Captcha digitado incorretamente, tentar novamente")
