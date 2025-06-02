@@ -219,7 +219,7 @@ class ConvenioSbc:
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(SBCLocators.DATA_INICIO)
             ).send_keys(data.DATA_OPERACOES)
-            self.driver.execute_script("document.body.style.zoom='60%'")
+            self.driver.execute_script("document.body.style.zoom='65%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SBCLocators.DATA_FIM)
             ).send_keys(data.DATA_FINAL)

@@ -272,6 +272,8 @@ class ConvenioNovaLima:
         try:    
             time.sleep(1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            time.sleep(0.1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             self.driver.execute_script("document.body.style.zoom='33%'")
             
             WebDriverWait(self.driver, 10).until(

@@ -1,7 +1,7 @@
 from src.processadoras.cip.convenios.govsp import ConvenioGovSP
 from src.processadoras.cip.convenios.govmt import ConvenioGovMT
 from src.processadoras.cip.convenios.sefazsp import ConvenioSefazSP
-from src.core.file_manager import renomear_e_mover_arquivos as file_manager, upload_s3
+from src.core.file_manager import data_management as DM
 from src.core.date_var import variaveis_data as data
 from src.core.aws_config import Paths as Paths_S3
 from src.core.paths import caminhos as paths
@@ -44,16 +44,16 @@ class CipController:
                 raise Exception("Falha no download do arquivo")
             
             try:
-                arquivo_local = file_manager(
+                arquivo_local = DM.renomear_e_mover_arquivos(
                     pasta_origem=paths.pasta_download,
                     pasta_destino = paths.pasta_download,
                     parametro_nome= "RA015",
                     novo_nome=(f"cip_{nome_convenio}_{data.DATA_ARQUIVO}"))
                 
                 s3_key = f"{Paths_S3.Diretorio}/{data.DATA_PASTA}/{os.path.basename(arquivo_local)}"
-                upload_s3(arquivo_local, s3_key)
+                DM.upload_s3(arquivo_local, s3_key)
         
-                file_manager(
+                DM.renomear_e_mover_arquivos(
                     pasta_origem=paths.pasta_download,
                     pasta_destino=rf"C:\Relatórios\BackupsS3\{data.DATA_PASTA}",
                     parametro_nome= "cip_",

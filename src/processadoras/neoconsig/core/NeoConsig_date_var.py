@@ -24,8 +24,4 @@ class variaveis_data():
         if MES_ANTERIOR == "marÃ§o":
             MES_ANTERIOR = "marco"
             
-        MES_ATUAL = MES_ANTERIOR
-
-
-    #print (MES_ATUAL)
-    #print (ANO_ATUAL)   
+        MES_ATUAL = MES_ANTERIOR 

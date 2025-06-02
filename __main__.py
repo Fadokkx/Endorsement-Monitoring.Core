@@ -52,7 +52,7 @@ def main():
     try:
         zetra = ZetraController(driver)
         
-        convenios = ['pref_rio', 'nova_lima','embu', 'sbc'] #[None] Ou ['pref_rio', 'nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']
+        convenios = [None] #[None] Ou ['pref_rio', 'nova_lima','curitiba','sobral','embu', 'hortolandia', 'hospital_do_servidor_publico', 'igeprev', 'sbc', 'serra','uberlandia']
         
         resultados = zetra.executar_todos_convenios(convenios)
 
@@ -255,7 +255,7 @@ def main():
     try:
         NeoConsig = NeoConsigController(driver)
 
-        convenios = ['rio', 'sorocaba', 'alagoas'] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
+        convenios = [None] #[None] OU ['goias', 'rio', 'sorocaba', 'alagoas']
         
         resultados = NeoConsig.executar_todos_convenios(convenios)
 

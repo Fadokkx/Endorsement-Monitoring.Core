@@ -9,7 +9,7 @@ from src.processadoras.consigfacil.convenios.piaui import ConvenioPiaui
 from src.processadoras.consigfacil.convenios.porto_velho import ConvenioPortoVelho
 from src.processadoras.consigfacil.convenios.recife import ConvenioRecife
 from src.processadoras.consigfacil.convenios.teresina import ConvenioTeresina
-from src.core.file_manager import renomear_e_mover_arquivos as file_manager, remove_arquivo_consigfacil as remove_multi, upload_s3
+from src.core.file_manager import data_management as DM
 from src.core.aws_config import Paths as Paths_S3
 from src.core.date_var import variaveis_data as data
 from src.core.paths import caminhos as paths
@@ -63,19 +63,19 @@ class ConsigFacilController():
                 raise Exception ("Falha ao baixar relatório")
             
             try:
-                remove_multi()
+                DM.remove_arquivo_consigfacil()
                 time.sleep(0.1)
                 
-                arquivo_local = file_manager(
+                arquivo_local = DM.renomear_e_mover_arquivos(
                     pasta_origem=paths.pasta_download,
                     pasta_destino = paths.pasta_download,
                     parametro_nome= "relatorio",
                     novo_nome=(f"consigfacil_{nome_convenio}_{data.DATA_ARQUIVO}"))
                 
                 s3_key = f"{Paths_S3.Diretorio}/{data.DATA_PASTA}/{os.path.basename(arquivo_local)}"
-                upload_s3(arquivo_local, s3_key)
+                DM.upload_s3(arquivo_local, s3_key)
         
-                file_manager(
+                DM.renomear_e_mover_arquivos(
                     pasta_origem=paths.pasta_download,
                     pasta_destino=rf"C:\Relatórios\BackupsS3\{data.DATA_PASTA}",
                     parametro_nome= "consigfacil_",
