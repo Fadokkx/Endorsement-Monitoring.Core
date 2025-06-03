@@ -48,6 +48,8 @@ class NeoConsigController:
                     pasta_destino=paths.pasta_download, 
                     parametro_nome= "operacaoEmprestimo", 
                     novo_nome=(f"neoconsig_{nome_convenio}_{data.DATA_ARQUIVO}"))
+                
+                #DM.alteracao_neoconsig()
                         
                 s3_key = f"{Paths_S3.Diretorio}/{data.DATA_PASTA}/{os.path.basename(arquivo_local)}"
                 DM.upload_s3(arquivo_local, s3_key)

@@ -9,6 +9,14 @@ from src.core.date_var import variaveis_data as Data
 
 class data_management:
     
+    def upload_s3(caminho_arquivo_local: str, nome_destino_s3: str):
+        bucket = Paths_S3.Bucket
+        try:
+            CA.Aws_client.upload_file(caminho_arquivo_local, bucket, nome_destino_s3)
+        except Exception as e:
+            print(f"Erro ao fazer upload para o S3: {e}")
+            raise
+    
     def remove_arquivo_consigfacil():
 
         downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
@@ -82,7 +90,6 @@ class data_management:
         except Exception as e:
             print(f"Ocorreu um erro ao renomear/mover arquivos: {e}")
             raise
-
         
     def alteracao_neoconsig(pasta_download: str, nome_convenio: str, data_arquivo: str) -> str:
         pass
