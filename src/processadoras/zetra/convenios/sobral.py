@@ -232,7 +232,9 @@ class ConvenioSobral:
             #CHECKBOX
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(SobralLocators.CHECKBOX_DEFERIDA)).click()
-            time.sleep(1)
+            time.sleep(0.1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
 
             WebDriverWait(self.driver, 10).until(

@@ -212,7 +212,7 @@ class ConvenioGovSP:
                     exportar = pg.locateOnScreen(
                     PC.ExportarBotao,
                     confidence= 0.8,
-                    minSearchTime=3
+                    minSearchTime=4
                     )
 
                     if exportar:
@@ -220,7 +220,7 @@ class ConvenioGovSP:
                         csv_option = pg.locateOnScreen(
                             PC.TipoCSV,
                             confidence= 0.8,
-                            minSearchTime= 3
+                            minSearchTime= 6
                         )
                         if csv_option:
                             pg.moveTo(csv_option)

@@ -22,6 +22,7 @@ Git_Repos_manager/
 .vscode/
 *.swp
 *.swo
+.vs
 
 # Arquivos gerados pelo Selenium/WebDriver
 geckodriver.log
