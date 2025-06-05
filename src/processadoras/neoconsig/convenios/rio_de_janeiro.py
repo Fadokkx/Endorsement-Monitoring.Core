@@ -140,7 +140,7 @@ class ConvenioRio:
         try:
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(RioLocators.BOTAO_TIPO_CSV)).click()
-            time.sleep(30)
+            time.sleep(45)
             return True
         except Exception as e:
             print (f"Erro {e}")
