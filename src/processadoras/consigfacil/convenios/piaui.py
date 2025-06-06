@@ -32,6 +32,8 @@ class PiauiLocators:
     CAMPO_NOVA_SENHA_CONFIRMA = (By.XPATH, "/html/body/div[3]/div/div[2]/div/div/div/div/div/form/table/tbody/tr[2]/td/table/tbody/tr[6]/td/input")
     BOTAO_ENTRAR_TROCA_SENHA = (By.XPATH, "/html/body/div[3]/div/div[2]/div/div/div/div/div/form/table/tbody/tr[3]/td/input")
     BODY = (By.XPATH, "/html/body")
+    CAMPO_SERVICOS = (By.XPATH, '//*[@id="servico"]')
+    OPCAO_SAQUE = (By.XPATH, '//*[@id="servico"]/option[2]')
     
 class ConvenioPiaui:
     def __init__(self, driver: WebDriver):
@@ -146,11 +148,13 @@ class ConvenioPiaui:
     def opcoes_relatorio(self):
         try:
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(PiauiLocators.DATA_INICIO)
-            )
-            self.driver.find_element(*PiauiLocators.DATA_INICIO).send_keys(data.DATA_OPERACOES)
+                EC.presence_of_element_located(PiauiLocators.DATA_INICIO)).send_keys(data.DATA_OPERACOES)
             self.driver.find_element(*PiauiLocators.DATA_FIM).send_keys(data.DATA_FINAL)
-            time.sleep(1)
+            WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(PiauiLocators.CAMPO_SERVICOS)).click()
+            time.sleep(0.1)
+            self.driver.find_element(*PiauiLocators.OPCAO_SAQUE).click()
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(1)
             self.driver.find_element(*PiauiLocators.OPCAO_REL).click()
@@ -175,7 +179,7 @@ class ConvenioPiaui:
             try:
                 Sem_relatorio = pg.locateOnScreen(
                     DI.sem_relatorio,
-                    confidence= 0.8,
+                    confidence= 0.5,
                     minSearchTime= 3
                 )
                 if Sem_relatorio:

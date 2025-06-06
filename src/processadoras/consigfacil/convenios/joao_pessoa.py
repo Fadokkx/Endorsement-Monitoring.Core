@@ -32,6 +32,8 @@ class JoaoPessoaLocators:
     BOTAO_GERAR = (By.XPATH, '//*[@id="t_dadosp"]/tbody/tr[13]/td/p/input')
     TIPO_CSV = (By.XPATH, '//*[@id="opcao_geracao_relatorio"]/option[2]')
     BODY = (By.XPATH, "/html/body")
+    CAMPO_SERVICOS = (By.XPATH, '//*[@id="servico"]')
+    OPCAO_SAQUE = (By.XPATH, '//*[@id="servico"]/option[2]')
 
 class ConvenioJoaoPessoa:
     def __init__(self, driver: WebDriver):
@@ -150,10 +152,14 @@ class ConvenioJoaoPessoa:
             )
             self.driver.find_element(*JoaoPessoaLocators.DATA_INICIO).send_keys(data.DATA_OPERACOES)
             self.driver.find_element(*JoaoPessoaLocators.DATA_FIM).send_keys(data.DATA_FINAL)
-            time.sleep(1)
+            WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(JoaoPessoaLocators.CAMPO_SERVICOS)).click()
+            self.driver.find_element(*JoaoPessoaLocators.OPCAO_SAQUE).click()
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").click()
+            time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
+            time.sleep(0.5)
             self.driver.find_element(*JoaoPessoaLocators.OPCAO_REL).click()
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(JoaoPessoaLocators.TIPO_CSV)
