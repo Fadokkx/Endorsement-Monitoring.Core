@@ -1,3 +1,4 @@
+from src.processadoras.consigfacil.convenios.maranhao.locators import MaranhaoLocators
 from src.processadoras.consigfacil.core.consigfacil_date_var import variaveis_data as data
 from src.processadoras.consigfacil.core.cf_paths import Diretorios_Imagem as DI
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,27 +12,6 @@ import time
 import os
 
 load_dotenv()
-
-class MaranhaoLocators:
-    CAMPO_LOGIN = (By.XPATH, '//*[@id="usuario"]')
-    CAMPO_SENHA = (By.XPATH,'//*[@id="senha"]')
-    CAMPO_CAPTCHA = (By.XPATH,'//*[@id="captcha"]')
-    BOTAO_LOGIN = (By.XPATH,'//*[@id="html"]/body/div[1]/div[2]/form/button')
-    BOTAO_CONFIRMA_LEITURA = (By.XPATH, '//*[@id="staticBackdrop"]/div/div/div[3]/button[1]')
-    BOTAO_NOVIDADES = (By.XPATH, '//*[@id="modalExibeBanners"]/div/div/div[1]/button')
-    ABA_RELATORIO = (By.XPATH, '//*[@id="sidebar"]/ul/div[1]/div[2]/div/div/div/li[2]/a')
-    SELEC_RELATORIO = (By.XPATH, '//*[@id="objeto_1009"]')
-    DATA_INICIO = (By.XPATH, '//*[@id="de"]')
-    DATA_FIM = (By.XPATH, '//*[@id="ate"]')
-    ORDER_BY = (By.XPATH, '//*[@id="ordenar"]')
-    OPCAO_REL = (By.XPATH, '//*[@id="opcao_geracao_relatorio"]')
-    BOTAO_GERAR = (By.XPATH, '//*[@id="t_dadosp"]/tbody/tr[13]/td/p/input')
-    TIPO_CSV = (By.XPATH, '//*[@id="opcao_geracao_relatorio"]/option[2]')
-    CAMPO_SENHA_TROCA = (By.XPATH, '//*[@id="t_dadosp"]/tbody/tr[2]/td/table/tbody/tr[2]/td/input')
-    CAMPO_NOVA_SENHA_TROCA = (By.XPATH, "/html/body/div[3]/div/div[2]/div/div/div/div/div/form/table/tbody/tr[2]/td/table/tbody/tr[4]/td/input")
-    CAMPO_NOVA_SENHA_CONFIRMA = (By.XPATH, "/html/body/div[3]/div/div[2]/div/div/div/div/div/form/table/tbody/tr[2]/td/table/tbody/tr[6]/td/input")
-    BOTAO_ENTRAR_TROCA_SENHA = (By.XPATH, "/html/body/div[3]/div/div[2]/div/div/div/div/div/form/table/tbody/tr[3]/td/input")
-    BODY = (By.XPATH, "/html/body")
     
 class ConvenioMaranhao:
     def __init__(self, driver: WebDriver):
