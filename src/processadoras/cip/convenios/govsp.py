@@ -30,7 +30,8 @@ class CipLocators:
     DATA_INICIO = (By.XPATH, "/html/body/div[1]/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[3]/div[1]/input")
     DATA_FIM = (By.XPATH, "/html/body/div[1]/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[3]/div[3]/input")
     BOTAO_SELEC_ALLCONV = (By.XPATH, "/html/body/div[1]/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[6]/div/div[2]/span/div[2]/div/button[3]")
-    BOTAO_SELEC_ALLESPE = (By.XPATH, "/html/body/div[1]/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[9]/div/div[2]/span/div[2]/div/button[3]")
+    BOTAO_SELEC_ESPECIE_SAQUE = (By.XPATH, "/html/body/div/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[9]/div/div[2]/span/div[1]/select/option[2]")
+    BOTAO_ATIVA_ESPECIE = (By.XPATH, "/html/body/div/div/div[2]/div/form/div[4]/div/div[5]/div[2]/div[9]/div/div[2]/span/div[2]/div/button[1]")
     BOTAO_GERAR_REL = (By.XPATH, "/html/body/div/div/div[2]/div/form/div[4]/div/div[7]/input[2]")
     BOTAO_TROCA_PERFIL = (By.XPATH, "/html/body/div/div/div[1]/div/div[3]/a")
     BOTAO_GOVSP = (By.XPATH, "/html/body/div/div/form/div[2]/div/div[5]/div[2]/fieldset/div/div[1]/span[2]/input")
@@ -157,7 +158,10 @@ class ConvenioGovSP:
             self.driver.find_element(*CipLocators.DATA_INICIO).send_keys(data.DATA_OPERACOES)
             self.driver.find_element(*CipLocators.DATA_FIM).send_keys(data.DATA_FINAL)
             self.driver.find_element(*CipLocators.BOTAO_SELEC_ALLCONV).click()
-            self.driver.find_element(*CipLocators.BOTAO_SELEC_ALLESPE).click()
+            self.driver.find_element(*CipLocators.BOTAO_SELEC_ESPECIE_SAQUE).click()
+            self.driver.find_element(*CipLocators.BOTAO_ATIVA_ESPECIE).click()
+            time.sleep(0.5)
+            
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             
             #Checkbox

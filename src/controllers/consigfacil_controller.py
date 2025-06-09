@@ -1,14 +1,14 @@
-from src.processadoras.consigfacil.convenios.campina_grande import ConvenioCampinaGrande
-from src.processadoras.consigfacil.convenios.cuiaba import ConvenioCuiaba
-from src.processadoras.consigfacil.convenios.ipatinga import ConvenioIpatinga
-from src.processadoras.consigfacil.convenios.joao_pessoa import ConvenioJoaoPessoa
-from src.processadoras.consigfacil.convenios.juazeiro_do_norte import ConvenioJuazeiro
-from src.processadoras.consigfacil.convenios.maranhao import ConvenioMaranhao
-from src.processadoras.consigfacil.convenios.pernambuco import ConvenioPernambuco
-from src.processadoras.consigfacil.convenios.piaui import ConvenioPiaui
-from src.processadoras.consigfacil.convenios.porto_velho import ConvenioPortoVelho
-from src.processadoras.consigfacil.convenios.recife import ConvenioRecife
-from src.processadoras.consigfacil.convenios.teresina import ConvenioTeresina
+from src.processadoras.consigfacil.convenios.campina_grande.campina_grande import ConvenioCampinaGrande
+from src.processadoras.consigfacil.convenios.cuiaba.cuiaba import ConvenioCuiaba
+from src.processadoras.consigfacil.convenios.ipatinga.ipatinga import ConvenioIpatinga
+from src.processadoras.consigfacil.convenios.joao_pessoa.joao_pessoa import ConvenioJoaoPessoa
+from src.processadoras.consigfacil.convenios.juazeiro.juazeiro_do_norte import ConvenioJuazeiro
+from src.processadoras.consigfacil.convenios.maranhao.maranhao import ConvenioMaranhao
+from src.processadoras.consigfacil.convenios.pernambuco.pernambuco import ConvenioPernambuco
+from src.processadoras.consigfacil.convenios.piaui.piaui import ConvenioPiaui
+from src.processadoras.consigfacil.convenios.porto_velho.porto_velho import ConvenioPortoVelho
+from src.processadoras.consigfacil.convenios.recife.recife import ConvenioRecife
+from src.processadoras.consigfacil.convenios.teresina.teresina import ConvenioTeresina
 from src.core.file_manager import data_management as DM
 from src.core.aws_config import Paths as Paths_S3
 from src.core.date_var import variaveis_data as data

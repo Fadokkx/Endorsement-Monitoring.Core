@@ -10,6 +10,7 @@ import time
 import os
 
 load_dotenv()
+
 class HospServPublicoLocators:
     MENU_PRINCIPAL = (By.XPATH, '//*[@id="container"]/ul/li[3]/a')
     MENU_RELATORIOS = (By.XPATH, '//*[@id="menuRelatorio"]/ul/li[2]/a')
@@ -36,6 +37,8 @@ class HospServPublicoLocators:
     RADIO_CONFIRMA_LEITURA5 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[5]/div/fieldset/div/label[1]')
     RADIO_CONFIRMA_LEITURA6 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[6]/div/fieldset/div/label[1]')
     BOTAO_CONFIRMA_LEITURA = (By.XPATH, "/html/body/section/div[3]/div/form/div[2]/a")
+    CAMPO_SERVICOS = (By.XPATH, '//*[@id="svcCodigo"]')
+    BODY = (By.XPATH, "/html/body")
     
 class ConvenioHospServPublico:
     def __init__(self, driver: WebDriver):
@@ -50,15 +53,17 @@ class ConvenioHospServPublico:
         
     def login(self):
         try:
+            time.sleep(1)
             self.driver.get(self.url)
+            
             WebDriverWait(self.driver, 15).until(
-                EC.presence_of_element_located(HospServPublicoLocators.CAMPO_USUARIO)
-            ).send_keys(self.user)
+                EC.presence_of_element_located(HospServPublicoLocators.CAMPO_USUARIO)).send_keys(self.user)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(HospServPublicoLocators.BOTAO_CONTINUAR)
-            ).click()
+                EC.element_to_be_clickable(HospServPublicoLocators.BOTAO_CONTINUAR)).click()
+            
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(HospServPublicoLocators.CAMPO_SENHA)).send_keys(self.second_password)
+            
             ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
             self.driver.find_element(*HospServPublicoLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
             self.driver.find_element(*HospServPublicoLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
@@ -217,18 +222,20 @@ class ConvenioHospServPublico:
         try:
             WebDriverWait(self.driver, 15).until(
                 EC.element_to_be_clickable(HospServPublicoLocators.DATA_INICIO)).send_keys(data.DATA_OPERACOES)
-            self.driver.execute_script("document.body.style.zoom='60%'")
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(HospServPublicoLocators.DATA_FIM)).send_keys(data.DATA_FINAL)
-            time.sleep(0.1)
-            
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(0.1)
-            
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(HospServPublicoLocators.CHECKBOX_DEFERIDA)).click()
+                EC.element_to_be_clickable(HospServPublicoLocators.CAMPO_SERVICOS)).click()
+
             time.sleep(0.1)
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+                        
+            self.driver.execute_script("document.body.style.zoom='60%'")
+            
+            
+            time.sleep(0.1)
+            self.driver.find_element(*HospServPublicoLocators.BODY).send_keys(Keys.PAGE_DOWN)
+            time.sleep(0.1)
+            self.driver.find_element(*HospServPublicoLocators.BODY).send_keys(Keys.PAGE_DOWN)
             
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(HospServPublicoLocators.SELEC_OPCOES)).click()

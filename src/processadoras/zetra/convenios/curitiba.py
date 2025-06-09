@@ -61,14 +61,6 @@ class ConvenioCuritiba:
             ).click()
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(CuritibaLocators.CAMPO_SENHA)).send_keys(self.second_password)
-            #try:
-            #    base64_image, timestamp = self.captcha_resolver.get_image()  # Chamada via instância
-            #    captcha_text = self.captcha_resolver.captcha_resolver(base64_image)
-            #    WebDriverWait(self.driver, 10).until(
-            #        EC.presence_of_element_located(CuritibaLocators.CAMPO_CAPTCHA)
-            #    ).send_keys(captcha_text)
-            #except Exception as e:
-            #    print(f"Erro: {e}")
             ZetraCaptchaResolver = input("Resolva o captcha e pressione Enter: ")
             self.driver.find_element(*CuritibaLocators.CAMPO_CAPTCHA).send_keys(ZetraCaptchaResolver)
             self.driver.find_element(*CuritibaLocators.BOTAO_LOGIN).send_keys(Keys.RETURN)
@@ -235,9 +227,6 @@ class ConvenioCuritiba:
             
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(0.1)
-            
-            WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(CuritibaLocators.CHECKBOX_DEFERIDA)).click()
             
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(CuritibaLocators.SELEC_OPCOES))
