@@ -229,10 +229,10 @@ class ConvenioNovaLima:
             WebDriverWait(self.driver, 5).until(
                 EC.element_to_be_clickable(NovalimaLocators.CAMPO_SERVICOS)).click()
             
-            time.sleep(0.1)
+            time.sleep(0.5)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(0.1)
-            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
+            pg.press('pagedown')
             
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(NovalimaLocators.SELEC_OPCOES)).click()

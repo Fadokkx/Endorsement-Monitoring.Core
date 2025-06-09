@@ -35,6 +35,7 @@ class HortolandiaLocators:
     RADIO_CONFIRMA_LEITURA5 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[5]/div/fieldset/div/label[1]')
     RADIO_CONFIRMA_LEITURA6 = (By.XPATH, '//*[@id="no-back"]/div[3]/div/form/div[1]/div[2]/div[2]/div[6]/div/fieldset/div/label[1]')
     BOTAO_CONFIRMA_LEITURA = (By.XPATH, "/html/body/section/div[3]/div/form/div[2]/a")
+    CAMPO_SERVICOS = (By.XPATH, '//*[@id="svcCodigo"]')
     
 class ConvenioHortolandia:
     def __init__(self, driver: WebDriver):
@@ -226,7 +227,9 @@ class ConvenioHortolandia:
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(0.1)
             WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(HortolandiaLocators.CHECKBOX_DEFERIDA)).click()
+                EC.element_to_be_clickable(HortolandiaLocators.CAMPO_SERVICOS)).click()
+            time.sleep(0.1)
+            self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             time.sleep(0.1)
             self.driver.find_element(By.XPATH, "/html/body").send_keys(Keys.PAGE_DOWN)
             self.driver.execute_script("document.body.style.zoom='60%'")
