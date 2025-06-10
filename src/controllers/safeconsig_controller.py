@@ -45,7 +45,9 @@ class SafeConsigController():
                     parametro_nome= "Relatorio_Contratos_Averbados", 
                     novo_nome=(f"safeconsig_{nome_convenio}_{data.DATA_ARQUIVO}")
                 )
-                            
+                DM.SepSafeConsig(nome_convenio, data.DATA_ARQUIVO)
+                time.sleep(0.5)
+                
                 s3_key = f"{Paths_S3.Diretorio}/{data.DATA_PASTA}/{os.path.basename(arquivo_local)}"
                 DM.upload_s3(arquivo_local, s3_key)
                 

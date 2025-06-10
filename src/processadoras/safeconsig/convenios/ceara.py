@@ -18,6 +18,8 @@ class CearaLocators:
     ABA_RELATORIO = (By.XPATH, '//*[@id="menuform:j_idt146"]/a')
     MENU_MOVIMENT = (By.XPATH, '//*[@id="menuform:j_idt147"]/a')
     OPCAO_AVERB =(By.XPATH, '//*[@id="menuform:j_idt150"]/a')
+    CAMPO_SERVICOS = (By.XPATH, '//*[@id="j_idt343:j_idt355:input_label"]')
+    OPCAO_SAQUE = (By.XPATH, '//*[@id="j_idt343:j_idt355:input_1"]')
     CAMPO_DATA_INI = (By.XPATH, '//*[@id="j_idt343:j_idt393:j_idt393_input"]')
     CAMPO_DATA_FIM = (By.XPATH, '//*[@id="j_idt343:j_idt397:j_idt397_input"]')
     BOTAO_EXPORT_REL = (By.XPATH, '//*[@id="j_idt343:j_idt402"]/span[2]')
@@ -67,6 +69,11 @@ class ConvenioCeara:
         
     def opcoes_relatorio(self):
         try:
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(CearaLocators.CAMPO_SERVICOS)).click()
+            WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(CearaLocators.OPCAO_SAQUE)).click()
+            time.sleep(0.1)
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(CearaLocators.CAMPO_DATA_INI)).clear()
             self.driver.find_element(*CearaLocators.CAMPO_DATA_INI).send_keys(data.DATA_INICIAL)

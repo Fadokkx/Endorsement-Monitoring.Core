@@ -3,9 +3,11 @@ import shutil
 import csv
 import re
 import zipfile
+import pandas as pd
 from datetime import datetime
 from src.core.aws_config import ConfigAws as CA, Paths as Paths_S3
 from src.core.date_var import variaveis_data as Data
+from src.core.paths import caminhos as path
 
 class data_management:
     
@@ -93,3 +95,22 @@ class data_management:
         
     def alteracao_neoconsig(pasta_download: str, nome_convenio: str, data_arquivo: str) -> str:
         pass
+    
+    def SepSafeConsig(convenio, data):
+        try:
+            pasta_download = os.path.join(path.pasta_download)
+            arquivo_csv = f"safeconsig_{convenio}_{data}.csv"
+            
+            caminho_arquivo = os.path.join(pasta_download, arquivo_csv)
+            
+            df = pd.read_csv(caminho_arquivo, encoding="ISO-8859-1")
+            df.to_csv(
+            caminho_arquivo,
+            sep=";",              # separador ponto-e-vírgula
+            index=False,
+            encoding="utf-8-sig", # compatível com Excel
+            quoting=3             # 3 = csv.QUOTE_NONE → evita aspas desnecessárias
+        )
+            
+        except Exception as e:
+            print(f"Erro: {e}")
